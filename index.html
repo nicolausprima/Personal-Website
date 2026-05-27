@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nicolaus Prima — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=PT+Mono&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <style>
+    :root {
+      --primary: #111111;
+      --secondary: #8B5CF6;
+      --surface: #FFFFFF;
+      --text: #111827;
+      --muted: #6B7280;
+      --border: #E5E7EB;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --shadow-sm: 0 1px 2px rgba(17,24,39,0.06);
+      --shadow-md: 0 4px 12px rgba(17,24,39,0.08);
+      --shadow-lg: 0 8px 24px rgba(17,24,39,0.1);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --font-body: 'Roboto', sans-serif;
+      --font-display: 'Montserrat', sans-serif;
+      --font-mono: 'PT Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    ::selection {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .paper-sheet {
+      max-width: 100%;
+      margin: 0 auto;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--secondary);
+      outline-offset: 2px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--primary);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-4) var(--space-6);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .nav-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: var(--space-1) 0;
+      transition: color 0.2s;
+    }
+
+    .nav-menu a:hover { color: var(--primary); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 20px;
+      background: var(--primary);
+      color: #FFFFFF;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+
+    .nav-cta:hover {
+      background: #2a2a2a;
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-cta:active {
+      background: #000;
+      transform: translateY(1px);
+    }
+
+    #hero {
+      padding: 80px var(--space-6) 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-dot {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 2px solid #D1D5DB;
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      object-fit: cover;
+      margin-bottom: var(--space-5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-avatar-placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #F3F4F6;
+      border: 2px solid var(--border);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-5);
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-5);
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-typed {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: var(--space-5);
+      min-height: 2rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-typed .typed-cursor {
+      color: var(--secondary);
+    }
+
+    .hero-bio {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 600px;
+      line-height: 1.8;
+      margin: 0 auto var(--space-6);
+    }
+
+    .hero-bio strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 12px 28px;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      line-height: 1;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: #2a2a2a;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:active {
+      background: #000000;
+      transform: translateY(1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(17,17,17,0.03);
+    }
+
+    .btn-outline:active {
+      background: rgba(17,17,17,0.06);
+    }
+
+    .tech-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      padding: var(--space-5) var(--space-6);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .tech-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .tech-items {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .tech-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #F9FAFB;
+      transition: all 0.2s;
+    }
+
+    .tech-item:hover {
+      border-color: #D1D5DB;
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    section {
+      padding: 80px var(--space-6);
+    }
+
+    #projects, #skills {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    #education {
+      background: #F9FAFB;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: var(--space-3);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .project-card:hover {
+      border-color: #D1D5DB;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .project-card:active {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .project-icon {
+      width: 40px; height: 40px;
+      background: #F3F4F6;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--primary);
+    }
+
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border);
+    }
+
+    .lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #F9FAFB;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .lang-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+
+    .lang-dot.r { background: #276BBE; }
+    .lang-dot.python { background: #3572A5; }
+
+    .project-arrow {
+      color: var(--muted);
+      transition: all 0.2s;
+      display: flex;
+    }
+
+    .project-card:hover .project-arrow {
+      color: var(--primary);
+      transform: translate(2px, -2px);
+    }
+
+    .edu-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6) var(--space-5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--space-4);
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .edu-card:hover {
+      border-color: #D1D5DB;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .edu-logo {
+      width: 100px;
+      height: 80px;
+      object-fit: contain;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+
+    .edu-card:hover .edu-logo { opacity: 1; }
+
+    .edu-placeholder {
+      width: 100px; height: 80px;
+      background: #F3F4F6;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      text-align: center;
+    }
+
+    .edu-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+    }
+
+    .edu-period {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-top: var(--space-1);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .skill-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5) var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .skill-pill:hover {
+      border-color: #D1D5DB;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .skill-info { flex: 1; }
+
+    .skill-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .skill-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer {
+      background: #18181b;
+      padding: 64px var(--space-6) 40px;
+      text-align: center;
+      color: #FFFFFF;
+    }
+
+    .footer-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: var(--space-2);
+    }
+
+    .footer-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.875rem;
+      margin-bottom: var(--space-6);
+    }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-5);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      background: rgba(255,255,255,0.12);
+      color: #FFFFFF;
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .social-btn:active {
+      transform: translateY(0);
+    }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      max-width: 400px;
+      margin: 0 auto var(--space-5);
+    }
+
+    .footer-copy {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.8125rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .navbar { padding: var(--space-4) var(--space-5); }
+      .nav-menu { gap: var(--space-4); }
+      #hero { padding: 60px var(--space-5) 40px; }
+      section { padding: 60px var(--space-5); }
+      .tech-bar { gap: var(--space-4); flex-direction: column; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 48px var(--space-5) 32px; }
+    }
+
+    @media (max-width: 600px) {
+      .paper-sheet { }
+      .navbar { flex-wrap: wrap; gap: var(--space-3); }
+      .nav-menu a { font-size: 0.8125rem; }
+      .nav-cta { font-size: 0.75rem; padding: 6px 16px; }
+      .hero-name { font-size: 2.2rem; }
+      .edu-grid { grid-template-columns: 1fr; max-width: 300px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .social-row { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="paper-sheet">
+    <!-- NAVBAR -->
+    <header class="navbar" role="banner">
+      <div class="nav-left">
+        <a href="#hero" class="nav-logo">Nicolaus Prima Dharma</a>
+        <nav aria-label="Main navigation">
+          <ul class="nav-menu">
+            <li><a href="#hero">Profile</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+          </ul>
+        </nav>
+      </div>
+      <a href="#" class="nav-cta">Download CV</a>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-dots">
+        <span class="hero-dot" style="top:8%;left:6%"></span>
+        <span class="hero-dot" style="top:18%;right:10%"></span>
+        <span class="hero-dot" style="bottom:20%;left:8%"></span>
+        <span class="hero-dot" style="bottom:12%;right:6%"></span>
+      </div>
+      <div class="reveal">
+        <img src="FotoMuka.jpg" alt="Nicolaus Prima" class="hero-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="hero-avatar-placeholder">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        </div>
+      </div>
+      <div class="hero-inner">
+        <div class="hero-tag reveal">✦ AVAILABLE FOR PROJECTS</div>
+        <h1 class="hero-name reveal">Nicolaus Prima Dharma.</h1>
+        <p class="hero-typed reveal"><span class="auto-type"></span></p>
+        <p class="hero-bio reveal">
+          Third semester student at <strong>PENS Surabaya</strong> — Applied Data Science.
+          Passionate about web development, artificial intelligence, and turning raw data into meaningful insights.
+          Building responsive interfaces, learning ML algorithms, and exploring data visualization.
+        </p>
+        <div class="hero-cta reveal">
+          <a href="#projects" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+            View Projects
+          </a>
+          <a href="https://github.com/nicolausprima" class="btn btn-outline" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <div class="tech-bar reveal">
+      <span class="tech-label">Tech Stack</span>
+      <div class="tech-items">
+        <span class="tech-item">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7 6h5c2.8 0 4 1.5 4 3.5S14.8 13 12 13H7"/><path d="M11 13l4.5 6"/></svg>
+          R
+        </span>
+        <span class="tech-item">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c-3.5 0-5 1.8-5 5v3.5c0 3 1.5 4.5 5 4.5h3c2 0 3 1.2 3 3v2c0 2-1.2 3-3 3"/><path d="M16 22c3.5 0 5-1.8 5-5v-3.5c0-3-1.5-4.5-5-4.5h-3c-2 0-3-1.2-3-3V6c0-2 1.2-3 3-3"/><circle cx="9" cy="5" r="1" fill="currentColor"/><circle cx="15" cy="19" r="1" fill="currentColor"/></svg>
+          Python
+        </span>
+        <span class="tech-item">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2l2 18 6 2 6-2 2-18H4z"/><path d="M7 6h10"/><path d="M7 10h10"/><path d="M8 14h4"/><path d="M9 18h2"/></svg>
+          HTML
+        </span>
+        <span class="tech-item">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l2 18 5 2 5-2 2-18H5z"/><path d="M8 6h8"/><path d="M9 10h6"/><path d="M8 14h6"/><path d="M9 18h3"/></svg>
+          CSS
+        </span>
+        <span class="tech-item">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M9 8v8"/><path d="M15 8v3a2 2 0 0 1-2 2"/><path d="M13 13v3"/></svg>
+          JavaScript
+        </span>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-header reveal">
+        <span class="section-label">Portfolio</span>
+        <h2 class="section-title">My Projects</h2>
+      </div>
+      <div class="projects-grid">
+        <a href="https://github.com/nicolausprima/Wattwise" target="_blank" rel="noopener" class="project-card reveal">
+          <div class="project-icon">⚡</div>
+          <div class="project-title">Wattwise — Energy Intelligence Dashboard</div>
+          <p class="project-desc">Dashboard analisis dan kecerdasan energi untuk memantau, menganalisis, serta memberikan rekomendasi penghematan energi berbasis data industri baja. Menggunakan K-Means clustering dan Content-Based Filtering.</p>
+          <div class="project-footer">
+            <span class="lang-badge"><span class="lang-dot python"></span>Python, Flask</span>
+            <span class="project-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+        <a href="https://github.com/nicolausprima/PanganTrack" target="_blank" rel="noopener" class="project-card reveal">
+          <div class="project-icon">🛒</div>
+          <div class="project-title">PanganTrack — Commodity Price Prediction</div>
+          <p class="project-desc">Platform dashboard interaktif untuk memprediksi harga komoditas pangan nasional dan daerah di Indonesia. Menggunakan LightGBM untuk forecasting deret waktu harga pangan pokok.</p>
+          <div class="project-footer">
+            <span class="lang-badge"><span class="lang-dot python"></span>Python, LightGBM</span>
+            <span class="project-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+        <a href="https://github.com/nicolausprima/Credit-Risk-NN" target="_blank" rel="noopener" class="project-card reveal">
+          <div class="project-icon">🏦</div>
+          <div class="project-title">Credit-Risk-NN — Loan Default Prediction</div>
+          <p class="project-desc">Klasifikasi risiko kredit berbasis Deep Learning (PyTorch ANN) untuk memprediksi gagal bayar pinjaman berdasarkan riwayat keuangan dan demografi pemohon. Akurasi prediksi ~92%.</p>
+          <div class="project-footer">
+            <span class="lang-badge"><span class="lang-dot python"></span>Python, PyTorch</span>
+            <span class="project-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="edu-inner">
+        <div class="section-header reveal">
+          <span class="section-label">Background</span>
+          <h2 class="section-title">My Education</h2>
+        </div>
+        <div class="edu-grid">
+          <div class="edu-card reveal">
+            <img src="LogoSmanig.png" alt="SMAN 1 Gedangan" class="edu-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="edu-placeholder" style="display:none">LogoSmanig.png</div>
+            <div>
+              <div class="edu-name">SMAN 1 Gedangan</div>
+              <div class="edu-period">Senior High School</div>
+            </div>
+          </div>
+          <div class="edu-card reveal">
+            <img src="LogoPENS.png" alt="PENS" class="edu-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="edu-placeholder" style="display:none">LogoPENS.png</div>
+            <div>
+              <div class="edu-name">PENS Surabaya</div>
+              <div class="edu-period">Applied Data Science</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-header reveal">
+        <span class="section-label">Toolbox</span>
+        <h2 class="section-title">My Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-pill reveal">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2c-3.5 0-5 1.8-5 5v3.5c0 3 1.5 4.5 5 4.5h3c2 0 3 1.2 3 3v2c0 2-1.2 3-3 3"/><path d="M16 22c3.5 0 5-1.8 5-5v-3.5c0-3-1.5-4.5-5-4.5h-3c-2 0-3-1.2-3-3V6c0-2 1.2-3 3-3"/><circle cx="9" cy="5" r="1" fill="currentColor"/><circle cx="15" cy="19" r="1" fill="currentColor"/></svg></div>
+          <div class="skill-info">
+            <div class="skill-name">Python</div>
+            <div class="skill-sub">Pandas, NumPy, OOP</div>
+          </div>
+        </div>
+        <div class="skill-pill reveal">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7 6h5c2.8 0 4 1.5 4 3.5S14.8 13 12 13H7"/><path d="M11 13l4.5 6"/></svg></div>
+          <div class="skill-info">
+            <div class="skill-name">R Language</div>
+            <div class="skill-sub">Stats, ggplot2</div>
+          </div>
+        </div>
+        <div class="skill-pill reveal">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></div>
+          <div class="skill-info">
+            <div class="skill-name">PostgreSQL</div>
+            <div class="skill-sub">Database Management</div>
+          </div>
+        </div>
+        <div class="skill-pill reveal">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="skill-info">
+            <div class="skill-name">Web Dev</div>
+            <div class="skill-sub">HTML, CSS, JS</div>
+          </div>
+        </div>
+        <div class="skill-pill reveal">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="12" cy="20" r="2"/><path d="M12 6l4 5"/><path d="M12 6l-4 5"/><path d="M14 14l2 4"/><path d="M10 14l-2 4"/><path d="M8 12l4 6"/><path d="M16 12l-4 6"/></svg></div>
+          <div class="skill-info">
+            <div class="skill-name">Machine Learning</div>
+            <div class="skill-sub">Algorithms & Models</div>
+          </div>
+        </div>
+        <div class="skill-pill reveal">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 16v2"/><path d="M10 12v6"/><path d="M14 8v10"/><path d="M18 4v14"/></svg></div>
+          <div class="skill-info">
+            <div class="skill-name">Data Viz</div>
+            <div class="skill-sub">Visualization & Analysis</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+  </div>
+
+  <!-- FOOTER (outside paper-sheet) -->
+  <footer>
+    <div class="footer-title reveal">Let's Connect</div>
+    <p class="footer-sub reveal">Open to collaborations, internships, and cool projects.</p>
+    <div class="social-row reveal">
+      <a href="mailto:nicolausprima@example.com" class="social-btn" aria-label="Send email">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/nicolausprima/" class="social-btn" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/nicolausprima" class="social-btn" target="_blank" rel="noopener" aria-label="GitHub profile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <hr class="footer-divider">
+    <p class="footer-copy">© 2025 Nicolaus Prima Dharma Nugroho</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
