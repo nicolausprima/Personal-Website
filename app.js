@@ -1,3 +1,12 @@
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+}, { passive: true });
+
 new Typed('.auto-type', {
   strings: [
     "Data Science Student.",
@@ -14,7 +23,6 @@ new Typed('.auto-type', {
   cursorChar: '_'
 });
 
-// Scroll reveal
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
