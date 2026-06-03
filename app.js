@@ -48,6 +48,8 @@ class SkillPixelIcon {
     // Physics parameters
     this.springStrength = 0.06;
     this.friction = 0.87;
+    this.hoverTime = 0;
+    this.hoverProgress = 0;
 
     this.init();
   }
@@ -338,7 +340,10 @@ class SkillPixelIcon {
       wx: Math.random() * this.width,
       wy: Math.random() * this.height,
       size: 1.8 + Math.random() * 1.4, // particle sizes 1.8–3.2px for 96px canvas
-      alpha: 0.38 + Math.random() * 0.52
+      alpha: 0.38 + Math.random() * 0.52,
+      glowPhase: Math.random() * Math.PI * 2,
+      glowSpeed: 0.15 + Math.random() * 0.45, // even slower (cycles range from 15 to 60 seconds)
+      glowMax: 0.1 + Math.random() * 1.1    // wider upscaling limit (+10% to +110% size)
     };
   }
 
@@ -378,6 +383,13 @@ class SkillPixelIcon {
     this.time += 0.01;
     this.ctx.clearRect(0, 0, this.width, this.height);
 
+    // Update hover progress
+    if (this.isHovered) {
+      this.hoverProgress += (1 - this.hoverProgress) * 0.08;
+    } else {
+      this.hoverProgress += (0 - this.hoverProgress) * 0.12;
+    }
+
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
 
@@ -398,9 +410,23 @@ class SkillPixelIcon {
       p.cb += (p.tb - p.cb) * 0.08;
 
       if (this.isHovered && p.tx !== null) {
-        // Assemble logo inside the card icon slot
-        const dx = p.tx - p.x;
-        const dy = p.ty - p.y;
+        const centerX = 48;
+        const centerY = 48;
+        
+        // Relative target coordinates from center
+        const rx = p.tx - centerX;
+        const ry = p.ty - centerY;
+        
+        // Individualized slow organic waving/vibration: each particle drifts on its own path
+        const waveX = Math.sin(this.time * (p.glowSpeed * 2.0) + p.glowPhase) * 0.7;
+        const waveY = Math.cos(this.time * (p.glowSpeed * 2.0) + p.glowPhase) * 0.7;
+        
+        // Normal scale layout + wave offsets
+        const targetX = centerX + rx + waveX;
+        const targetY = centerY + ry + waveY;
+
+        const dx = targetX - p.x;
+        const dy = targetY - p.y;
         
         const ax = dx * this.springStrength;
         const ay = dy * this.springStrength;
@@ -446,8 +472,12 @@ class SkillPixelIcon {
         if (p.y > this.height + 2) p.y = -2;
       }
 
+      // Slow, random organic pixel size breathing/twinkling animation
+      const pScale = 1.0 + p.glowMax * Math.pow(Math.sin(this.time * p.glowSpeed + p.glowPhase), 2) * this.hoverProgress;
+      const renderSize = p.size * pScale;
+
       this.ctx.fillStyle = `rgba(${Math.round(p.cr)}, ${Math.round(p.cg)}, ${Math.round(p.cb)}, ${p.alpha})`;
-      this.ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+      this.ctx.fillRect(p.x - renderSize / 2, p.y - renderSize / 2, renderSize, renderSize);
     }
 
     requestAnimationFrame(() => this.tick());
