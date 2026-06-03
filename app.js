@@ -1,22 +1,10 @@
 const navbar = document.querySelector('.navbar');
-let lastScrollY = window.scrollY;
-
 window.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY;
-
-  if (currentScrollY > 60) {
+  if (window.scrollY > 60) {
     navbar.classList.add('scrolled');
   } else {
     navbar.classList.remove('scrolled');
   }
-
-  if (currentScrollY > lastScrollY && currentScrollY > 120) {
-    navbar.classList.add('hidden');
-  } else {
-    navbar.classList.remove('hidden');
-  }
-
-  lastScrollY = currentScrollY;
 }, { passive: true });
 
 new Typed('.auto-type', {

@@ -89,11 +89,6 @@
       padding: 14px 32px;
       border-bottom: 1px solid var(--border-light);
     }
-    .navbar.hidden {
-      transform: translateY(-20px);
-      opacity: 0;
-      pointer-events: none;
-    }
     .nav-logo {
       font-family: var(--font-display);
       font-size: 1.25rem;
@@ -703,6 +698,13 @@
       section { padding: 100px 0; }
       .photo-frame { width: 220px; height: 260px; }
       .hero-visual::before { width: 240px; height: 290px; }
+      .river-group-1, .river-group-2, .river-group-3 {
+        animation: none !important;
+        transform: none !important;
+      }
+      .hero-river path.pulse-path {
+        display: none !important;
+      }
     }
     @media (max-width: 640px) {
       section { padding: 80px 0; }
