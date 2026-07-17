@@ -1,27 +1,92 @@
+// ── DARK MODE TOGGLE ──────────────────────────────────────────
+const root = document.documentElement;
+const toggleBtn = document.getElementById('theme-toggle');
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}
+
+// Init: check localStorage, then system preference
+const saved = localStorage.getItem('theme');
+if (saved) {
+  applyTheme(saved);
+} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  applyTheme('dark');
+}
+
+toggleBtn?.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme');
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+// ── Lightweight Smooth Scroll (Lerp) for Hands ────────────────
+// Lightweight Smooth Scroll (Lerp) for Hands
+let targetScrollY = window.scrollY;
+let currentScrollY = window.scrollY;
+
+// ── CUSTOM CURSOR ─────────────────────────────────────────────
+const cursor = document.querySelector('.cursor');
 const navbar = document.querySelector('.navbar');
+const handLeft = document.getElementById('image-hand-left');
+const handRight = document.getElementById('image-hand-right');
+
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
+  let scrollY = window.scrollY;
+  targetScrollY = scrollY; // Update target for lerp
+  
+  if (scrollY > 60) {
     navbar.classList.add('scrolled');
   } else {
     navbar.classList.remove('scrolled');
   }
 }, { passive: true });
 
-new Typed('.auto-type', {
-  strings: [
-    "Data Science Student.",
-    "Web Developer.",
-    "ML Enthusiast.",
-    "Data Analyst."
-  ],
-  typeSpeed: 55,
-  backSpeed: 35,
-  loop: true,
-  backDelay: 2200,
-  startDelay: 800,
-  showCursor: true,
-  cursorChar: '_'
-});
+function animateHands() {
+  currentScrollY += (targetScrollY - currentScrollY) * 0.08; 
+  
+  const projectsSection = document.getElementById('projects');
+  if (handLeft && handRight && projectsSection) {
+    let projectsTop = projectsSection.offsetTop;
+    let projectsBottom = projectsTop + projectsSection.offsetHeight;
+    
+    let ratio = Math.min(1, currentScrollY / Math.max(1, projectsTop - 250));
+    let pushIn = (1 - ratio) * 12; 
+    
+    let opacity = 1;
+    let fadeStart = projectsBottom - (window.innerHeight * 0.8); 
+    if (currentScrollY > fadeStart) {
+      opacity = 1 - ((currentScrollY - fadeStart) / 300); 
+      if (opacity < 0) opacity = 0;
+    }
+    
+    handLeft.style.opacity = opacity;
+    handRight.style.opacity = opacity;
+    
+    handLeft.style.transform = `translateY(-50%) translateX(${pushIn}vw)`;
+    handRight.style.transform = `translateY(-50%) translateX(-${pushIn}vw) scaleX(-1)`;
+  }
+  
+  requestAnimationFrame(animateHands);
+}
+requestAnimationFrame(animateHands);
+
+if (document.querySelector('.auto-type')) {
+  new Typed('.auto-type', {
+    strings: [
+      "Data Science Student.",
+      "Web Developer.",
+      "ML Enthusiast.",
+      "Data Analyst."
+    ],
+    typeSpeed: 55,
+    backSpeed: 35,
+    loop: true,
+    backDelay: 2200,
+    startDelay: 800,
+    showCursor: true,
+    cursorChar: '_'
+  });
+}
 
 // Skill Icon Particle Simulation Class for Skill Cards (96x96)
 class SkillPixelIcon {
@@ -59,14 +124,14 @@ class SkillPixelIcon {
   drawHtmlLogo(ctx) {
     // Web Dev: curly braces {} — bold, centered, unmistakable
     ctx.clearRect(0, 0, 200, 200);
-    // Shadow/depth: draw slightly offset in dark orange
-    ctx.fillStyle = '#b83d1a';
+    // Shadow/depth: draw slightly offset in dark charcoal
+    ctx.fillStyle = '#111111';
     ctx.font = "bold 150px 'JetBrains Mono', monospace";
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('{}', 102, 104);
-    // Foreground: vivid orange
-    ctx.fillStyle = '#e34f26';
+    // Foreground: charcoal
+    ctx.fillStyle = '#2A2A2A';
     ctx.fillText('{}', 100, 100);
   }
 
@@ -503,3 +568,393 @@ const observer = new IntersectionObserver((entries) => {
   rootMargin: '-30px 0px -30px 0px'
 });
 reveals.forEach(el => observer.observe(el));
+
+// ── HERO DITHER: floating @ symbols ───────────────────────────
+class HeroDither {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx    = canvas.getContext('2d');
+    this.syms   = [];
+
+    this._resize();
+    this._populate();
+    window.addEventListener('resize', () => {
+      this._resize();
+      this._populate();
+    });
+    this._tick();
+  }
+
+  _resize() {
+    // Match canvas physical pixels to its CSS size
+    const r = this.canvas.getBoundingClientRect();
+    this.W = this.canvas.width  = r.width  || window.innerWidth;
+    this.H = this.canvas.height = r.height || window.innerHeight;
+  }
+
+  _populate() {
+    const { W, H } = this;
+    // One symbol per ~11 000 px² of hero area
+    const count = Math.max(30, Math.floor((W * H) / 11000));
+    this.syms = [];
+    for (let i = 0; i < count; i++) {
+      this.syms.push({
+        x:          Math.random() * W,
+        y:          Math.random() * H,
+        travelAngle: Math.random() * Math.PI * 2,     // direction of drift
+        speed:      0.04 + Math.random() * 0.10,       // px / frame  (very slow)
+        rot:        Math.random() * Math.PI * 2,        // visual rotation angle
+        rotSpeed:   (Math.random() - 0.5) * 0.0035,   // spin per frame
+        size:       10 + Math.random() * 24,            // font-size px
+        baseAlpha:  0.04 + Math.random() * 0.13,       // peak opacity
+        phase:      Math.random() * Math.PI * 2,        // breathing phase
+        phaseSpd:   0.005 + Math.random() * 0.009,     // breathing speed
+      });
+    }
+  }
+
+  get _isDark() {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
+  _tick() {
+    const { ctx, W, H, syms } = this;
+    ctx.clearRect(0, 0, W, H);
+
+    // Color: charcoal in light, warm cream in dark
+    const [r, g, b] = this._isDark ? [222, 218, 212] : [28, 28, 28];
+
+    for (const s of syms) {
+      // Drift
+      s.x  += Math.cos(s.travelAngle) * s.speed;
+      s.y  += Math.sin(s.travelAngle) * s.speed;
+      s.rot += s.rotSpeed;
+      s.phase += s.phaseSpd;
+
+      // Wrap around edges with a little padding
+      const pad = 50;
+      if (s.x < -pad)    s.x = W + pad;
+      if (s.x > W + pad) s.x = -pad;
+      if (s.y < -pad)    s.y = H + pad;
+      if (s.y > H + pad) s.y = -pad;
+
+      // Breathing opacity
+      const alpha = s.baseAlpha * (0.6 + 0.4 * Math.sin(s.phase));
+
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(s.rot);
+      ctx.globalAlpha = +alpha.toFixed(4);
+      ctx.font = `${s.size}px 'JetBrains Mono', monospace`;
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('@', 0, 0);
+      ctx.restore();
+    }
+
+    requestAnimationFrame(() => this._tick());
+  }
+}
+
+const _ditherCanvas = document.getElementById('hero-dither');
+if (_ditherCanvas) new HeroDither(_ditherCanvas);
+
+// ── INTERACTIVE 3D DITHER OBJECTS ─────────────────────────────
+class Dither3D {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.points = [];
+    this.NUM_POINTS = 729; // 9x9x9
+    this.shapeIndex = 0;
+    
+    // Rotation state
+    this.angleY = 0;
+    this.angleX = 0;
+
+    // Initialize points
+    const chars = ['@', '#', '*', '+', ':', '.', '%', '&', 'O', 'x', '=', '~'];
+    for (let i = 0; i < this.NUM_POINTS; i++) {
+      this.points.push({
+        x: 0, y: 0, z: 0,
+        tx: 0, ty: 0, tz: 0,
+        r: 0, g: 0, b: 0,
+        tr: 0, tg: 0, tb: 0,
+        char: chars[Math.floor(Math.random() * chars.length)]
+      });
+    }
+
+    this._resize();
+    window.addEventListener('resize', () => this._resize());
+    
+    // Initial shape
+    this.setShape(0);
+    // Instantly morph for first shape
+    this.points.forEach(p => {
+      p.x = p.tx; p.y = p.ty; p.z = p.tz;
+      p.r = p.tr; p.g = p.tg; p.b = p.tb;
+    });
+
+    this._tick();
+  }
+
+  _resize() {
+    const r = this.canvas.getBoundingClientRect();
+    this.W = this.canvas.width = r.width || 320;
+    this.H = this.canvas.height = r.height || 320;
+  }
+
+  setShape(index) {
+    this.shapeIndex = (index + 6) % 6;
+    const labels = ["Python", "R Language", "PostgreSQL", "Web Dev", "Machine Learning", "Data Viz"];
+    
+    const labelEl = document.getElementById('hero-3d-label');
+    if (labelEl) labelEl.textContent = labels[this.shapeIndex];
+
+    if (this.shapeIndex === 0) this.generatePython();
+    else if (this.shapeIndex === 1) this.generateRLanguage();
+    else if (this.shapeIndex === 2) this.generateSQL();
+    else if (this.shapeIndex === 3) this.generateWeb();
+    else if (this.shapeIndex === 4) this.generateML();
+    else if (this.shapeIndex === 5) this.generateDataViz();
+  }
+
+  generatePython() {
+    for (let i = 0; i < this.NUM_POINTS; i++) {
+      let p = this.points[i];
+      let t = i / this.NUM_POINTS; 
+      let angle = t * Math.PI * 12; // 6 coils
+      let radius = 60 + 40 * Math.sin(t * Math.PI); // thicker in middle
+      p.tx = Math.cos(angle) * radius + (Math.random()-0.5)*15;
+      p.ty = -100 + t * 200 + (Math.random()-0.5)*15;
+      p.tz = Math.sin(angle) * radius + (Math.random()-0.5)*15;
+      
+      let isYellow = Math.random() > 0.5;
+      if (isYellow) { p.tr = 255; p.tg = 212; p.tb = 59; } // Yellow
+      else { p.tr = 55; p.tg = 118; p.tb = 171; } // Blue
+    }
+  }
+
+  generateRLanguage() {
+    let idx = 0;
+    // Stem
+    for (let i = 0; i < 200 && idx < this.NUM_POINTS; i++) {
+      let p = this.points[idx++];
+      p.tx = -40 + (Math.random()-0.5)*20;
+      p.ty = -100 + Math.random()*200;
+      p.tz = (Math.random()-0.5)*20;
+      p.tr = 39; p.tg = 105; p.tb = 192;
+    }
+    // Top Loop
+    for (let i = 0; i < 300 && idx < this.NUM_POINTS; i++) {
+      let p = this.points[idx++];
+      let angle = -Math.PI/2 + Math.random() * Math.PI;
+      let r = 50 + (Math.random()-0.5)*20;
+      p.tx = -40 + Math.cos(angle)*r;
+      p.ty = -50 + Math.sin(angle)*r;
+      p.tz = (Math.random()-0.5)*20;
+      p.tr = 39; p.tg = 105; p.tb = 192;
+    }
+    // Diagonal leg
+    for (let i = 0; i < 229 && idx < this.NUM_POINTS; i++) {
+      let p = this.points[idx++];
+      let t = Math.random();
+      p.tx = -20 + t * 70 + (Math.random()-0.5)*20;
+      p.ty = 0 + t * 100 + (Math.random()-0.5)*20;
+      p.tz = (Math.random()-0.5)*20;
+      p.tr = 39; p.tg = 105; p.tb = 192;
+    }
+  }
+
+  generateSQL() {
+    for (let i = 0; i < this.NUM_POINTS; i++) {
+      let p = this.points[i];
+      let t = i / this.NUM_POINTS;
+      let cyl = Math.floor(t * 3);
+      let yBase = -80 + cyl * 70;
+      
+      let isCap = Math.random() > 0.6;
+      let angle = Math.random() * Math.PI * 2;
+      let r = 80;
+      if (isCap) {
+        r = Math.random() * 80;
+        p.ty = yBase - 25; 
+      } else {
+        p.ty = yBase - 25 + Math.random() * 50; 
+      }
+      p.tx = Math.cos(angle) * r;
+      p.tz = Math.sin(angle) * r;
+      p.tr = 51; p.tg = 103; p.tb = 145; // Postgres Blue
+    }
+  }
+
+  generateWeb() {
+    for (let i = 0; i < this.NUM_POINTS; i++) {
+      let p = this.points[i];
+      let isLeft = i < this.NUM_POINTS / 2;
+      let t = (i % (this.NUM_POINTS/2)) / (this.NUM_POINTS/2);
+      
+      let y = -80 + t * 160;
+      let xOffset = 50 - Math.abs(y) * 0.6; 
+      
+      if (isLeft) {
+        p.tx = -60 - xOffset + (Math.random()-0.5)*20;
+      } else {
+        p.tx = 60 + xOffset + (Math.random()-0.5)*20;
+      }
+      p.ty = y + (Math.random()-0.5)*20;
+      p.tz = (Math.random()-0.5)*20;
+      
+      let rnd = Math.random();
+      if (rnd < 0.33) { p.tr = 227; p.tg = 79; p.tb = 38; } // HTML Orange
+      else if (rnd < 0.66) { p.tr = 38; p.tg = 77; p.tb = 228; } // CSS Blue
+      else { p.tr = 247; p.tg = 223; p.tb = 30; } // JS Yellow
+    }
+  }
+
+  generateML() {
+    const nodes = [
+      {x: -80, y: -60, z: 0}, {x: -80, y: 0, z: 0}, {x: -80, y: 60, z: 0},
+      {x: 0, y: -90, z: 0}, {x: 0, y: -30, z: 0}, {x: 0, y: 30, z: 0}, {x: 0, y: 90, z: 0},
+      {x: 80, y: -60, z: 0}, {x: 80, y: 0, z: 0}, {x: 80, y: 60, z: 0}
+    ];
+    let idx = 0;
+    // Nodes
+    for (let i = 0; i < 300 && idx < this.NUM_POINTS; i++) {
+      let p = this.points[idx++];
+      let node = nodes[i % nodes.length];
+      let r = 18;
+      let theta = Math.random() * Math.PI * 2;
+      let phi = Math.random() * Math.PI;
+      p.tx = node.x + Math.sin(phi)*Math.cos(theta)*r;
+      p.ty = node.y + Math.cos(phi)*r;
+      p.tz = node.z + Math.sin(phi)*Math.sin(theta)*r;
+      p.tr = 255; p.tg = 80; p.tb = 100; // Red nodes
+    }
+    // Lines
+    for (; idx < this.NUM_POINTS; idx++) {
+      let p = this.points[idx];
+      let startLayer = Math.random() > 0.5 ? 0 : 1;
+      let startNodes = startLayer === 0 ? nodes.slice(0,3) : nodes.slice(3,7);
+      let endNodes = startLayer === 0 ? nodes.slice(3,7) : nodes.slice(7,10);
+      let start = startNodes[Math.floor(Math.random()*startNodes.length)];
+      let end = endNodes[Math.floor(Math.random()*endNodes.length)];
+      let t = Math.random();
+      p.tx = start.x + (end.x - start.x) * t + (Math.random()-0.5)*8;
+      p.ty = start.y + (end.y - start.y) * t + (Math.random()-0.5)*8;
+      p.tz = start.z + (end.z - start.z) * t + (Math.random()-0.5)*8;
+      p.tr = 180; p.tg = 180; p.tb = 255; // Blue lines
+    }
+  }
+
+  generateDataViz() {
+    let bars = [40, 100, 70, 130];
+    let barWidth = 35;
+    let gap = 20;
+    let totalW = (bars.length * barWidth) + ((bars.length - 1) * gap);
+    let startX = -totalW / 2 + barWidth / 2;
+    
+    for (let i = 0; i < this.NUM_POINTS; i++) {
+      let p = this.points[i];
+      let barIdx = i % bars.length;
+      let h = bars[barIdx];
+      
+      let bx = startX + barIdx * (barWidth + gap);
+      p.tx = bx + (Math.random()-0.5) * barWidth;
+      p.ty = 80 - Math.random() * h * 1.5; 
+      p.tz = (Math.random()-0.5) * barWidth;
+      
+      if (barIdx===0) { p.tr = 255; p.tg = 99; p.tb = 132; }
+      else if (barIdx===1) { p.tr = 54; p.tg = 162; p.tb = 235; }
+      else if (barIdx===2) { p.tr = 255; p.tg = 206; p.tb = 86; }
+      else { p.tr = 75; p.tg = 192; p.tb = 192; }
+    }
+  }
+
+  _tick() {
+    const { ctx, W, H } = this;
+    ctx.clearRect(0, 0, W, H);
+
+    // Auto rotate
+    this.angleY += 0.002;
+    this.angleX = Math.sin(Date.now() * 0.001) * 0.1; // slight nod
+
+    const focalLength = 300;
+    const cosY = Math.cos(this.angleY);
+    const sinY = Math.sin(this.angleY);
+    const cosX = Math.cos(this.angleX);
+    const sinX = Math.sin(this.angleX);
+
+    // Sort points by Z to draw back-to-front
+    const projected = [];
+
+    for (let p of this.points) {
+      // Lerp to target
+      p.x += (p.tx - p.x) * 0.04;
+      p.y += (p.ty - p.y) * 0.04;
+      p.z += (p.tz - p.z) * 0.04;
+      p.r += (p.tr - p.r) * 0.04;
+      p.g += (p.tg - p.g) * 0.04;
+      p.b += (p.tb - p.b) * 0.04;
+
+      // Rotate Y
+      let rz = p.z * cosY - p.x * sinY;
+      let rx = p.z * sinY + p.x * cosY;
+      let ry = p.y;
+
+      // Rotate X
+      let finalY = ry * cosX - rz * sinX;
+      let finalZ = ry * sinX + rz * cosX;
+      let finalX = rx;
+
+      // Project
+      const scale = focalLength / (focalLength + finalZ + 200); // push back a bit
+      const px = finalX * scale + W / 2;
+      const py = finalY * scale + H / 2;
+
+      projected.push({
+        x: px, y: py, z: finalZ,
+        r: Math.round(p.r), g: Math.round(p.g), b: Math.round(p.b),
+        scale: scale,
+        char: p.char
+      });
+    }
+
+    projected.sort((a, b) => b.z - a.z);
+
+    // Draw
+    ctx.font = '10px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    for (let p of projected) {
+      ctx.fillStyle = `rgb(${p.r}, ${p.g}, ${p.b})`;
+      ctx.globalAlpha = Math.min(1, Math.max(0.1, p.scale * 1.5));
+      ctx.fillText(p.char, p.x, p.y);
+    }
+
+    requestAnimationFrame(() => this._tick());
+  }
+}
+
+const canvas3D = document.getElementById('hero-3d-canvas');
+if (canvas3D) {
+  const dither3D = new Dither3D(canvas3D);
+  const btnNext = document.getElementById('btn-next-3d');
+  const btnPrev = document.getElementById('btn-prev-3d');
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      dither3D.setShape(dither3D.shapeIndex + 1);
+    });
+  }
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      dither3D.setShape(dither3D.shapeIndex - 1);
+    });
+  }
+}
+// ──────────────────────────────────────────────────────────────
+
+// ──────────────────────────────────────────────────────────────
+
