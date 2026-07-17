@@ -16,8 +16,17 @@ if (saved) {
 }
 
 toggleBtn?.addEventListener('click', () => {
+  // Add temporary class to enable smooth transition on all elements
+  document.documentElement.classList.add('theme-transition');
+  
   const current = root.getAttribute('data-theme');
   applyTheme(current === 'dark' ? 'light' : 'dark');
+  
+  // Remove the transition class after animation completes (500ms)
+  // This ensures normal hover effects aren't overridden permanently
+  setTimeout(() => {
+    document.documentElement.classList.remove('theme-transition');
+  }, 500);
 });
 // ── Lightweight Smooth Scroll (Lerp) for Hands ────────────────
 // Lightweight Smooth Scroll (Lerp) for Hands
