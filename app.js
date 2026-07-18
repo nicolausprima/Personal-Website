@@ -102,14 +102,21 @@ if (document.querySelector('.auto-type-hero')) {
       "Turning <span class='hero-highlight h-1'>raw</span> data into meaningful <span class='hero-highlight h-2'>insights.</span>"
     ],
     typeSpeed: 20, /* Reduced from 45 for smoother, faster typing */
-    backSpeed: 30,
-    loop: false,
+    backSpeed: 15, /* Fast deletion */
+    loop: true,
+    backDelay: 4000, /* Pause fully typed for 4 seconds */
     showCursor: true,
     cursorChar: '|',
-    onComplete: (self) => {
+    onStringTyped: (arrayPos, self) => {
       // Trigger the left-to-right highlight animations
       const h1 = document.querySelector('.hero-title-new');
       if (h1) h1.classList.add('highlight-active');
+      
+      // Remove highlight 0.6 seconds before backspacing starts 
+      // so it elegantly sweeps backward before text deletes
+      setTimeout(() => {
+        if (h1) h1.classList.remove('highlight-active');
+      }, 3400); 
     }
   });
 }

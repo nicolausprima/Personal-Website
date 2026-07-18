@@ -443,6 +443,7 @@
       color: var(--text);
       z-index: 1;
       border-radius: 2px;
+      transition: color 0.3s ease; /* Default transition for reverting */
     }
     
     .hero-highlight::before {
@@ -455,6 +456,7 @@
       background-color: var(--text);
       z-index: -1;
       border-radius: 2px;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); /* Default transition for reverting */
     }
     
     /* Highlight Activation Animations (Triggered by JS onComplete) */
