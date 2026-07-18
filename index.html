@@ -1005,6 +1005,11 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .dither-hand.left-side { right: 98vw; }
+      .dither-hand.right-side { left: 98vw; }
+    }
+
     @media (max-width: 900px) {
       .hero-inner {
         text-align: center;
@@ -1023,6 +1028,21 @@
       .hero-river path.pulse-path {
         display: none !important;
       }
+      .hero-cta-new {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      .hero-cta-new .btn-primary-new, 
+      .hero-cta-new .btn-outline-new {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+      }
+      .hero-title-new {
+        font-size: 3rem;
+        min-height: 2.4em;
+      }
     }
     @media (max-width: 640px) {
       section { padding: 80px 0; }
@@ -1038,6 +1058,20 @@
       .social-row { flex-direction: column; align-items: center; }
       .social-btn { width: 100%; max-width: 280px; justify-content: center; }
       .tech-strip { gap: 10px; padding: 16px; }
+      
+      .hero-title-new {
+        font-size: 2.2rem;
+        min-height: 3.5em; /* 3 lines on mobile to prevent jump */
+      }
+      
+      /* Make hands subtle on mobile so they don't block text */
+      .dither-hand {
+        opacity: 0.15 !important;
+        z-index: 1; /* Send behind text */
+      }
+      .dither-hand.left-side { right: 90vw; }
+      .dither-hand.right-side { left: 90vw; }
+
 
       /* Buttons — inverted for auto dark/light adapt */
     .btn-primary {
