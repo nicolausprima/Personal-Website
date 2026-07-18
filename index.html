@@ -429,11 +429,53 @@
       font-family: var(--font-heading);
       font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 500;
-      line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--text);
       margin-bottom: 24px;
+      min-height: 2.2em; /* Prevent layout shift during typing */
     }
+    
+    .hero-highlight {
+      position: relative;
+      display: inline-block;
+      padding: 0 8px;
+      margin: 0 2px;
+      color: var(--text);
+      z-index: 1;
+      border-radius: 2px;
+    }
+    
+    .hero-highlight::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: var(--text);
+      z-index: -1;
+      border-radius: 2px;
+    }
+    
+    /* Highlight Activation Animations (Triggered by JS onComplete) */
+    .hero-title-new.highlight-active .hero-highlight.h-1::before {
+      width: 100%;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0s;
+    }
+    .hero-title-new.highlight-active .hero-highlight.h-1 {
+      color: var(--bg);
+      transition: color 0.3s ease 0.15s;
+    }
+    
+    .hero-title-new.highlight-active .hero-highlight.h-2::before {
+      width: 100%;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; /* Staggered delay */
+    }
+    .hero-title-new.highlight-active .hero-highlight.h-2 {
+      color: var(--bg);
+      transition: color 0.3s ease 0.45s;
+    }
+    
     .hero-bio-new {
       font-size: 1.1rem;
       color: var(--text-secondary);
@@ -1079,7 +1121,7 @@
           Nicolaus Prima • Portfolio
         </div>
         <h1 class="hero-title-new">
-          Turning raw data into meaningful insights.
+          <span class="auto-type-hero"></span>
         </h1>
         <p class="hero-bio-new">
           Applied Data Science Student at PENS Surabaya. Passionate about web development, artificial intelligence, and building scalable solutions.

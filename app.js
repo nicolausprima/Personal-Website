@@ -33,6 +33,9 @@ toggleBtn?.addEventListener('click', () => {
 let targetScrollY = window.scrollY;
 let currentScrollY = window.scrollY;
 
+// Intro animation state for hands
+let introProgress = 0;
+
 // ── CUSTOM CURSOR ─────────────────────────────────────────────
 const cursor = document.querySelector('.cursor');
 const navbar = document.querySelector('.navbar');
@@ -53,6 +56,14 @@ window.addEventListener('scroll', () => {
 function animateHands() {
   currentScrollY += (targetScrollY - currentScrollY) * 0.08; 
   
+  // Calculate intro animation (0 to 1 over approx 1 second)
+  if (introProgress < 1) {
+    introProgress += 0.015;
+    if (introProgress > 1) introProgress = 1;
+  }
+  // Quartic ease-out for ultra smooth landing
+  let introEased = 1 - Math.pow(1 - introProgress, 4);
+  
   const projectsSection = document.getElementById('projects');
   if (handLeft && handRight && projectsSection) {
     let projectsTop = projectsSection.offsetTop;
@@ -61,6 +72,9 @@ function animateHands() {
     let ratio = Math.min(1, currentScrollY / Math.max(1, projectsTop - 250));
     let pushIn = (1 - ratio) * 12; 
     
+    // Add a slide-in offset for the initial load (-15vw starting point, resolves to 0)
+    let slideInOffset = (1 - introEased) * -15;
+    
     let opacity = 1;
     let fadeStart = projectsBottom - (window.innerHeight * 0.8); 
     if (currentScrollY > fadeStart) {
@@ -68,32 +82,35 @@ function animateHands() {
       if (opacity < 0) opacity = 0;
     }
     
-    handLeft.style.opacity = opacity;
-    handRight.style.opacity = opacity;
+    // Apply fade-in for intro
+    let finalOpacity = opacity * introEased;
     
-    handLeft.style.transform = `translateY(-50%) translateX(${pushIn}vw)`;
-    handRight.style.transform = `translateY(-50%) translateX(-${pushIn}vw) scaleX(-1)`;
+    handLeft.style.opacity = finalOpacity;
+    handRight.style.opacity = finalOpacity;
+    
+    handLeft.style.transform = `translateY(-50%) translateX(${pushIn + slideInOffset}vw)`;
+    handRight.style.transform = `translateY(-50%) translateX(-${pushIn + slideInOffset}vw) scaleX(-1)`;
   }
   
   requestAnimationFrame(animateHands);
 }
 requestAnimationFrame(animateHands);
 
-if (document.querySelector('.auto-type')) {
-  new Typed('.auto-type', {
+if (document.querySelector('.auto-type-hero')) {
+  new Typed('.auto-type-hero', {
     strings: [
-      "Data Science Student.",
-      "Web Developer.",
-      "ML Enthusiast.",
-      "Data Analyst."
+      "Turning <span class='hero-highlight h-1'>raw</span> data into meaningful <span class='hero-highlight h-2'>insights.</span>"
     ],
-    typeSpeed: 55,
-    backSpeed: 35,
-    loop: true,
-    backDelay: 2200,
-    startDelay: 800,
+    typeSpeed: 20, /* Reduced from 45 for smoother, faster typing */
+    backSpeed: 30,
+    loop: false,
     showCursor: true,
-    cursorChar: '_'
+    cursorChar: '|',
+    onComplete: (self) => {
+      // Trigger the left-to-right highlight animations
+      const h1 = document.querySelector('.hero-title-new');
+      if (h1) h1.classList.add('highlight-active');
+    }
   });
 }
 
