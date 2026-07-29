@@ -735,8 +735,10 @@
     }
 
     /* SECTIONS */
-    section { padding: 140px 0; }
-    section + section { padding-top: 0; }
+    section {
+      padding: 100px 0;
+      scroll-margin-top: 80px;
+    }
     .section-label {
       display: block;
       font-family: var(--font-mono);
@@ -948,8 +950,8 @@
     /* ABOUT ME */
     .about-me {
       padding: 60px 0;
-      scroll-margin-top: 70px;
-      min-height: calc(100vh - 70px);
+      scroll-margin-top: 80px;
+      min-height: calc(100vh - 80px);
       display: flex;
       align-items: center;
       justify-content: center;
