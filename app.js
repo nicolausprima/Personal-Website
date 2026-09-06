@@ -28,6 +28,72 @@ toggleBtn?.addEventListener('click', () => {
     document.documentElement.classList.remove('theme-transition');
   }, 500);
 });
+
+// ── CENTERED ANCHOR SCROLLING ─────────────────────────────────
+// Attached early so later script errors can never break navigation
+// Measures via offsetTop (immune to reveal-animation transforms)
+const scrollToCenter = (target) => {
+  const vh = window.innerHeight;
+  if (target.id === 'hero') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  const container = target.querySelector('.container') || target;
+
+  // Document-relative top of an element, walking offsetParents.
+  // Unlike getBoundingClientRect, offsetTop ignores transform animations.
+  const absTop = (el) => {
+    let t = 0;
+    let n = el;
+    while (n) {
+      t += n.offsetTop;
+      n = n.offsetParent;
+    }
+    return t;
+  };
+
+  const kids = Array.from(container.children).filter((el) => {
+    return getComputedStyle(el).display !== 'none';
+  });
+  let contentTop = Infinity;
+  let contentBottom = -Infinity;
+  kids.forEach((el) => {
+    if (el.offsetHeight === 0) return;
+    contentTop = Math.min(contentTop, absTop(el));
+    contentBottom = Math.max(contentBottom, absTop(el) + el.offsetHeight);
+  });
+  if (!isFinite(contentTop)) return;
+  const contentH = contentBottom - contentTop;
+
+  const navbarH = 84;
+  let top;
+  if (contentH <= vh - navbarH - 8) {
+    // Content fits below the navbar: center it exactly
+    top = contentTop - (vh - contentH) / 2;
+  } else {
+    // Content taller than viewport: show it from just below the navbar
+    top = contentTop - navbarH;
+  }
+  const maxScroll = document.documentElement.scrollHeight - vh;
+  window.scrollTo({ top: Math.max(0, Math.min(top, maxScroll)), behavior: 'smooth' });
+};
+window.scrollToCenter = scrollToCenter;
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    scrollToCenter(target);
+    try { history.replaceState(null, '', link.getAttribute('href')); } catch (err) {}
+  });
+});
+
+// Re-center if the page is opened with a hash
+if (location.hash) {
+  const hashTarget = document.querySelector(location.hash);
+  if (hashTarget) setTimeout(() => scrollToCenter(hashTarget), 100);
+}
 // ── Lightweight Smooth Scroll (Lerp) for Hands ────────────────
 // Lightweight Smooth Scroll (Lerp) for Hands
 let targetScrollY = window.scrollY;
@@ -97,28 +163,34 @@ function animateHands() {
 requestAnimationFrame(animateHands);
 
 if (document.querySelector('.auto-type-hero')) {
-  new Typed('.auto-type-hero', {
-    strings: [
-      "Turning <span class='hero-highlight h-1'>raw</span> data into meaningful <span class='hero-highlight h-2'>insights.</span>"
-    ],
-    typeSpeed: 20, /* Reduced from 45 for smoother, faster typing */
-    backSpeed: 15, /* Fast deletion */
-    loop: true,
-    backDelay: 4000, /* Pause fully typed for 4 seconds */
-    showCursor: true,
-    cursorChar: '|',
-    onStringTyped: (arrayPos, self) => {
-      // Trigger the left-to-right highlight animations
-      const h1 = document.querySelector('.hero-title-new');
-      if (h1) h1.classList.add('highlight-active');
-      
-      // Remove highlight 0.6 seconds before backspacing starts 
-      // so it elegantly sweeps backward before text deletes
-      setTimeout(() => {
-        if (h1) h1.classList.remove('highlight-active');
-      }, 3400); 
-    }
-  });
+  try {
+    new Typed('.auto-type-hero', {
+      strings: [
+        "I turn <span class='hero-highlight h-1'>data</span> into <span class='hero-highlight h-2'>decisions.</span>"
+      ],
+      typeSpeed: 20, /* Reduced from 45 for smoother, faster typing */
+      backSpeed: 15, /* Fast deletion */
+      loop: true,
+      backDelay: 4000, /* Pause fully typed for 4 seconds */
+      showCursor: true,
+      cursorChar: '|',
+      onStringTyped: (arrayPos, self) => {
+        // Trigger the left-to-right highlight animations
+        const h1 = document.querySelector('.hero-title-new');
+        if (h1) h1.classList.add('highlight-active');
+        
+        // Remove highlight 0.6 seconds before backspacing starts 
+        // so it elegantly sweeps backward before text deletes
+        setTimeout(() => {
+          if (h1) h1.classList.remove('highlight-active');
+        }, 3400);
+      }
+    });
+  } catch (err) {
+    // CDN failed to load: show static text instead of a broken hero
+    const el = document.querySelector('.auto-type-hero');
+    if (el) el.textContent = 'I turn data into decisions.';
+  }
 }
 
 // Skill Icon Particle Simulation Class for Skill Cards (96x96)
@@ -155,7 +227,7 @@ class SkillPixelIcon {
   // Draw templates modeled on 200x200 space; dynamically centered and scaled to 96x96
 
   drawHtmlLogo(ctx) {
-    // Web Dev: curly braces {} — bold, centered, unmistakable
+    // Web Dev: bold centered curly braces
     ctx.clearRect(0, 0, 200, 200);
     // Shadow/depth: draw slightly offset in dark charcoal
     ctx.fillStyle = '#111111';
@@ -338,7 +410,7 @@ class SkillPixelIcon {
   }
 
   drawVizLogo(ctx) {
-    // Data Viz: colored bar chart — no axis lines, just clean bars
+    // Data Viz: colored bar chart, no axis lines
     ctx.clearRect(0, 0, 200, 200);
     // Bar 1 (short)
     ctx.fillStyle = '#e83e8c';
@@ -437,7 +509,7 @@ class SkillPixelIcon {
       origB: 225,
       wx: Math.random() * this.width,
       wy: Math.random() * this.height,
-      size: 1.8 + Math.random() * 1.4, // particle sizes 1.8–3.2px for 96px canvas
+      size: 1.8 + Math.random() * 1.4, // particle size range for 96px canvas
       alpha: 0.38 + Math.random() * 0.52,
       glowPhase: Math.random() * Math.PI * 2,
       glowSpeed: 0.15 + Math.random() * 0.45, // even slower (cycles range from 15 to 60 seconds)
@@ -987,7 +1059,5 @@ if (canvas3D) {
     });
   }
 }
-// ──────────────────────────────────────────────────────────────
-
 // ──────────────────────────────────────────────────────────────
 

@@ -3,7 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nicolaus Prima — Data & Code</title>
+  <title>Nicolaus Prima | Data Science Student at PENS Surabaya</title>
+
+  <!-- SEO -->
+  <meta name="title" content="Nicolaus Prima | Data Science Student at PENS Surabaya">
+  <meta name="description" content="Portfolio of Nicolaus Prima, Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards like Wattwise and PanganTrack, and web applications.">
+  <meta name="keywords" content="Nicolaus Prima, Data Science, PENS Surabaya, Machine Learning, Wattwise, PanganTrack, LightGBM, Flask, Python, Data Dashboard Portfolio">
+  <meta name="author" content="Nicolaus Prima Dharma Nugroho">
+  <meta name="theme-color" content="#F7F5F2">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nicolausprima.vercel.app/">
+  <meta property="og:site_name" content="Nicolaus Prima">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Nicolaus Prima | Data Science Student at PENS Surabaya">
+  <meta property="og:description" content="Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards like Wattwise and PanganTrack, and web applications.">
+  <meta property="og:image" content="https://nicolausprima.vercel.app/og-image.png">
+  <meta property="og:image:secure_url" content="https://nicolausprima.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Portfolio preview of Nicolaus Prima, data science student">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nicolausprima.vercel.app/">
+  <meta name="twitter:title" content="Nicolaus Prima | Data Science Student at PENS Surabaya">
+  <meta name="twitter:description" content="Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards like Wattwise and PanganTrack, and web applications.">
+  <meta name="twitter:image" content="https://nicolausprima.vercel.app/og-image.png">
+
+  <link rel="canonical" href="https://nicolausprima.vercel.app/">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nicolaus Prima Dharma Nugroho",
+    "alternateName": "Nicolaus Prima",
+    "url": "https://nicolausprima.vercel.app/",
+    "image": "https://nicolausprima.vercel.app/FotoMuka.jpg",
+    "jobTitle": "Applied Data Science Student",
+    "description": "Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards, and web applications.",
+    "email": "mailto:nicolausprimaa@gmail.com",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Politeknik Elektronika Negeri Surabaya (PENS)"
+    },
+    "sameAs": [
+      "https://github.com/nicolausprima",
+      "https://www.linkedin.com/in/nicolausprima/"
+    ],
+    "knowsAbout": ["Python", "Machine Learning", "Data Visualization", "Flask", "LightGBM", "PostgreSQL", "R", "Web Development"]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Epilogue:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -74,16 +131,13 @@
     [data-theme="dark"] .project-card,
     [data-theme="dark"] .skill-card,
     [data-theme="dark"] .edu-card,
-    [data-theme="dark"] .social-btn,
-    [data-theme="dark"] .about-avatar-wrap,
-    [data-theme="dark"] .about-links a {
+    [data-theme="dark"] .about-avatar-wrap {
       box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 1px 4px rgba(0,0,0,0.4), 0 4px 20px rgba(0,0,0,0.25);
     }
     [data-theme="dark"] .project-card:hover,
     [data-theme="dark"] .skill-card:hover,
     [data-theme="dark"] .edu-card:hover,
-    [data-theme="dark"] .about-avatar-wrap:hover,
-    [data-theme="dark"] .about-links a:hover {
+    [data-theme="dark"] .about-avatar-wrap:hover {
       box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 4px 24px rgba(0,0,0,0.5), 0 16px 48px rgba(0,0,0,0.35);
       border-color: var(--border);
     }
@@ -242,6 +296,27 @@
     }
     .nav-menu a:hover { color: var(--text); }
     .nav-menu a:hover::after { width: 100%; }
+    .nav-social {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-left: 20px;
+      border-left: 1px solid var(--border-light);
+    }
+    .nav-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .nav-social a:hover {
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .nav-social svg { width: 15px; height: 15px; }
 
     /* HERO */
     #hero {
@@ -273,7 +348,7 @@
     .river-group-2 .pulse-path { animation-duration: 80s; animation-delay: -22s; }
     .river-group-3 .pulse-path { animation-duration: 68s; animation-delay: -40s; }
 
-    /* Wavy floating groups — very slow, hypnotic */
+    /* Wavy floating groups, very slow and hypnotic */
     .river-group-1 { animation: river-float-1 62s ease-in-out infinite; }
     .river-group-2 { animation: river-float-2 88s ease-in-out infinite; }
     .river-group-3 { animation: river-float-3 74s ease-in-out infinite; }
@@ -519,6 +594,9 @@
       font-size: 0.95rem;
       text-decoration: none;
       transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
     .btn-outline-new:hover { background: var(--surface); }
     .btn-outline:hover {
@@ -737,7 +815,7 @@
     /* SECTIONS */
     section {
       padding: 100px 0;
-      scroll-margin-top: 80px;
+      scroll-margin-top: 80px; /* JS handles precise centering on nav clicks */
     }
     .section-label {
       display: block;
@@ -760,8 +838,8 @@
     /* PROJECTS */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
       margin-top: 40px;
       position: relative;
       z-index: 2; /* Ensures cards stay above hands */
@@ -770,12 +848,11 @@
       background: var(--surface);
       border: 1px solid var(--border-light);
       border-radius: var(--radius);
-      padding: 32px 28px 24px;
+      overflow: hidden;
       text-decoration: none;
       color: var(--text);
       display: flex;
       flex-direction: column;
-      gap: 16px;
       transition: var(--transition);
       box-shadow: 0 1px 4px rgba(26, 22, 18, 0.04), 0 4px 16px rgba(26, 22, 18, 0.04);
     }
@@ -786,64 +863,125 @@
     }
     .project-card:nth-child(1) { --card-accent: var(--accent); }
     .project-card:nth-child(2) { --card-accent: var(--accent-2); }
-    .project-card:nth-child(3) { --card-accent: var(--text-secondary); }
-    .project-icon {
-      width: 38px; height: 38px;
-      background: var(--bg);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-sm);
+    .project-media {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .project-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .project-card:hover .project-media img { transform: scale(1.04); }
+    .project-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 24px 24px 22px;
+      flex: 1;
+    }
+    .project-tagline {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: var(--card-accent, var(--accent));
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
-    .project-icon svg { width: 18px; height: 18px; }
+    .project-tagline::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: var(--card-accent, var(--accent));
+      border-radius: 50%;
+    }
     .project-title {
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 600;
       line-height: 1.25;
       letter-spacing: -0.01em;
     }
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      flex: 1;
-    }
-    .project-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 16px;
-      border-top: 1px solid var(--border-light);
-      margin-top: auto;
-    }
-    .lang-badge {
+    .project-metric {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: 100px;
+      padding: 4px 12px;
+      align-self: flex-start;
+    }
+    .project-metric svg { width: 11px; height: 11px; color: var(--card-accent, var(--accent)); }
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .stack-badge {
+      font-family: var(--font-mono);
       font-size: 0.6rem;
       font-weight: 500;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       padding: 4px 10px;
       background: var(--bg);
+      border: 1px solid var(--border-light);
       border-radius: var(--radius-sm);
     }
-    .lang-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--card-accent, var(--accent));
-    }
-    .project-arrow {
-      color: var(--text-muted);
-      transition: var(--transition);
+    .project-footer {
       display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
+      margin-top: auto;
     }
-    .project-card:hover .project-arrow {
-      color: var(--card-accent, var(--accent));
-      transform: translate(3px, -3px);
+    .project-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      line-height: 1;
+      transition: var(--transition);
+    }
+    .project-btn svg { width: 13px; height: 13px; }
+    .project-btn.demo {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .project-btn.demo:hover { background: var(--accent-hover); }
+    .project-btn.code {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .project-btn.code:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* EDUCATION */
@@ -999,33 +1137,6 @@
       line-height: 1.75;
       margin-bottom: 28px;
     }
-    .about-links {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      justify-content: center;
-    }
-    .about-links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      padding: 9px 20px;
-      border-radius: 100px;
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      transition: var(--transition);
-      box-shadow: 0 1px 4px rgba(26, 22, 18, 0.04);
-    }
-    .about-links a:hover {
-      color: var(--text);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(26, 22, 18, 0.08);
-    }
 
     /* FOOTER */
     footer {
@@ -1046,33 +1157,12 @@
       font-size: 0.9rem;
       margin-bottom: 32px;
     }
-    .social-row {
+    .footer-cta {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 40px;
       flex-wrap: wrap;
-    }
-    .social-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius);
-      padding: 10px 22px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: var(--transition);
-      box-shadow: 0 1px 4px rgba(26, 22, 18, 0.04);
-    }
-    .social-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(26, 22, 18, 0.06);
     }
     .footer-divider {
       border: none;
@@ -1144,8 +1234,9 @@
       #hero { padding: 80px 0 20px; }
       /* container uses vw */
       .container { padding: 0 18px; }
-      .social-row { flex-direction: column; align-items: center; }
-      .social-btn { width: 100%; max-width: 280px; justify-content: center; }
+      .footer-cta { flex-direction: column; align-items: center; }
+      .footer-cta .btn-primary-new,
+      .footer-cta .btn-outline-new { width: 100%; max-width: 280px; justify-content: center; }
       .tech-strip { gap: 10px; padding: 16px; }
       
       .hero-title-new {
@@ -1162,7 +1253,7 @@
       .dither-hand.right-side { left: 90vw; }
 
 
-      /* Buttons — inverted for auto dark/light adapt */
+      /* Buttons, inverted for auto dark/light adapt */
     .btn-primary {
       background: var(--text);
       color: var(--bg);
@@ -1199,6 +1290,14 @@
           <li><a href="#skills">Skills</a></li>
         </ul>
       </nav>
+      <div class="nav-social">
+        <a href="https://github.com/nicolausprima" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
+        </a>
+      </div>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
         <span class="theme-toggle-thumb">
           <!-- Sun icon -->
@@ -1250,15 +1349,16 @@
           <span class="auto-type-hero"></span>
         </h1>
         <p class="hero-bio-new">
-          Applied Data Science Student at PENS Surabaya. Passionate about web development, artificial intelligence, and building scalable solutions.
+          Applied Data Science student at PENS Surabaya. I build machine learning models, data dashboards, and web apps.
         </p>
         <div class="hero-cta-new">
           <a href="#projects" class="btn-primary-new">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h8"/></svg>
             View Projects
           </a>
-          <a href="https://github.com/nicolausprima" class="btn-outline-new" target="_blank" rel="noopener">
-            Explore GitHub
+          <a href="CV.pdf" download class="btn-outline-new">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
           </a>
         </div>
       </div>
@@ -1268,22 +1368,12 @@
   <section id="about" class="about-me reveal">
     <div class="container about-me-container">
       <div class="about-avatar-wrap">
-        <img src="FotoMuka.jpg" alt="Nicolaus Prima" class="about-avatar">
+        <img src="FotoMuka.jpg" alt="Foto Nicolaus Prima, mahasiswa Applied Data Science di PENS Surabaya" class="about-avatar">
       </div>
       <h2 class="about-name">Nicolaus Prima</h2>
       <p class="about-bio">
-        Applied Data Science Student at PENS (Politeknik Elektronika Negeri Surabaya) with a passion for transforming raw data into actionable insights. Dedicated to building machine learning models, end-to-end data pipelines, and modern web applications.
+        Applied Data Science student at PENS (Politeknik Elektronika Negeri Surabaya). Recent work: an energy analytics dashboard built on steel industry data, and a price forecasting platform for Indonesian food commodities.
       </p>
-      <div class="about-links">
-        <a href="https://github.com/nicolausprima" target="_blank" rel="noopener" aria-label="GitHub Profile">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
-        <a href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
-          <span>LinkedIn</span>
-        </a>
-      </div>
     </div>
   </section>
 
@@ -1295,39 +1385,66 @@
         <h2>Projects</h2>
       </div>
       <div class="projects-grid">
-        <a href="https://github.com/nicolausprima/Wattwise" target="_blank" rel="noopener" class="project-card reveal">
-          <div class="project-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <article class="project-card reveal">
+          <div class="project-media">
+            <img src="assets/wattwise.webp" alt="Tangkapan layar dashboard Wattwise: grafik analisis konsumsi energi industri" loading="lazy">
           </div>
-          <div class="project-title">Wattwise — Energy Intelligence Dashboard</div>
-          <p class="project-desc">Dashboard analisis dan kecerdasan energi untuk memantau, menganalisis, serta memberikan rekomendasi penghematan energi berbasis data industri baja. Menggunakan K-Means clustering dan Content-Based Filtering.</p>
-          <div class="project-footer">
-            <span class="lang-badge"><span class="lang-dot"></span>Python, Flask</span>
-            <span class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          <div class="project-body">
+            <span class="project-tagline">Energy Analytics</span>
+            <h3 class="project-title">Wattwise: Energy Intelligence Dashboard</h3>
+            <span class="project-metric">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Potensi hemat energi ~15%
+            </span>
+            <p class="project-desc">Memantau konsumsi energi industri baja dan memberi rekomendasi hemat energi dari hasil clustering.</p>
+            <div class="project-stack">
+              <span class="stack-badge">Python</span>
+              <span class="stack-badge">Flask</span>
+              <span class="stack-badge">K-Means</span>
+              <span class="stack-badge">Content-Based Filtering</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://wattwiseapp.vercel.app/" target="_blank" rel="noopener" class="project-btn demo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Live Demo
+              </a>
+              <a href="https://github.com/nicolausprima/Wattwise" target="_blank" rel="noopener" class="project-btn code">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                View Code
+              </a>
+            </div>
           </div>
-        </a>
-        <a href="https://github.com/nicolausprima/PanganTrack" target="_blank" rel="noopener" class="project-card reveal">
-          <div class="project-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </article>
+        <article class="project-card reveal">
+          <div class="project-media">
+            <img src="assets/pangantrack.webp" alt="Tangkapan layar dashboard PanganTrack: grafik prediksi harga komoditas pangan" loading="lazy">
           </div>
-          <div class="project-title">PanganTrack — Commodity Price Prediction</div>
-          <p class="project-desc">Platform dashboard interaktif untuk memprediksi harga komoditas pangan nasional dan daerah di Indonesia. Menggunakan LightGBM untuk forecasting deret waktu harga pangan pokok.</p>
-          <div class="project-footer">
-            <span class="lang-badge"><span class="lang-dot"></span>Python, LightGBM</span>
-            <span class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          <div class="project-body">
+            <span class="project-tagline">Price Forecasting</span>
+            <h3 class="project-title">PanganTrack: Commodity Price Prediction</h3>
+            <span class="project-metric">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              MAPE prediksi harga ~5%
+            </span>
+            <p class="project-desc">Memprediksi harga pangan nasional dan daerah dengan model time series LightGBM.</p>
+            <div class="project-stack">
+              <span class="stack-badge">Python</span>
+              <span class="stack-badge">LightGBM</span>
+              <span class="stack-badge">Time Series</span>
+              <span class="stack-badge">Dashboard</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://pangan-track.vercel.app/" target="_blank" rel="noopener" class="project-btn demo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Live Demo
+              </a>
+              <a href="https://github.com/nicolausprima/PanganTrack" target="_blank" rel="noopener" class="project-btn code">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                View Code
+              </a>
+            </div>
           </div>
-        </a>
-        <a href="https://github.com/nicolausprima/Credit-Risk-NN" target="_blank" rel="noopener" class="project-card reveal">
-          <div class="project-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="project-title">Credit-Risk-NN — Loan Default Prediction</div>
-          <p class="project-desc">Klasifikasi risiko kredit berbasis Deep Learning (PyTorch ANN) untuk memprediksi gagal bayar pinjaman berdasarkan riwayat keuangan dan demografi pemohon. Akurasi prediksi ~92%.</p>
-          <div class="project-footer">
-            <span class="lang-badge"><span class="lang-dot"></span>Python, PyTorch</span>
-            <span class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-          </div>
-        </a>
+        </article>
       </div>
     </div>
   </section>
@@ -1342,7 +1459,7 @@
       <div class="edu-grid">
         <div class="edu-card reveal">
           <div class="edu-logo-wrap">
-            <img src="LogoSmanig.png" alt="SMAN 1 Gedangan" class="edu-logo" onerror="this.style.display='none'">
+            <img src="LogoSmanig.png" alt="Logo SMAN 1 Gedangan" class="edu-logo" onerror="this.style.display='none'">
           </div>
           <div>
             <div class="edu-name">SMAN 1 Gedangan</div>
@@ -1351,7 +1468,7 @@
         </div>
         <div class="edu-card reveal">
           <div class="edu-logo-wrap">
-            <img src="LogoPENS.png" alt="PENS" class="edu-logo" onerror="this.style.display='none'">
+            <img src="LogoPENS.png" alt="Logo PENS (Politeknik Elektronika Negeri Surabaya)" class="edu-logo" onerror="this.style.display='none'">
           </div>
           <div>
             <div class="edu-name">PENS Surabaya</div>
@@ -1436,23 +1553,19 @@
   <footer>
     <div class="container">
       <div class="footer-title reveal">Let's Connect</div>
-      <p class="footer-sub reveal">Open to collaborations, internships, and cool projects.</p>
-      <div class="social-row reveal">
-        <a href="mailto:nicolausprima@example.com" class="social-btn" aria-label="Send email">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email
+      <p class="footer-sub reveal">Open to internships and collaborations. Find me on <a href="https://github.com/nicolausprima" target="_blank" rel="noopener" style="color: var(--text); text-decoration: underline; text-underline-offset: 3px;">GitHub</a> or <a href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener" style="color: var(--text); text-decoration: underline; text-underline-offset: 3px;">LinkedIn</a>.</p>
+      <div class="footer-cta reveal">
+        <a href="mailto:nicolausprimaa@gmail.com" class="btn-primary-new">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email Me
         </a>
-        <a href="https://www.linkedin.com/in/nicolausprima/" class="social-btn" target="_blank" rel="noopener" aria-label="LinkedIn profile">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://github.com/nicolausprima" class="social-btn" target="_blank" rel="noopener" aria-label="GitHub profile">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
+        <a href="CV.pdf" download class="btn-outline-new">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
         </a>
       </div>
       <hr class="footer-divider">
-      <p class="footer-copy">&copy; 2025 Nicolaus Prima Dharma Nugroho</p>
+      <p class="footer-copy">&copy; 2026 Nicolaus Prima Dharma Nugroho</p>
     </div>
   </footer>
 
