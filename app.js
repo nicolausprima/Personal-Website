@@ -65,7 +65,7 @@ const scrollToCenter = (target) => {
   if (!isFinite(contentTop)) return;
   const contentH = contentBottom - contentTop;
 
-  const navbarH = 84;
+  const navbarH = (document.querySelector('.navbar')?.offsetHeight || 60) + 12;
   let top;
   if (contentH <= vh - navbarH - 8) {
     // Content fits below the navbar: center it exactly
@@ -1060,4 +1060,71 @@ if (canvas3D) {
   }
 }
 // ──────────────────────────────────────────────────────────────
+
+// ── MOBILE NAVIGATION FLOATING MENU CONTROLLER ───────────────
+const navToggle = document.getElementById('nav-toggle');
+const mobileNavDrawer = document.getElementById('mobile-nav-drawer');
+const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+function openMobileMenu() {
+  if (!mobileNavDrawer) return;
+  mobileNavDrawer.classList.add('open');
+  mobileNavOverlay?.classList.add('open');
+  navToggle?.classList.add('active');
+  navToggle?.setAttribute('aria-expanded', 'true');
+  mobileNavDrawer.setAttribute('aria-hidden', 'false');
+  mobileNavOverlay?.setAttribute('aria-hidden', 'false');
+}
+
+function closeMobileMenu() {
+  if (!mobileNavDrawer) return;
+  mobileNavDrawer.classList.remove('open');
+  mobileNavOverlay?.classList.remove('open');
+  navToggle?.classList.remove('active');
+  navToggle?.setAttribute('aria-expanded', 'false');
+  mobileNavDrawer.setAttribute('aria-hidden', 'true');
+  mobileNavOverlay?.setAttribute('aria-hidden', 'true');
+}
+
+navToggle?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = mobileNavDrawer?.classList.contains('open');
+  if (isOpen) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+});
+
+mobileNavOverlay?.addEventListener('click', closeMobileMenu);
+
+mobileNavLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+});
+
+// Close when clicking anywhere outside
+document.addEventListener('click', (e) => {
+  if (mobileNavDrawer?.classList.contains('open')) {
+    if (!mobileNavDrawer.contains(e.target) && !navToggle?.contains(e.target)) {
+      closeMobileMenu();
+    }
+  }
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileNavDrawer?.classList.contains('open')) {
+    closeMobileMenu();
+  }
+});
+
+// Auto-close on screen resize to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768 && mobileNavDrawer?.classList.contains('open')) {
+    closeMobileMenu();
+  }
+});
 
