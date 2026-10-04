@@ -654,9 +654,25 @@ class SkillPixelIcon {
   }
 }
 
-// Initialize simulation for all skill canvases on the page
+// Skills now badge strip (no canvases); guard no-op when absent
 document.querySelectorAll('.skill-pixel-canvas').forEach(canvas => {
-  new SkillPixelIcon(canvas);
+  if (typeof SkillPixelIcon !== 'undefined') new SkillPixelIcon(canvas);
+});
+
+// Skills marquee: build seamless loop (4x fill, no visible gap/refresh)
+document.querySelectorAll('.tech-track').forEach(track => {
+  const originals = [...track.children];
+  // Fill track to at least 2x row width, then clone once more for -50% loop
+  while (track.scrollWidth < track.parentElement.clientWidth * 2) {
+    originals.forEach(el => track.appendChild(el.cloneNode(true)));
+  }
+  [...track.children].forEach(el => {
+    const c = el.cloneNode(true);
+    c.setAttribute('aria-hidden', 'true');
+    track.appendChild(c);
+  });
+  // Balance leftover: shift start offset so head/tail show half-badge under fade
+  track.parentElement.scrollLeft = 0;
 });
 
 const reveals = document.querySelectorAll('.reveal');
