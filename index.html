@@ -1296,13 +1296,15 @@
     }
 
     /* EDUCATION — timeline rows + logo kanan */
-    .edu-list {
+    .edu-list,
+    .exp-list {
       display: flex;
       flex-direction: column;
       margin-top: 40px;
     }
 
-    .edu-item {
+    .edu-item,
+    .exp-item {
       display: grid;
       grid-template-columns: 150px 1fr auto;
       gap: 24px;
@@ -1312,15 +1314,18 @@
       transition: background var(--transition);
     }
 
-    .edu-item:last-child {
+    .edu-item:last-child,
+    .exp-item:last-child {
       border-bottom: 1px solid var(--border-light);
     }
 
-    .edu-item:hover {
+    .edu-item:hover,
+    .exp-item:hover {
       background: var(--surface);
     }
 
-    .edu-years {
+    .edu-years,
+    .exp-years {
       font-family: var(--font-mono);
       font-size: 0.8rem;
       font-weight: 500;
@@ -1328,7 +1333,8 @@
       white-space: nowrap;
     }
 
-    .edu-degree {
+    .edu-degree,
+    .exp-role {
       font-family: var(--font-body);
       font-size: 1.02rem;
       font-weight: 700;
@@ -1336,13 +1342,15 @@
       color: var(--text);
     }
 
-    .edu-school {
+    .edu-school,
+    .exp-org {
       font-size: 0.86rem;
       color: var(--text-secondary);
       margin-top: 5px;
     }
 
-    .edu-campus {
+    .edu-campus,
+    .exp-meta {
       font-size: 0.86rem;
       color: var(--text-muted);
       margin-top: 2px;
@@ -1370,6 +1378,58 @@
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+    }
+
+    /* EXPERIENCE — header split + link kanan (ala contoh) */
+    .section-head-split {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+      padding-bottom: 6px;
+      transition: color var(--transition);
+    }
+
+    .section-link:hover {
+      color: var(--accent);
+    }
+
+    /* EXPERIENCE — sub-peran di dalam induk (ala LinkedIn group) */
+    .exp-sub {
+      list-style: none;
+      margin: 18px 0 0;
+      padding: 0 0 0 18px;
+      border-left: 2px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .exp-sub li {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .exp-sub-role {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .exp-sub-years {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
     }
 
     /* SKILLS — badge marquee (atas kanan, bawah kiri + fade tepi) */
@@ -1800,11 +1860,13 @@
         margin-right: 10px;
       }
 
-      .edu-list {
+      .edu-list,
+      .exp-list {
         margin-top: 28px;
       }
 
-      .edu-item {
+      .edu-item,
+      .exp-item {
         grid-template-columns: 150px 1fr auto;
         gap: 24px;
         padding: 30px 0;
@@ -2004,11 +2066,13 @@
         min-height: 42px;
       }
 
-      .edu-list {
+      .edu-list,
+      .exp-list {
         margin-top: 28px;
       }
 
-      .edu-item {
+      .edu-item,
+      .exp-item {
         grid-template-columns: 1fr auto;
         grid-template-areas:
           "years logo"
@@ -2018,8 +2082,10 @@
         align-items: start;
       }
 
-      .edu-years { grid-area: years; }
-      .edu-info { grid-area: info; }
+      .edu-years,
+      .exp-years { grid-area: years; }
+      .edu-info,
+      .exp-info { grid-area: info; }
       .edu-logo-wrap {
         grid-area: logo;
         align-self: center;
@@ -2029,12 +2095,15 @@
         margin-right: 12px;
       }
 
-      .edu-degree {
+      .edu-degree,
+      .exp-role {
         font-size: 0.98rem;
       }
 
       .edu-school,
-      .edu-campus {
+      .edu-campus,
+      .exp-org,
+      .exp-meta {
         font-size: 0.8rem;
       }
 
@@ -2191,6 +2260,7 @@
           <li><a href="#about">About</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#education">Education</a></li>
+          <li><a href="#experience">Experience</a></li>
           <li><a href="#skills">Skills</a></li>
         </ul>
       </nav>
@@ -2248,7 +2318,8 @@
       <li><a href="#about" class="mobile-nav-link">About <span>02</span></a></li>
       <li><a href="#projects" class="mobile-nav-link">Projects <span>03</span></a></li>
       <li><a href="#education" class="mobile-nav-link">Education <span>04</span></a></li>
-      <li><a href="#skills" class="mobile-nav-link">Skills <span>05</span></a></li>
+      <li><a href="#experience" class="mobile-nav-link">Experience <span>05</span></a></li>
+      <li><a href="#skills" class="mobile-nav-link">Skills <span>06</span></a></li>
     </ul>
     <div class="mobile-nav-divider"></div>
     <div class="mobile-nav-actions">
@@ -2459,6 +2530,40 @@
           </div>
           <div class="edu-logo-wrap">
             <img src="LogoPENS.png" alt="Logo PENS (Politeknik Elektronika Negeri Surabaya)" class="edu-logo">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="reveal section-head-split">
+        <div>
+          <span class="section-label">Background</span>
+          <h2>Experience</h2>
+        </div>
+        <a href="https://www.linkedin.com/in/nicolausprima" target="_blank" rel="noopener" class="section-link">View
+          Details &gt;</a>
+      </div>
+      <div class="exp-list">
+        <div class="exp-item reveal exp-parent">
+          <div class="exp-years">May 2026 - Present</div>
+          <div class="exp-info">
+            <div class="exp-role">Junior Staff of Research and Technology</div>
+            <div class="exp-org">Himpunan Mahasiswa Teknik Informatika PENS</div>
+            <div class="exp-meta">Part-time &middot; Surabaya, Indonesia</div>
+            <ul class="exp-sub">
+              <li>
+                <span class="exp-sub-role">PIC, HIMIT Community Week 2026</span>
+                <span class="exp-sub-years">Aug 2026 - Sep 2026</span>
+              </li>
+              <li>
+                <span class="exp-sub-role">Logistics Coordinator, Mini Class X E-Code</span>
+                <span class="exp-sub-years">Jun 2026 - Jul 2026</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
