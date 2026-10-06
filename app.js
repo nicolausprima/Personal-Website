@@ -87,7 +87,9 @@ const scrollToCenter = (target) => {
 
   const navbarH = (document.querySelector('.navbar')?.offsetHeight || 60) + 12;
   let top;
-  if (contentH <= vh - navbarH - 8) {
+  if (target.id === 'about') {
+    top = target.offsetTop - navbarH;
+  } else if (contentH <= vh - navbarH - 8) {
     // Content fits below the navbar: center it exactly
     top = contentTop - (vh - contentH) / 2;
   } else {

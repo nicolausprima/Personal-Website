@@ -2093,9 +2093,14 @@
 
       /* About Me */
       .about-me {
-        padding: 50px 0;
-        min-height: auto;
-        scroll-margin-top: 60px;
+        padding: 70px 0 110px;
+        min-height: calc(100svh - 60px);
+        min-height: calc(100vh - 60px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        scroll-margin-top: 65px;
+        box-sizing: border-box;
       }
 
       .about-avatar-wrap {

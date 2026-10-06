@@ -269,7 +269,7 @@
 
     /* NAVBAR */
     .navbar {
-      position: fixed;
+      position: sticky;
       top: 0;
       left: 0;
       right: 0;
@@ -277,16 +277,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 32px;
-      transition: var(--transition);
-    }
-
-    .navbar.scrolled {
+      padding: 18px 32px;
       background: rgba(247, 245, 242, 0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 14px 32px;
       border-bottom: 1px solid var(--border-light);
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] .navbar {
+      background: rgba(17, 17, 16, 0.88);
     }
 
     .nav-right {
@@ -2231,7 +2231,7 @@
       font-weight: 500;
       color: var(--text-muted);
       text-decoration: none;
-      margin-bottom: 32px;
+      margin-bottom: 20px;
       transition: color var(--transition), transform var(--transition);
     }
     .detail-back:hover {
@@ -2301,7 +2301,17 @@
       background: var(--bg);
       border: 2px solid var(--text-muted);
     }
-    .detail-page { padding-top: 140px; padding-bottom: 80px; }
+    .detail-page {
+      padding-top: 40px;
+      padding-bottom: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .detail-page {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
+    }
 
     /* PAGE TRANSITION — fade halus antar halaman */
     body {
