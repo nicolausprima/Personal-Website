@@ -370,16 +370,20 @@
     }
 
     .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
       color: var(--text);
       text-decoration: none;
-      font-feature-settings: 'swsh' 1, 'calt' 1;
     }
 
-    .nav-logo span {
+    .nav-logo:hover {
       color: var(--accent);
+    }
+
+    .nav-logo .nav-mark {
+      height: 30px;
+      width: auto;
+      display: block;
     }
 
     .nav-menu {
@@ -2165,8 +2169,8 @@
         padding: 8px 14px;
       }
 
-      .nav-logo {
-        font-size: 1.12rem;
+      .nav-logo .nav-mark {
+        height: 26px;
       }
 
       .hero-title-new {
@@ -2222,7 +2226,7 @@
 
   <!-- NAVBAR -->
   <header class="navbar" role="banner">
-    <a href="#hero" class="nav-logo">Nicolaus<span>.</span></a>
+    <a href="#hero" class="nav-logo" aria-label="Nicolaus Prima — home"><svg class="nav-mark" viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><path d="M112 172 L184 130 L184 340 L112 382 Z"/><path d="M184 130 L256 88 L400 340 L328 382 Z"/><path d="M328 172 L400 130 L400 340 L328 382 Z"/><path d="M184 130 L256 88 L328 130 L256 172 Z"/></g></svg></a>
     <div class="nav-right">
       <nav class="nav-desktop" aria-label="Main navigation">
         <ul class="nav-menu">
