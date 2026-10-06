@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <title>Nicolaus Prima — Convergence Tensor</title>
+  <g fill="#1C1C1C">
+    <!-- Left Isometric Column -->
+    <path d="M 112 172 L 184 130 L 184 340 L 112 382 Z" />
+    <!-- Dynamic Diagonal Tensor Fold -->
+    <path d="M 184 130 L 256 88 L 400 340 L 328 382 Z" />
+    <!-- Right Isometric Column -->
+    <path d="M 328 172 L 400 130 L 400 340 L 328 382 Z" />
+    <!-- Top Dimensional Cap -->
+    <path d="M 184 130 L 256 88 L 328 130 L 256 172 Z" />
+  </g>
+</svg>

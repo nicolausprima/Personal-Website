@@ -4,76 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nicolaus Prima | Data Science Student at PENS Surabaya</title>
-
-  <!-- SEO -->
-  <meta name="title" content="Nicolaus Prima | Data Science Student at PENS Surabaya">
+  <title>Experience Details | Nicolaus Prima</title>
   <meta name="description"
-    content="Portfolio of Nicolaus Prima, Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards like Wattwise and PanganTrack, and web applications.">
-  <meta name="keywords"
-    content="Nicolaus Prima, Data Science, PENS Surabaya, Machine Learning, Wattwise, PanganTrack, LightGBM, Flask, Python, Data Dashboard Portfolio">
-  <meta name="author" content="Nicolaus Prima Dharma Nugroho">
-  <meta name="theme-color" content="#F7F5F2">
-
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
-  <!-- Open Graph -->
+    content="Detail pengalaman Nicolaus Prima: HIMIT Community Week 2026 dan Mini Class X E-Code, lengkap dengan dokumentasi foto.">
+  <link rel="canonical" href="https://nicolausprima.vercel.app/experience.html">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://nicolausprima.vercel.app/">
-  <meta property="og:site_name" content="Nicolaus Prima">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:title" content="Nicolaus Prima | Data Science Student at PENS Surabaya">
+  <meta property="og:url" content="https://nicolausprima.vercel.app/experience.html">
+  <meta property="og:title" content="Experience Details | Nicolaus Prima">
   <meta property="og:description"
-    content="Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards like Wattwise and PanganTrack, and web applications.">
+    content="Detail pengalaman Nicolaus Prima: HIMIT Community Week 2026 dan Mini Class X E-Code, lengkap dengan dokumentasi foto.">
   <meta property="og:image" content="https://nicolausprima.vercel.app/og-image.png">
-  <meta property="og:image:secure_url" content="https://nicolausprima.vercel.app/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Portfolio preview of Nicolaus Prima, data science student">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://nicolausprima.vercel.app/">
-  <meta name="twitter:title" content="Nicolaus Prima | Data Science Student at PENS Surabaya">
-  <meta name="twitter:description"
-    content="Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards like Wattwise and PanganTrack, and web applications.">
-  <meta name="twitter:image" content="https://nicolausprima.vercel.app/og-image.png">
-
-  <link rel="canonical" href="https://nicolausprima.vercel.app/">
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Nicolaus Prima Dharma Nugroho",
-    "alternateName": "Nicolaus Prima",
-    "url": "https://nicolausprima.vercel.app/",
-    "image": "https://nicolausprima.vercel.app/FotoMuka.jpg",
-    "jobTitle": "Applied Data Science Student",
-    "description": "Applied Data Science student at PENS Surabaya. He builds machine learning models, forecasting dashboards, and web applications.",
-    "email": "mailto:nicolausprimaa@gmail.com",
-    "alumniOf": {
-      "@type": "CollegeOrUniversity",
-      "name": "Politeknik Elektronika Negeri Surabaya (PENS)"
-    },
-    "sameAs": [
-      "https://github.com/nicolausprima",
-      "https://www.linkedin.com/in/nicolausprima/"
-    ],
-    "knowsAbout": ["Python", "Machine Learning", "Data Visualization", "Flask", "LightGBM", "PostgreSQL", "R", "Web Development"]
-  }
-  </script>
-
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Epilogue:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Bebas+Neue&display=swap"
     rel="stylesheet">
-  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
   <script>
-    // Apply theme immediately to prevent flash of wrong theme
     (function () {
       var t = localStorage.getItem('theme');
       if (t) { document.documentElement.setAttribute('data-theme', t); }
@@ -252,27 +199,6 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       width: 100%;
-    }
-
-    /* PAGE TRANSITION — fade halus antar halaman */
-    body {
-      opacity: 0;
-      transition: opacity 0.35s ease;
-    }
-
-    body.page-ready {
-      opacity: 1;
-    }
-
-    body.page-leaving {
-      opacity: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      body {
-        opacity: 1;
-        transition: none;
-      }
     }
 
     body {
@@ -855,6 +781,90 @@
       overflow: hidden;
     }
 
+    /* Animated Image Hands */
+    .dither-hand {
+      position: fixed;
+      /* Global follow */
+      top: 50%;
+      width: 45vw;
+      max-width: 600px;
+      min-width: 250px;
+      height: 45vw;
+      max-height: 600px;
+      min-height: 250px;
+      background-image: url('dither-hand.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      mix-blend-mode: screen;
+      opacity: 1;
+      pointer-events: none;
+      z-index: 5;
+
+      /* Smooth fade for scroll */
+      transition: opacity 0.4s ease;
+
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+      mask-image: linear-gradient(to right, transparent 0%, black 20%);
+    }
+
+    [data-theme="light"] .dither-hand {
+      filter: invert(1);
+      mix-blend-mode: multiply;
+    }
+
+    .dither-hand.left-side {
+      /* Anchor the right tip of the left hand exactly 570px from the center screen (beside the 1140px container) */
+      right: calc(50vw + 575px);
+      transform: translateY(-50%) translateX(0vw);
+      animation: pointFloatLeft 2s ease-in-out infinite;
+    }
+
+    .dither-hand.right-side {
+      /* Anchor the left tip of the flipped right hand exactly 570px from the center screen */
+      left: calc(50vw + 575px);
+      transform: translateY(-50%) translateX(0vw) scaleX(-1);
+      animation: pointFloatRight 2s ease-in-out infinite;
+    }
+
+    .dither-hand.left-side {
+      right: calc(50vw + 575px);
+      transform: translateY(-50%) translateX(0vw);
+    }
+
+    .dither-hand.right-side {
+      left: calc(50vw + 575px);
+      transform: translateY(-50%) translateX(0vw) scaleX(-1);
+    }
+
+    @keyframes pointFloatLeft {
+
+      0%,
+      100% {
+        margin-right: 0px;
+      }
+
+      50% {
+        margin-right: -15px;
+      }
+
+      /* Pushes 15px inward */
+    }
+
+    @keyframes pointFloatRight {
+
+      0%,
+      100% {
+        margin-left: 0px;
+      }
+
+      50% {
+        margin-left: -15px;
+      }
+
+      /* Pushes 15px inward */
+    }
+
     .hero-visual::before {
       content: '';
       position: absolute;
@@ -1372,18 +1382,6 @@
       object-fit: cover;
     }
 
-    .exp-detail-link {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: color var(--transition), border-color var(--transition);
-    }
-
-    .exp-detail-link:hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
     .exp-sub-role {
       font-size: 0.9rem;
       font-weight: 600;
@@ -1813,6 +1811,15 @@
     }
 
     /* ── RESPONSIVE BREAKPOINTS ── */
+    @media (max-width: 1200px) {
+      .dither-hand.left-side {
+        right: 98vw;
+      }
+
+      .dither-hand.right-side {
+        left: 98vw;
+      }
+    }
 
     @media (max-width: 900px) {
       .hero-inner {
@@ -1967,7 +1974,10 @@
         min-height: 48px;
       }
 
-
+      /* Hide background hands on mobile for unhindered content & optimal performance */
+      .dither-hand {
+        display: none !important;
+      }
 
       /* River animation static on mobile */
       .river-group-1,
@@ -2210,43 +2220,129 @@
         padding: 10px 12px;
       }
     }
+
+    /* EXPERIENCE DETAIL — halaman khusus */
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color var(--transition), transform var(--transition);
+    }
+    .detail-back:hover {
+      color: var(--accent);
+      transform: translateX(-3px);
+    }
+    .detail-hero { margin-bottom: 48px; }
+    .detail-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: -0.02em;
+      margin: 12px 0 8px;
+    }
+    .detail-hero p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 640px;
+      line-height: 1.7;
+    }
+    .exp-detail-block {
+      border-top: 1px solid var(--border-light);
+      padding: 40px 0;
+    }
+    .exp-detail-block:last-of-type {
+      border-bottom: 1px solid var(--border-light);
+    }
+    .exp-detail-photo {
+      margin-top: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      max-width: 560px;
+    }
+    .exp-detail-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      object-fit: cover;
+    }
+    .exp-detail-caption {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    /* Garis relasi induk -> sub-acara (timeline ala LinkedIn group) */
+    .exp-detail-children {
+      margin: 28px 0 0;
+      padding: 0 0 0 22px;
+      border-left: 2px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .exp-detail-child {
+      position: relative;
+      scroll-margin-top: 120px;
+    }
+    .exp-detail-child::before {
+      content: "";
+      position: absolute;
+      left: -29px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--text-muted);
+    }
+    .detail-page { padding-top: 140px; padding-bottom: 80px; }
+
+    /* PAGE TRANSITION — fade halus antar halaman */
+    body {
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    body.page-ready {
+      opacity: 1;
+    }
+
+    body.page-leaving {
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body {
+        opacity: 1;
+        transition: none;
+      }
+    }
+
   </style>
 </head>
 
 <body>
-
-  <!-- NAVBAR -->
+  <!-- NAVBAR (simplified, links back to index) -->
   <header class="navbar" role="banner">
-    <a href="#hero" class="nav-logo">Nicolaus<span>.</span></a>
+    <a href="index.html#hero" class="nav-logo">Nicolaus<span>.</span></a>
     <div class="nav-right">
       <nav class="nav-desktop" aria-label="Main navigation">
         <ul class="nav-menu">
-          <li><a href="#about">About</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="#education">Education</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="index.html#education">Education</a></li>
           <li><a href="experience.html">Experience</a></li>
-          <li><a href="#skills">Skills</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
         </ul>
       </nav>
-      <div class="nav-social nav-social-desktop">
-        <a href="https://github.com/nicolausprima" target="_blank" rel="noopener" aria-label="GitHub profile"
-          title="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-          </svg>
-        </a>
-        <a href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener"
-          aria-label="LinkedIn profile" title="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z" />
-          </svg>
-        </a>
-      </div>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
         <span class="theme-toggle-thumb">
-          <!-- Sun icon -->
           <svg class="theme-toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.5" stroke-linecap="round">
             <circle cx="12" cy="12" r="4" />
@@ -2259,326 +2355,81 @@
             <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" />
             <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" />
           </svg>
-          <!-- Moon icon -->
           <svg class="theme-toggle-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.5" stroke-linecap="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </span>
       </button>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mobile-nav-drawer">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
     </div>
   </header>
 
-  <!-- MOBILE NAV FLOATING MENU -->
-  <div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
-  <nav class="mobile-nav-menu" id="mobile-nav-drawer" aria-label="Mobile navigation" aria-hidden="true">
-    <ul class="mobile-nav-list">
-      <li><a href="#hero" class="mobile-nav-link">Home <span>01</span></a></li>
-      <li><a href="#about" class="mobile-nav-link">About <span>02</span></a></li>
-      <li><a href="projects.html" class="mobile-nav-link">Projects <span>03</span></a></li>
-      <li><a href="#education" class="mobile-nav-link">Education <span>04</span></a></li>
-      <li><a href="experience.html" class="mobile-nav-link">Experience <span>05</span></a></li>
-      <li><a href="#skills" class="mobile-nav-link">Skills <span>06</span></a></li>
-    </ul>
-    <div class="mobile-nav-divider"></div>
-    <div class="mobile-nav-actions">
-      <div class="mobile-nav-social">
-        <a href="https://github.com/nicolausprima" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        </a>
-        <a href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
-        </a>
-      </div>
-      <a href="CV.pdf" download class="mobile-nav-cv-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        CV
-      </a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <canvas class="hero-river" id="hero-dither" aria-hidden="true"></canvas>
-    <div class="hero-visual reveal">
-      <div class="dither-3d-container">
-        <canvas id="hero-3d-canvas" aria-label="3D Dither Object"></canvas>
-      </div>
-      <button id="btn-prev-3d" class="btn-3d-nav btn-3d-prev" aria-label="Previous 3D Object">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-      </button>
-      <button id="btn-next-3d" class="btn-3d-nav btn-3d-next" aria-label="Next 3D Object">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      </button>
-      <div id="hero-3d-label" class="hero-3d-label">Python</div>
-    </div>
-
-    <!-- New Clean Hero Content (Inspired by Antigravity) -->
-    <div class="hero-content-new">
-      <div class="hero-tag-new">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent)" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 22h20L12 2z"></path>
-        </svg>
-        Nicolaus Prima • Portfolio
-      </div>
-      <h1 class="hero-title-new">
-        <span class="auto-type-hero"></span>
-      </h1>
-      <p class="hero-bio-new">
-        Applied Data Science student at PENS Surabaya. I build machine learning models, data dashboards, and web apps.
-      </p>
-      <div class="hero-cta-new">
-        <a href="projects.html" class="btn-primary-new">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round">
-            <path d="M4 6h16M4 12h16M4 18h8" />
-          </svg>
-          View Projects
-        </a>
-        <a href="CV.pdf" download class="btn-outline-new">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-          Download CV
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT ME -->
-  <section id="about" class="about-me reveal">
-    <div class="container about-me-container">
-      <div class="about-avatar-wrap">
-        <img src="FotoMuka.jpg" alt="Foto Nicolaus Prima, mahasiswa Applied Data Science di PENS Surabaya"
-          class="about-avatar">
-      </div>
-      <h2 class="about-name">Nicolaus Prima</h2>
-      <p class="about-bio">
-        Applied Data Science student at PENS (Politeknik Elektronika Negeri Surabaya). Recent work: an energy analytics
-        dashboard built on steel industry data, and a price forecasting platform for Indonesian food commodities.
-      </p>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
+  <main class="detail-page">
     <div class="container">
-      <div class="reveal section-head-split">
-        <div>
-          <span class="section-label">Portfolio</span>
-          <h2>Projects</h2>
-        </div>
-        <a href="projects.html" class="section-link">View All Projects &gt;</a>
-      </div>
-      <div class="projects-grid">
-        <article class="project-card reveal">
-          <div class="project-media">
-            <img src="assets/stock-analysis.jpg"
-              alt="Tangkapan layar dashboard AKSA: quantitative screener saham BEI dengan model machine learning" loading="lazy">
-          </div>
-          <div class="project-body">
-            <h3 class="project-title">AKSA: Quantitative Stock Intelligence</h3>
-            <span class="project-tagline">Autonomous IDX Screener & Backtest Engine</span>
-            <p class="project-desc">Screener trading kuantitatif untuk 700+ saham BEI/IDX berbasis XGBoost ML, Chart Embeddings, simulasi backtest realistik, integrasi DuckDB + Polars, dan bot Telegram otomatis.</p>
-            <div class="project-stack">
-              <span class="stack-badge">Python</span>
-              <span class="stack-badge">XGBoost</span>
-              <span class="stack-badge">FastAPI</span>
-              <span class="stack-badge">DuckDB</span>
-              <span class="stack-badge">Polars</span>
-              <span class="stack-badge">SHAP</span>
-            </div>
-            <div class="project-footer">
-              <a href="https://stock-analysis-6xrv.onrender.com/" target="_blank" rel="noopener" class="project-btn demo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="2" y1="12" x2="22" y2="12" />
-                  <path
-                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                </svg>
-                Live Demo
-              </a>
-              <a href="https://github.com/nicolausprima/stock-analysis" target="_blank" rel="noopener"
-                class="project-btn code">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                  </svg>
-                View Code
-              </a>
-            </div>
-          </div>
-        </article>
-        <article class="project-card reveal">
-          <div class="project-media">
-            <img src="assets/hargawatch.png"
-              alt="Tangkapan layar dashboard HargaWatch: intelijen harga pangan Kota Surabaya" loading="lazy">
-          </div>
-          <div class="project-body">
-            <h3 class="project-title">HargaWatch: Food Price Intelligence</h3>
-            <span class="project-tagline">Data Pipeline & Early Warning System &middot; Ongoing</span>
-            <p class="project-desc">Platform intelijen harga pangan Kota Surabaya. Mengolah 477k baris data harian dari SISKAPERBAPO, Open-Meteo, dan BPS ke Supabase PostgreSQL untuk deteksi anomali & peringatan dini.</p>
-            <div class="project-stack">
-              <span class="stack-badge">Python</span>
-              <span class="stack-badge">Supabase</span>
-              <span class="stack-badge">PostgreSQL</span>
-              <span class="stack-badge">Next.js</span>
-              <span class="stack-badge">Data Pipeline</span>
-            </div>
-            <div class="project-footer">
-              <a href="https://github.com/nicolausprima/hargawatch" target="_blank" rel="noopener"
-                class="project-btn code">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                View Code
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="container">
-      <div class="reveal">
+      <a href="index.html" class="detail-back">&larr; Back to Home</a>
+      <div class="detail-hero">
         <span class="section-label">Background</span>
-        <h2>Education</h2>
+        <h1>Experience Details</h1>
+        <p>Penjelasan rinci tiap peran beserta dokumentasi foto: tanggung jawab, kontribusi, dan momen kegiatannya.</p>
       </div>
-      <div class="edu-list">
-        <div class="edu-item reveal">
-          <div class="edu-years">2021 - 2024</div>
-          <div class="edu-info">
-            <div class="edu-degree">Senior High School</div>
-            <div class="edu-school">SMAN 1 Gedangan</div>
-            <div class="edu-campus">Sidoarjo</div>
+
+      <article class="exp-detail-block" id="himit">
+        <span class="section-label">May 2026 - Present &middot; Surabaya</span>
+        <h2 class="exp-role" style="font-size:1.4rem;margin-top:8px;">Junior Staff of Research and Technology</h2>
+        <div class="exp-org">Himpunan Mahasiswa Teknik Informatika PENS</div>
+        <p class="exp-desc" style="list-style:none;padding:0;margin-top:14px;max-width:680px;">
+          Staf junior divisi Research and Technology: mendukung riset internal, kegiatan edukasi, dan kepanitiaan
+          acara himpunan. Dua penugasan utama selama periode ini dirinci di bawah beserta dokumentasinya.
+        </p>
+
+        <div class="exp-detail-children">
+          <div class="exp-detail-child" id="community-week">
+            <h3 class="exp-sub-role" style="font-size:1.05rem;">PIC, HIMIT Community Week 2026</h3>
+            <div class="exp-sub-years">Aug 2026 - Sep 2026</div>
+            <p class="exp-desc" style="list-style:none;padding:0;margin-top:10px;max-width:680px;">
+              Sebagai penanggung jawab kegiatan, mengoordinasikan panitia dari tahap perencanaan hingga pelaksanaan:
+              menyusun rundown, membagi tugas divisi, dan memastikan tiap sesi berjalan sesuai jadwal. Foto di bawah
+              diambil saat sesi kumpul akbar peserta di lapangan malam hari.
+            </p>
+            <figure class="exp-detail-photo">
+              <img src="assets/exp-community-week.webp" alt="Foto dokumentasi HIMIT Community Week 2026" loading="lazy">
+            </figure>
+            <figcaption class="exp-detail-caption">Sesi foto bersama peserta HIMIT Community Week 2026 di lapangan.</figcaption>
           </div>
-          <div class="edu-logo-wrap">
-            <img src="LogoSmanig.png" alt="Logo SMAN 1 Gedangan" class="edu-logo">
+
+          <div class="exp-detail-child" id="mini-class">
+            <h3 class="exp-sub-role" style="font-size:1.05rem;">Logistics Coordinator, Mini Class X E-Code</h3>
+            <div class="exp-sub-years">Jun 2026 - Jul 2026</div>
+            <p class="exp-desc" style="list-style:none;padding:0;margin-top:10px;max-width:680px;">
+              Mengelola kebutuhan logistik kelas: menyiapkan ruangan, perangkat, konsumsi, dan materi pendukung agar
+              sesi Mini Class X E-Code berjalan lancar. Berkoordinasi dengan pemateri dan peserta selama kegiatan
+              berlangsung.
+            </p>
+            <figure class="exp-detail-photo">
+              <img src="assets/exp-miniclass.webp" alt="Foto dokumentasi Mini Class X E-Code" loading="lazy">
+            </figure>
+            <figcaption class="exp-detail-caption">Sesi foto bersama panitia dan peserta Mini Class X E-Code di ruang kelas.</figcaption>
           </div>
         </div>
-        <div class="edu-item reveal">
-          <div class="edu-years">2024 - Now</div>
-          <div class="edu-info">
-            <div class="edu-degree">Applied Data Science</div>
-            <div class="edu-school">Politeknik Elektronika Negeri Surabaya (PENS)</div>
-            <div class="edu-campus">Surabaya Campus</div>
-          </div>
-          <div class="edu-logo-wrap">
-            <img src="LogoPENS.png" alt="Logo PENS (Politeknik Elektronika Negeri Surabaya)" class="edu-logo">
-          </div>
-        </div>
-      </div>
+      </article>
+
+      <article class="exp-detail-block" id="hipster">
+        <span class="section-label">Aug 2025 - Jun 2026 &middot; Surabaya</span>
+        <h2 class="exp-role" style="font-size:1.4rem;margin-top:8px;">Hipster (UI/UX Designer)</h2>
+        <div class="exp-org">Unit Kegiatan Mahasiswa (UKM) Software Development, PENS</div>
+        <ul class="exp-desc" style="margin-top:14px;max-width:680px;">
+          <li>Mendesain UI/UX aplikasi PENSQuiz menggunakan Figma, mulai dari wireframe hingga high-fidelity design.</li>
+          <li>Menerjemahkan kebutuhan fitur tim menjadi antarmuka yang sederhana dan ramah pengguna, lalu diserahkan ke tim pengembang untuk implementasi.</li>
+          <li>Berkolaborasi dengan tim developer dalam iterasi desain berdasarkan masukan pengujian dan kebutuhan teknis.</li>
+        </ul>
+      </article>
     </div>
-  </section>
+  </main>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="container">
-      <div class="reveal section-head-split">
-        <div>
-          <span class="section-label">Background</span>
-          <h2>Experience</h2>
-        </div>
-        <a href="experience.html" class="section-link">View
-          Details &gt;</a>
-      </div>
-      <div class="exp-list">
-        <div class="exp-item reveal exp-parent">
-          <div class="exp-years">May 2026 - Present</div>
-          <div class="exp-info">
-            <div class="exp-role">Junior Staff of Research and Technology</div>
-            <div class="exp-org">Himpunan Mahasiswa Teknik Informatika PENS</div>
-            <div class="exp-meta">Surabaya, Indonesia</div>
-            <ul class="exp-sub">
-              <li>
-                <span class="exp-sub-role"><a href="experience.html#community-week" class="exp-detail-link">PIC, HIMIT Community Week 2026</a></span>
-                <span class="exp-sub-years">Aug 2026 - Sep 2026</span>
-              </li>
-              <li>
-                <span class="exp-sub-role"><a href="experience.html#mini-class" class="exp-detail-link">Logistics Coordinator, Mini Class X E-Code</a></span>
-                <span class="exp-sub-years">Jun 2026 - Jul 2026</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="exp-item reveal exp-parent">
-          <div class="exp-years">Aug 2025 - Jun 2026</div>
-          <div class="exp-info">
-            <div class="exp-role"><a href="experience.html#hipster" class="exp-detail-link">Hipster (UI/UX Designer)</a></div>
-            <div class="exp-org">Unit Kegiatan Mahasiswa (UKM) Software Development, PENS</div>
-            <div class="exp-meta">Surabaya, Indonesia</div>
-            <ul class="exp-desc">
-              <li>Mendesain UI/UX aplikasi PENSQuiz menggunakan Figma, mulai dari wireframe hingga high-fidelity design.</li>
-              <li>Menerjemahkan kebutuhan fitur tim menjadi antarmuka yang sederhana dan ramah pengguna, lalu diserahkan ke tim pengembang untuk implementasi.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="container">
-      <div class="reveal">
-        <span class="section-label">Toolbox</span>
-        <h2>Skills</h2>
-      </div>
-      <div class="tech-groups">
-        <div class="tech-row">
-          <div class="tech-track">
-            <span class="tech-badge" style="--brand:#3776AB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>Python</span>
-            <span class="tech-badge" style="--brand:#150458;--brand-dark:#B39DDB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.922 0h2.623v18.104h-2.623zm-4.126 12.94h2.623v2.57h-2.623zm0-7.037h2.623v5.446h-2.623zm0 11.197h2.623v5.446h-2.623zM4.456 5.896h2.622V24H4.455zm4.213 2.559h2.623v2.57H8.67zm0 4.151h2.623v5.447H8.67zm0-11.187h2.623v5.446H8.67Z"/></svg>pandas</span>
-            <span class="tech-badge" style="--brand:#013243;--brand-dark:#4DABCF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.315 4.876L6.3048 2.8517l-4.401 2.1965 4.1186 2.0683zm1.8381.9277l4.2045 2.1223-4.3622 2.1906-4.125-2.0718zm5.6153-2.9213l4.3193 2.1658-3.863 1.9402-4.2131-2.1252zm-1.859-.9329L12.021 0 8.1742 1.9193l4.0068 2.0208zm-3.0401 16.7443V24l4.7107-2.3507-.0053-5.3085zm4.7037-4.2057l-.0052-5.2528-4.6985 2.3356v5.2546zm5.6553-.9845v5.327l-4.0178 2.0052-.0029-5.3028zm0-1.8626V6.4214l-4.0253 2.001.0034 5.2633zM11.2062 11.571L8.0333 9.9756v6.895s-3.8804-8.2564-4.2399-8.998c-.0463-.0957-.2371-.2007-.2858-.2262C2.8118 7.2812.773 6.2485.773 6.2485V18.43l2.8204 1.5076v-6.3674s3.8392 7.3775 3.878 7.458c.0389.0807.4245.8582.8362 1.1314.5485.363 2.8992 1.7766 2.8992 1.7766z"/></svg>NumPy</span>
-            <span class="tech-badge" style="--brand:#276DC3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.746c-6.627 0-12 3.599-12 8.037 0 3.897 4.144 7.144 9.64 7.88V16.26c-2.924-.915-4.925-2.755-4.925-4.877 0-3.035 4.084-5.494 9.12-5.494 5.038 0 8.757 1.683 8.757 5.494 0 1.976-.999 3.379-2.662 4.272.09.066.174.128.258.216.169.149.25.363.372.544 2.128-1.45 3.44-3.437 3.44-5.631 0-4.44-5.373-8.038-12-8.038zm-2.111 4.99v13.516l4.093-.002-.002-5.291h1.1c.225 0 .321.066.549.25.272.22.715.982.715.982l2.164 4.063 4.627-.002-2.864-4.826s-.086-.193-.265-.383a2.22 2.22 0 00-.582-.416c-.422-.214-1.149-.434-1.149-.434s3.578-.264 3.578-3.826c0-3.562-3.744-3.63-3.744-3.63zm4.127 2.93l2.478.002s1.149-.062 1.149 1.127c0 1.165-1.149 1.17-1.149 1.17h-2.478zm1.754 6.119c-.494.049-1.012.079-1.54.088v1.807a16.622 16.622 0 002.37-.473l-.471-.891s-.108-.183-.248-.394c-.039-.054-.08-.098-.111-.137z"/></svg>R</span>
-            <span class="tech-badge" style="--brand:#4169E1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698zM2.371 11.8765c-.7435-2.4358-1.1779-4.8851-1.2123-5.5719-.1086-2.1714.4171-3.6829 1.5623-4.4927 1.8367-1.2986 4.8398-.5408 6.108-.13-.0032.0032-.0066.0061-.0098.0094-2.0238 2.044-1.9758 5.536-1.9708 5.7495-.0002.0823.0066.1989.0162.3593.0348.5873.0996 1.6804-.0735 2.9184-.1609 1.1504.1937 2.2764.9728 3.0892.0806.0841.1648.1631.2518.2374-.3468.3714-1.1004 1.1926-1.9025 2.1576-.5677.6825-.9597.5517-1.0886.5087-.3919-.1307-.813-.5871-1.2381-1.3223-.4796-.839-.9635-2.0317-1.4155-3.5126zm6.0072 5.0871c-.1711-.0428-.3271-.1132-.4322-.1772.0889-.0394.2374-.0902.4833-.1409 1.2833-.2641 1.4815-.4506 1.9143-1.0002.0992-.126.2116-.2687.3673-.4426a.3549.3549 0 0 0 .0737-.1298c.1708-.1513.2724-.1099.4369-.0417.156.0646.3078.26.3695.4752.0291.1016.0619.2945-.0452.4444-.9043 1.2658-2.2216 1.2494-3.1676 1.0128zm2.094-3.988-.0525.141c-.133.3566-.2567.6881-.3334 1.003-.6674-.0021-1.3168-.2872-1.8105-.8024-.6279-.6551-.9131-1.5664-.7825-2.5004.1828-1.3079.1153-2.4468.079-3.0586-.005-.0857-.0095-.1607-.0122-.2199.2957-.2621 1.6659-.9962 2.6429-.7724.4459.1022.7176.4057.8305.928.5846 2.7038.0774 3.8307-.3302 4.7363-.084.1866-.1633.3629-.2311.5454zm7.3637 4.5725c-.0169.1768-.0358.376-.0618.5959l-.146.4383a.3547.3547 0 0 0-.0182.1077c-.0059.4747-.054.6489-.115.8693-.0634.2292-.1353.4891-.1794 1.0575-.11 1.4143-.8782 2.2267-2.4172 2.5565-1.5155.3251-1.7843-.4968-2.0212-1.2217a6.5824 6.5824 0 0 0-.0769-.2266c-.2154-.5858-.1911-1.4119-.1574-2.5551.0165-.5612-.0249-1.9013-.3302-2.6462.0044-.2932.0106-.5909.019-.8918a.3529.3529 0 0 0-.0153-.1126 1.4927 1.4927 0 0 0-.0439-.208c-.1226-.4283-.4213-.7866-.7797-.9351-.1424-.059-.4038-.1672-.7178-.0869.067-.276.1831-.5875.309-.9249l.0529-.142c.0595-.16.134-.3257.213-.5012.4265-.9476 1.0106-2.2453.3766-5.1772-.2374-1.0981-1.0304-1.6343-2.2324-1.5098-.7207.0746-1.3799.3654-1.7088.5321a5.6716 5.6716 0 0 0-.1958.1041c.0918-1.1064.4386-3.1741 1.7357-4.4823a4.0306 4.0306 0 0 1 .3033-.276.3532.3532 0 0 0 .1447-.0644c.7524-.5706 1.6945-.8506 2.802-.8325.4091.0067.8017.0339 1.1742.081 1.939.3544 3.2439 1.4468 4.0359 2.3827.8143.9623 1.2552 1.9315 1.4312 2.4543-1.3232-.1346-2.2234.1268-2.6797.779-.9926 1.4189.543 4.1729 1.2811 5.4964.1353.2426.2522.4522.2889.5413.2403.5825.5515.9713.7787 1.2552.0696.087.1372.1714.1885.245-.4008.1155-1.1208.3825-1.0552 1.717-.0123.1563-.0423.4469-.0834.8148-.0461.2077-.0702.4603-.0994.7662zm.8905-1.6211c-.0405-.8316.2691-.9185.5967-1.0105a2.8566 2.8566 0 0 0 .135-.0406 1.202 1.202 0 0 0 .1342.103c.5703.3765 1.5823.4213 3.0068.1344-.2016.1769-.5189.3994-.9533.6011-.4098.1903-1.0957.333-1.7473.3636-.7197.0336-1.0859-.0807-1.1721-.151zm.5695-9.2712c-.0059.3508-.0542.6692-.1054 1.0017-.055.3576-.112.7274-.1264 1.1762-.0142.4368.0404.8909.0932 1.3301.1066.887.216 1.8003-.2075 2.7014a3.5272 3.5272 0 0 1-.1876-.3856c-.0527-.1276-.1669-.3326-.3251-.6162-.6156-1.1041-2.0574-3.6896-1.3193-4.7446.3795-.5427 1.3408-.5661 2.1781-.463zm.2284 7.0137a12.3762 12.3762 0 0 0-.0853-.1074l-.0355-.0444c.7262-1.1995.5842-2.3862.4578-3.4385-.0519-.4318-.1009-.8396-.0885-1.2226.0129-.4061.0666-.7543.1185-1.0911.0639-.415.1288-.8443.1109-1.3505.0134-.0531.0188-.1158.0118-.1902-.0457-.4855-.5999-1.938-1.7294-3.253-.6076-.7073-1.4896-1.4972-2.6889-2.0395.5251-.1066 1.2328-.2035 2.0244-.1859 2.0515.0456 3.6746.8135 4.8242 2.2824a.908.908 0 0 1 .0667.1002c.7231 1.3556-.2762 6.2751-2.9867 10.5405zm-8.8166-6.1162c-.025.1794-.3089.4225-.6211.4225a.5821.5821 0 0 1-.0809-.0056c-.1873-.026-.3765-.144-.5059-.3156-.0458-.0605-.1203-.178-.1055-.2844.0055-.0401.0261-.0985.0925-.1488.1182-.0894.3518-.1226.6096-.0867.3163.0441.6426.1938.6113.4186zm7.9305-.4114c.0111.0792-.049.201-.1531.3102-.0683.0717-.212.1961-.4079.2232a.5456.5456 0 0 1-.075.0052c-.2935 0-.5414-.2344-.5607-.3717-.024-.1765.2641-.3106.5611-.352.297-.0414.6111.0088.6356.1851z"/></svg>PostgreSQL</span>
-            <span class="tech-badge" style="--brand:#F7931E"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.601 5.53c-1.91.035-3.981.91-5.63 2.56-2.93 2.93-2.083 8.53-1.088 9.525.805.804 6.595 1.843 9.526-1.088a9.74 9.74 0 0 0 .584-.643c.043-.292.205-.66.489-1.106a1.848 1.848 0 0 1-.537.176c-.144.265-.37.55-.676.855-.354.335-.607.554-.76.656a.795.795 0 0 1-.437.152c-.35 0-.514-.308-.494-.924-.22.316-.425.549-.612.7a.914.914 0 0 1-.578.224c-.194 0-.36-.09-.496-.273a1.03 1.03 0 0 1-.193-.507 4.016 4.016 0 0 1-.726.583c-.224.132-.47.197-.74.197-.3 0-.543-.096-.727-.288a.978.978 0 0 1-.257-.524v.004c-.3.276-.564.48-.79.611a1.295 1.295 0 0 1-.649.197.693.693 0 0 1-.571-.275c-.145-.183-.218-.43-.218-.739 0-.464.101-1.02.302-1.67.201-.65.445-1.25.733-1.797l.842-.312a.21.21 0 0 1 .06-.013c.063 0 .116.047.157.14.04.095.061.221.061.38 0 .451-.104.888-.312 1.31-.207.422-.532.873-.974 1.352-.018.23-.027.388-.027.474 0 .193.036.345.106.458.071.113.165.169.282.169a.71.71 0 0 0 .382-.13c.132-.084.333-.26.602-.523.028-.418.187-.798.482-1.142.324-.38.685-.569 1.08-.569.206 0 .37.054.494.16a.524.524 0 0 1 .186.417c0 .458-.486.829-1.459 1.114.088.43.32.646.693.646a.807.807 0 0 0 .417-.117c.129-.076.321-.243.575-.497.032-.252.118-.495.259-.728.182-.3.416-.544.701-.73.285-.185.537-.278.756-.278.276 0 .47.127.58.381l.677-.374h.186l-.292.971c-.15.488-.226.823-.226 1.004 0 .19.067.285.202.285.086 0 .181-.045.285-.137.104-.092.25-.232.437-.42v.001c.143-.155.274-.32.392-.494-.19-.084-.285-.21-.285-.375 0-.17.058-.352.174-.545.116-.194.275-.29.479-.29.172 0 .258.088.258.265 0 .139-.05.338-.149.596.367-.04.687-.32.961-.842l.228-.01c1.059-2.438.828-5.075-.83-6.732-1.019-1.02-2.408-1.5-3.895-1.471zm4.725 8.203a8.938 8.938 0 0 1-1.333 2.151 1.09 1.09 0 0 0-.012.147c0 .168.047.309.14.423.092.113.206.17.34.17.296 0 .714-.264 1.254-.787-.001.04-.003.08-.003.121 0 .146.012.368.036.666l.733-.172c0-.2.003-.357.01-.474.01-.157.033-.33.066-.517.02-.11.07-.216.152-.315l.186-.216a5.276 5.276 0 0 1 .378-.397c.062-.055.116-.099.162-.13a.26.26 0 0 1 .123-.046c.055 0 .083.035.083.106 0 .07-.052.236-.156.497-.194.486-.292.848-.292 1.084 0 .175.046.314.136.418a.45.45 0 0 0 .358.155c.365 0 .803-.269 1.313-.808v-.381c-.361.426-.623.64-.784.64-.109 0-.163-.067-.163-.2 0-.1.065-.316.195-.65.19-.486.285-.836.285-1.048a.464.464 0 0 0-.112-.319.36.36 0 0 0-.282-.127c-.165 0-.354.077-.567.233-.213.156-.5.436-.863.84.053-.262.165-.622.335-1.08l-.809.156a6.54 6.54 0 0 0-.399 1.074c-.04.156-.07.316-.092.48a7.447 7.447 0 0 1-.49.45.38.38 0 0 1-.229.08.208.208 0 0 1-.174-.082.352.352 0 0 1-.064-.222c0-.1.019-.214.056-.343.038-.13.12-.373.249-.731l.308-.849zm-17.21-2.927c-.863-.016-1.67.263-2.261.854-1.352 1.352-1.07 3.827.631 5.527 1.7 1.701 4.95 1.21 5.527.632.467-.466 1.07-3.827-.631-5.527-.957-.957-2.158-1.465-3.267-1.486zm12.285.358h.166v.21H15.4zm.427 0h.166v.865l.46-.455h.195l-.364.362.428.684h-.198l-.357-.575-.164.166v.41h-.166zm1.016 0h.166v.21h-.166zm.481.122h.166v.288h.172v.135h-.172v.717c0 .037.006.062.02.075.012.013.037.02.074.02a.23.23 0 0 0 .078-.01v.141a.802.802 0 0 1-.136.014.23.23 0 0 1-.15-.043.15.15 0 0 1-.052-.123v-.79h-.141v-.136h.141zm-3.562.258c.081 0 .15.012.207.038.057.024.1.061.13.11s.045.106.045.173h-.176c-.006-.111-.075-.167-.208-.167a.285.285 0 0 0-.164.041.134.134 0 0 0-.06.117c0 .035.015.065.045.088.03.024.08.044.15.06l.16.039a.47.47 0 0 1 .224.105c.047.046.07.108.07.186a.3.3 0 0 1-.052.175.327.327 0 0 1-.152.116.585.585 0 0 1-.226.041c-.136 0-.24-.03-.309-.088-.069-.059-.105-.149-.109-.269h.176c.004.037.01.065.017.084a.166.166 0 0 0 .034.054c.044.043.112.065.204.065a.31.31 0 0 0 .177-.045.139.139 0 0 0 .067-.119.116.116 0 0 0-.038-.09.287.287 0 0 0-.124-.055l-.156-.038a1.248 1.248 0 0 1-.159-.05.359.359 0 0 1-.098-.061.22.22 0 0 1-.058-.083.32.32 0 0 1-.016-.108c0-.096.036-.174.109-.232a.45.45 0 0 1 .29-.087zm1.035 0a.46.46 0 0 1 .202.043.351.351 0 0 1 .187.212.577.577 0 0 1 .023.126h-.168a.256.256 0 0 0-.078-.168.242.242 0 0 0-.17-.06.248.248 0 0 0-.155.05.306.306 0 0 0-.1.144.662.662 0 0 0-.034.224.58.58 0 0 0 .035.214.299.299 0 0 0 .101.135.261.261 0 0 0 .157.048c.142 0 .227-.084.256-.252h.167a.519.519 0 0 1-.065.22.35.35 0 0 1-.146.138.464.464 0 0 1-.216.048.448.448 0 0 1-.246-.066.441.441 0 0 1-.161-.192.703.703 0 0 1-.057-.293c0-.085.01-.163.032-.233a.522.522 0 0 1 .095-.182.403.403 0 0 1 .15-.117.453.453 0 0 1 .191-.04zm.603.03h.166v1.046H15.4zm1.443 0h.166v1.046h-.166zm-5.05.618c-.08 0-.2.204-.356.611-.155.407-.308.977-.459 1.71.281-.312.509-.662.683-1.05.175-.387.262-.72.262-.999a.455.455 0 0 0-.036-.197c-.025-.05-.056-.075-.093-.075zm4.662 1.797c-.221 0-.431.188-.629.563-.197.376-.296.722-.296 1.038 0 .12.029.216.088.29a.273.273 0 0 0 .223.111c.221 0 .43-.188.625-.565.196-.377.294-.725.294-1.043a.457.457 0 0 0-.083-.29.269.269 0 0 0-.222-.104zm-2.848.007c-.146 0-.285.11-.417.333-.133.222-.2.51-.2.866.566-.159.849-.452.849-.881 0-.212-.077-.318-.232-.318Z"/></svg>scikit-learn</span><span class="tech-badge" style="--brand:#217346;--brand-dark:#6FB98F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3Z"/></svg>Excel</span>
-          </div>
-        </div>
-        <div class="tech-row">
-          <div class="tech-track">
-            <span class="tech-badge" style="--brand:#FF6F00"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.292 5.856L11.54 0v24l-4.095-2.378V7.603l-6.168 3.564.015-5.31zm21.43 5.311l-.014-5.31L12.46 0v24l4.095-2.378V14.87l3.092 1.788-.018-4.618-3.074-1.756V7.603l6.168 3.564z"/></svg>TensorFlow</span>
-            <span class="tech-badge" style="--brand:#3F4F75;--brand-dark:#8A9CC5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.021 0C.967 0 .111.883.111 1.973v20.054c0 1.09.857 1.973 1.91 1.973H21.98c1.054 0 1.91-.884 1.91-1.973V1.973C23.89.883 23.034 0 21.98 0H2.02zM10.1 4.648a.72.72 0 0 1 .304.127 1.196 1.196 0 0 1 .356.373.212.212 0 0 1 .084.163c.165.388.135.857-.149 1.203-.19.232-.429.305-.648.263a.241.241 0 0 1-.096.04c-.41.13-.884-.218-.994-.663-.065-.26-.087-.674.076-.908a.367.367 0 0 1 .082-.086.917.917 0 0 1 .05-.264c.077-.214.256-.214.425-.148a.542.542 0 0 1 .09-.006 1.938 1.938 0 0 1 .158.008.277.277 0 0 1 .262-.102zm8.43 0c.098.012.204.06.304.127a1.196 1.196 0 0 1 .355.373.212.212 0 0 1 .084.163c.166.388.136.857-.148 1.203-.19.232-.43.305-.648.263a.241.241 0 0 1-.096.04c-.41.13-.885-.218-.994-.663-.065-.26-.087-.674.076-.908a.367.367 0 0 1 .082-.086.91.91 0 0 1 .049-.264c.077-.214.256-.214.424-.148a.57.57 0 0 1 .091-.006 1.938 1.938 0 0 1 .159.008.277.277 0 0 1 .261-.102zm-13.159.16c.224-.013.461.063.649.198a1.069 1.069 0 0 1 .23.223 1.518 1.518 0 0 1 .059.039c.341.244.312.679.074.992l-.004.008a.91.91 0 0 1-.897.558c-.302-.008-.611-.084-.82-.271-.2-.143-.34-.356-.332-.627a.131.131 0 0 1 .092-.127 1.042 1.042 0 0 1 .342-.6.704.704 0 0 1 .607-.393zm8.682.003c.224-.014.461.06.648.195a1.069 1.069 0 0 1 .229.224 1.518 1.518 0 0 1 .058.04c.342.244.315.679.076.992l-.005.006a.907.907 0 0 1-.895.558c-.302-.008-.614-.084-.822-.271a.73.73 0 0 1-.33-.627.131.131 0 0 1 .092-.125 1.04 1.04 0 0 1 .34-.6.705.705 0 0 1 .61-.393zm-8.282.496a.563.563 0 0 1 .034.04l.011.005a.126.126 0 0 1 .088.076.596.596 0 0 1 .225.125.659.659 0 0 0-.078-.135 1.161 1.161 0 0 0-.28-.111zm8.68 0a.563.563 0 0 1 .033.04l.012.005c.039.007.07.038.088.076a.596.596 0 0 1 .225.125.659.659 0 0 0-.079-.135 1.153 1.153 0 0 0-.279-.111zm-4.553.119a1.912 1.912 0 0 0-.005.295c.075-.042.081-.17.064-.262a.322.322 0 0 0-.059-.033zm8.428 0a1.943 1.943 0 0 0-.004.295c.076-.042.08-.17.063-.262l-.02-.014a.303.303 0 0 0-.039-.02zM5.55 5.65l-.086.028.01.04c.057-.032.133-.028.175.028a.435.435 0 0 0-.003-.057.335.335 0 0 1-.075-.023c-.008-.004-.014-.01-.021-.016zm8.68 0l-.086.028.011.04c.057-.032.134-.028.176.028a.435.435 0 0 0-.004-.057.335.335 0 0 1-.074-.023.153.153 0 0 1-.023-.016zm-9.032.088c.003.017.005.036.01.053a.888.888 0 0 0 .023.078c-.026-.029-.038-.073-.033-.13zm8.68.002a.866.866 0 0 0 .033.13c-.026-.029-.038-.072-.033-.13zm-3.18.02l-.011.017a.38.38 0 0 1-.13.237.183.183 0 0 0-.001.006.119.119 0 0 1-.04.119.9.9 0 0 1-.029.064 1.862 1.862 0 0 1-.148.285.572.572 0 0 0 .217-.205c.1-.156.147-.34.142-.523zm8.43 0l-.012.017a.378.378 0 0 1-.129.237c0 .001 0 .004-.002.006.013.043-.005.088-.039.119a1.163 1.163 0 0 1-.029.064 1.862 1.862 0 0 1-.148.285.566.566 0 0 0 .216-.205c.1-.156.148-.34.143-.523zm-9.961.039a1.314 1.314 0 0 0 .004.133c.017.185.078.383.219.513a.59.59 0 0 0 .086.067 1.038 1.038 0 0 1-.143-.278 2.565 2.565 0 0 1-.166-.435zm8.43 0a1.314 1.314 0 0 0 .004.133c.017.185.078.383.218.513a.59.59 0 0 0 .086.067 1.054 1.054 0 0 1-.142-.278 2.522 2.522 0 0 1-.166-.435zm-11.67.146a.434.434 0 0 1-.028.065l.036.068a.238.238 0 0 0-.008-.133zm8.681 0a.51.51 0 0 1-.029.065l.035.068a.241.241 0 0 0-.006-.133zm-9.09.41a.61.61 0 0 1-.18.038l-.013.015a.532.532 0 0 0 .229-.013.495.495 0 0 1-.035-.04zm8.68 0a.61.61 0 0 1-.18.038l-.013.015a.532.532 0 0 0 .228-.013.625.625 0 0 1-.035-.04zm-4.308 2.3a1.061 1.061 0 0 1 1.052 1.072v8.58c0 .592-.47 1.072-1.052 1.072-.583 0-1.055-.48-1.055-1.072v-8.58c0-.592.472-1.072 1.055-1.073zm8.431 0a1.062 1.062 0 0 1 1.053 1.072v8.58c0 .592-.47 1.072-1.053 1.072-.582 0-1.054-.48-1.054-1.072v-8.58c0-.592.472-1.072 1.054-1.073zm-12.95.105c.224-.013.461.06.649.195a1.075 1.075 0 0 1 .23.225 1.871 1.871 0 0 1 .059.039c.341.244.312.679.074.992l-.004.006a.91.91 0 0 1-.897.558c-.302-.007-.611-.083-.82-.271-.2-.142-.34-.354-.332-.625a.131.131 0 0 1 .092-.127 1.042 1.042 0 0 1 .342-.6.701.701 0 0 1 .607-.393zm8.682 0c.224-.013.461.06.648.195a1.075 1.075 0 0 1 .229.225 1.871 1.871 0 0 1 .058.039c.342.244.315.679.076.992l-.005.006a.907.907 0 0 1-.895.558c-.302-.007-.614-.083-.822-.271a.727.727 0 0 1-.33-.625.131.131 0 0 1 .092-.127 1.04 1.04 0 0 1 .34-.6.705.705 0 0 1 .61-.393zm-8.282.496a.567.567 0 0 1 .034.043l.011.002a.126.126 0 0 1 .088.076.599.599 0 0 1 .225.125.659.659 0 0 0-.078-.133 1.21 1.21 0 0 0-.28-.113zm8.68 0a.567.567 0 0 1 .033.043l.012.002c.039.007.07.038.088.076a.599.599 0 0 1 .225.125.659.659 0 0 0-.079-.133 1.2 1.2 0 0 0-.279-.113zM5.55 9.6l-.086.027.01.041c.057-.032.133-.029.175.027a.437.437 0 0 0-.003-.054.323.323 0 0 1-.075-.026c-.008-.004-.014-.01-.021-.015zm8.68 0l-.086.027.011.041c.057-.032.134-.029.176.027a.437.437 0 0 0-.004-.054.323.323 0 0 1-.074-.026.153.153 0 0 1-.023-.015zm-9.032.09a.575.575 0 0 0 .032.123.164.164 0 0 1-.032-.124zm8.68 0a.575.575 0 0 0 .031.123.169.169 0 0 1-.031-.124zm-7.951.206a.419.419 0 0 1-.028.063 18.358 18.358 0 0 1 .036.07.237.237 0 0 0-.008-.133zm8.681 0a.419.419 0 0 1-.029.063 18.358 18.358 0 0 1 .035.07.241.241 0 0 0-.006-.133zm-9.09.409a.627.627 0 0 1-.18.037v.002l-.013.015a.548.548 0 0 0 .229-.015.61.61 0 0 1-.035-.04zm8.68 0a.627.627 0 0 1-.18.037v.002l-.013.015a.548.548 0 0 0 .228-.015l-.035-.04zm-8.525 2.64c.582 0 1.053.48 1.053 1.073v4.289c0 .592-.47 1.072-1.053 1.072-.582 0-1.055-.48-1.055-1.072v-4.29c0-.592.473-1.072 1.055-1.072zm8.432 0c.581 0 1.054.48 1.054 1.073v4.289c0 .592-.473 1.072-1.054 1.072-.583 0-1.053-.48-1.053-1.072v-4.29c0-.592.47-1.072 1.053-1.072Z"/></svg>Plotly</span>
-            <span class="tech-badge" style="--brand:#E34F26"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg>HTML5</span>
-            <span class="tech-badge" style="--brand:#1572B6"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg>CSS3</span>
-            <span class="tech-badge" style="--brand:#B8A500;--brand-dark:#F7DF1E"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg>JavaScript</span><span class="tech-badge" style="--brand:#00C4CC;--brand-dark:#4DD8DD"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM6.962 7.68c.754 0 1.337.549 1.405 1.2.069.583-.171 1.097-.822 1.406-.343.171-.48.172-.549.069-.034-.069 0-.137.069-.206.617-.514.617-.926.548-1.508-.034-.378-.308-.618-.583-.618-1.2 0-2.914 2.674-2.674 4.629.103.754.549 1.646 1.509 1.646.308 0 .65-.103.96-.24.5-.264.799-.47 1.097-.8-.073-.885.704-2.046 1.851-2.046.515 0 .926.205.96.583.068.514-.377.582-.514.582s-.378-.034-.378-.17c-.034-.138.309-.07.275-.378-.035-.206-.24-.274-.446-.274-.72 0-1.131.994-1.029 1.611.035.275.172.549.447.549.205 0 .514-.31.617-.755.068-.308.343-.514.583-.514.102 0 .17.034.205.171v.138c-.034.137-.137.548-.102.651 0 .069.034.171.17.171.092 0 .436-.18.777-.459.117-.59.253-1.298.253-1.357.034-.24.137-.48.617-.48.103 0 .171.034.205.171v.138l-.136.617c.445-.583 1.097-.994 1.508-.994.172 0 .309.102.309.274 0 .103 0 .274-.069.446-.137.377-.309.96-.412 1.474 0 .137.035.274.207.274.171 0 .685-.206 1.096-.754l.007-.004c-.002-.068-.007-.134-.007-.202 0-.411.035-.754.104-.994.068-.274.411-.514.617-.514.103 0 .205.069.205.171 0 .035 0 .103-.034.137-.137.446-.24.857-.24 1.269 0 .24.034.582.102.788 0 .034.035.069.07.069.068 0 .548-.445.89-1.028-.308-.206-.48-.549-.48-.96 0-.72.446-1.097.858-1.097.343 0 .617.24.617.72 0 .308-.103.65-.274.96h.102a.77.77 0 0 0 .584-.24.293.293 0 0 1 .134-.117c.335-.425.83-.74 1.41-.74.48 0 .924.205.959.582.068.515-.378.618-.515.618l-.002-.002c-.138 0-.377-.035-.377-.172 0-.137.309-.068.274-.376-.034-.206-.24-.275-.446-.275-.686 0-1.13.891-1.028 1.611.034.275.171.583.445.583.206 0 .515-.308.652-.754.068-.274.343-.514.583-.514.103 0 .17.034.205.171 0 .069 0 .206-.137.652-.17.308-.171.48-.137.617.034.274.171.48.309.583.034.034.068.102.068.102 0 .069-.034.138-.137.138-.034 0-.068 0-.103-.035-.514-.205-.72-.548-.789-.891-.205.24-.445.377-.72.377-.445 0-.89-.411-.96-.926a1.609 1.609 0 0 1 .075-.649c-.203.13-.422.203-.623.203h-.17c-.447.652-.927 1.098-1.27 1.303a.896.896 0 0 1-.377.104c-.068 0-.171-.035-.205-.104-.095-.152-.156-.392-.193-.667-.481.527-1.145.805-1.453.805-.343 0-.548-.206-.582-.55v-.376c.102-.754.377-1.2.377-1.337a.074.074 0 0 0-.069-.07c-.24 0-1.028.824-1.166 1.373l-.103.445c-.068.309-.377.515-.582.515-.103 0-.172-.035-.206-.172v-.137l.046-.233c-.435.31-.87.508-1.075.508-.308 0-.48-.172-.514-.412-.206.274-.445.412-.754.412-.352 0-.696-.24-.862-.593-.244.275-.523.553-.852.764-.48.309-1.028.549-1.68.549-.582 0-1.097-.309-1.371-.583-.412-.377-.651-.96-.686-1.509-.205-1.68.823-3.84 2.4-4.8.378-.205.755-.343 1.132-.343zm9.77 3.291c-.104 0-.172.172-.172.343 0 .274.137.583.309.755a1.74 1.74 0 0 0 .102-.583c0-.343-.137-.515-.24-.515z"/></svg>Canva</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-  <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="footer-title reveal">Let's Connect</div>
-      <p class="footer-sub reveal">Open to internships and collaborations. Find me on <a
+      <div class="footer-title">Let's Connect</div>
+      <p class="footer-sub">Open to internships and collaborations. Find me on <a
           href="https://github.com/nicolausprima" target="_blank" rel="noopener"
           style="color: var(--text); text-decoration: underline; text-underline-offset: 3px;">GitHub</a> or <a
           href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener"
@@ -2588,8 +2439,44 @@
     </div>
   </footer>
 
-  <!-- Custom JS -->
-  <script src="app.js"></script>
+  <script>
+    // Page transition fade (sinkron dengan index/app.js)
+    (function () {
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.body.classList.add('page-ready');
+        });
+      });
+      if (reduceMotion) return;
+      document.querySelectorAll('a[href$=".html"], a[href^="index.html"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          if (!href || link.target === '_blank') return;
+          e.preventDefault();
+          document.body.classList.add('page-leaving');
+          setTimeout(function () { window.location.href = href; }, 300);
+        });
+      });
+    })();
+    // Theme toggle mandiri (tanpa app.js yang berat)
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      function apply(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        try { localStorage.setItem('theme', t); } catch (e) {}
+      }
+      btn && btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme');
+        apply(cur === 'dark' ? 'light' : 'dark');
+      });
+      var nav = document.querySelector('.navbar');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 24) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }, { passive: true });
+    })();
+  </script>
 </body>
 
 </html>

@@ -1,5 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#1C1C1C"/>
-  <text x="32" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-style="italic" font-weight="600" fill="#F7F5F2" text-anchor="middle">N</text>
-  <circle cx="46" cy="44" r="4" fill="#F7F5F2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>Nicolaus Prima</title>
+  <style>
+    .tensor-mark { fill: #1C1C1C; }
+    @media (prefers-color-scheme: dark) {
+      .tensor-mark { fill: #F7F5F2; }
+    }
+  </style>
+  <g transform="translate(-86.02 -68.46) scale(0.836)">
+    <g class="tensor-mark">
+      <!-- Left Isometric Column -->
+      <path d="M 112 172 L 184 130 L 184 340 L 112 382 Z" />
+      <!-- Dynamic Diagonal Tensor Fold -->
+      <path d="M 184 130 L 256 88 L 400 340 L 328 382 Z" />
+      <!-- Right Isometric Column -->
+      <path d="M 328 172 L 400 130 L 400 340 L 328 382 Z" />
+      <!-- Top Dimensional Cap -->
+      <path d="M 184 130 L 256 88 L 328 130 L 256 172 Z" />
+    </g>
+  </g>
 </svg>

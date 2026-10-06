@@ -1,3 +1,23 @@
+// ── PAGE TRANSITION (fade halus antar halaman) ───────────────────
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      document.body.classList.add('page-ready');
+    });
+  });
+  if (reduceMotion) return;
+  document.querySelectorAll('a[href$=".html"], a[href^="experience.html"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || link.target === '_blank') return;
+      e.preventDefault();
+      document.body.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 300);
+    });
+  });
+})();
+
 // ── DARK MODE TOGGLE ──────────────────────────────────────────
 const root = document.documentElement;
 const toggleBtn = document.getElementById('theme-toggle');
@@ -94,24 +114,12 @@ if (location.hash) {
   const hashTarget = document.querySelector(location.hash);
   if (hashTarget) setTimeout(() => scrollToCenter(hashTarget), 100);
 }
-// ── Lightweight Smooth Scroll (Lerp) for Hands ────────────────
-// Lightweight Smooth Scroll (Lerp) for Hands
-let targetScrollY = window.scrollY;
-let currentScrollY = window.scrollY;
-
-// Intro animation state for hands
-let introProgress = 0;
-
-// ── CUSTOM CURSOR ─────────────────────────────────────────────
+// ── CUSTOM CURSOR & NAVBAR ────────────────────────────────────
 const cursor = document.querySelector('.cursor');
 const navbar = document.querySelector('.navbar');
-const handLeft = document.getElementById('image-hand-left');
-const handRight = document.getElementById('image-hand-right');
-
+// ── NAVBAR SCROLL HANDLER ─────────────────────────────────────
 window.addEventListener('scroll', () => {
-  let scrollY = window.scrollY;
-  targetScrollY = scrollY; // Update target for lerp
-  
+  const scrollY = window.scrollY;
   if (scrollY > 60) {
     navbar.classList.add('scrolled');
   } else {
@@ -119,48 +127,6 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-function animateHands() {
-  currentScrollY += (targetScrollY - currentScrollY) * 0.08; 
-  
-  // Calculate intro animation (0 to 1 over approx 1 second)
-  if (introProgress < 1) {
-    introProgress += 0.015;
-    if (introProgress > 1) introProgress = 1;
-  }
-  // Quartic ease-out for ultra smooth landing
-  let introEased = 1 - Math.pow(1 - introProgress, 4);
-  
-  const projectsSection = document.getElementById('projects');
-  if (handLeft && handRight && projectsSection) {
-    let projectsTop = projectsSection.offsetTop;
-    let projectsBottom = projectsTop + projectsSection.offsetHeight;
-    
-    let ratio = Math.min(1, currentScrollY / Math.max(1, projectsTop - 250));
-    let pushIn = (1 - ratio) * 12; 
-    
-    // Add a slide-in offset for the initial load (-15vw starting point, resolves to 0)
-    let slideInOffset = (1 - introEased) * -15;
-    
-    let opacity = 1;
-    let fadeStart = projectsBottom - (window.innerHeight * 0.8); 
-    if (currentScrollY > fadeStart) {
-      opacity = 1 - ((currentScrollY - fadeStart) / 300); 
-      if (opacity < 0) opacity = 0;
-    }
-    
-    // Apply fade-in for intro
-    let finalOpacity = opacity * introEased;
-    
-    handLeft.style.opacity = finalOpacity;
-    handRight.style.opacity = finalOpacity;
-    
-    handLeft.style.transform = `translateY(-50%) translateX(${pushIn + slideInOffset}vw)`;
-    handRight.style.transform = `translateY(-50%) translateX(-${pushIn + slideInOffset}vw) scaleX(-1)`;
-  }
-  
-  requestAnimationFrame(animateHands);
-}
-requestAnimationFrame(animateHands);
 
 if (document.querySelector('.auto-type-hero')) {
   try {
