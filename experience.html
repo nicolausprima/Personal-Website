@@ -2338,16 +2338,16 @@
 </head>
 
 <body>
-  <!-- NAVBAR (simplified, links back to index) -->
+  <!-- NAVBAR -->
   <header class="navbar" role="banner">
     <a href="index.html#hero" class="nav-logo">Nicolaus<span>.</span></a>
     <div class="nav-right">
       <nav class="nav-desktop" aria-label="Main navigation">
         <ul class="nav-menu">
           <li><a href="index.html#about">About</a></li>
-          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="projects.html">Projects</a></li>
           <li><a href="index.html#education">Education</a></li>
-          <li><a href="experience.html">Experience</a></li>
+          <li><a href="experience.html" class="active">Experience</a></li>
           <li><a href="index.html#skills">Skills</a></li>
         </ul>
       </nav>
@@ -2371,8 +2371,38 @@
           </svg>
         </span>
       </button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mobile-nav-drawer">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
     </div>
   </header>
+
+  <!-- MOBILE NAV FLOATING MENU -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
+  <nav class="mobile-nav-menu" id="mobile-nav-drawer" aria-label="Mobile navigation" aria-hidden="true">
+    <ul class="mobile-nav-list">
+      <li><a href="index.html#hero" class="mobile-nav-link">Home <span>01</span></a></li>
+      <li><a href="index.html#about" class="mobile-nav-link">About <span>02</span></a></li>
+      <li><a href="projects.html" class="mobile-nav-link">Projects <span>03</span></a></li>
+      <li><a href="index.html#education" class="mobile-nav-link">Education <span>04</span></a></li>
+      <li><a href="experience.html" class="mobile-nav-link active">Experience <span>05</span></a></li>
+      <li><a href="index.html#skills" class="mobile-nav-link">Skills <span>06</span></a></li>
+    </ul>
+    <div class="mobile-nav-divider"></div>
+    <div class="mobile-nav-actions">
+      <div class="mobile-nav-social">
+        <a href="https://github.com/nicolausprima" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.52 11.52 0 0 1 12 6.8c1.02.01 2.05.14 3.01.41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/nicolausprima/" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
+        </a>
+      </div>
+      <a href="CV.pdf" download class="mobile-nav-cv-btn">CV</a>
+    </div>
+  </nav>
 
   <main class="detail-page">
     <div class="container">
@@ -2485,6 +2515,34 @@
         if (window.scrollY > 24) nav.classList.add('scrolled');
         else nav.classList.remove('scrolled');
       }, { passive: true });
+    })();
+
+    // Mobile nav drawer
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var drawer = document.getElementById('mobile-nav-drawer');
+      var overlay = document.getElementById('mobile-nav-overlay');
+      if (!toggle || !drawer || !overlay) return;
+      function open() {
+        toggle.classList.add('open');
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        toggle.classList.remove('open');
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      toggle.addEventListener('click', function () {
+        if (drawer.classList.contains('open')) close();
+        else open();
+      });
+      overlay.addEventListener('click', close);
+      drawer.querySelectorAll('a').forEach(function (l) { l.addEventListener('click', close); });
     })();
   </script>
 </body>
