@@ -143,15 +143,13 @@
     /* Dark mode: card polish */
     [data-theme="dark"] .project-card,
     [data-theme="dark"] .tech-badge,
-    [data-theme="dark"] .edu-item,
-    [data-theme="dark"] .about-avatar-wrap {
+    [data-theme="dark"] .edu-item {
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 4px rgba(0, 0, 0, 0.4), 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
     [data-theme="dark"] .project-card:hover,
     [data-theme="dark"] .tech-badge:hover,
-    [data-theme="dark"] .edu-item:hover,
-    [data-theme="dark"] .about-avatar-wrap:hover {
+    [data-theme="dark"] .edu-item:hover {
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 4px 24px rgba(0, 0, 0, 0.5), 0 16px 48px rgba(0, 0, 0, 0.35);
       border-color: var(--border);
     }
@@ -1530,26 +1528,23 @@
     .about-avatar-wrap {
       width: 190px;
       height: 190px;
-      border-radius: 50%;
-      padding: 6px;
-      background: var(--surface);
-      border: 2px solid var(--border);
-      box-shadow: 0 10px 32px rgba(26, 22, 18, 0.1);
+      padding: 0;
+      background: none;
+      border: none;
+      box-shadow: none;
       margin-bottom: 28px;
-      transition: var(--transition);
     }
 
     .about-avatar-wrap:hover {
-      transform: translateY(-4px) scale(1.03);
-      border-color: var(--accent);
-      box-shadow: 0 16px 40px rgba(26, 22, 18, 0.16);
+      transform: none;
+      border-color: transparent;
+      box-shadow: none;
     }
 
     .about-avatar {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
       display: block;
     }
 
@@ -1558,7 +1553,6 @@
       position: relative;
       width: 100%;
       height: 100%;
-      border-radius: 50%;
       overflow: hidden;
       aspect-ratio: 1 / 1;
     }
@@ -1569,7 +1563,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
       opacity: 0;
       display: block;
     }
