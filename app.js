@@ -658,96 +658,158 @@ const observer = new IntersectionObserver((entries) => {
 });
 reveals.forEach(el => observer.observe(el));
 
-// ── HERO DITHER: floating @ symbols ───────────────────────────
-class HeroDither {
+// ── HERO SCATTER: noise → trend line ────────────────────────────
+// Titik acak berkumpul ke garis tren saat mouse mendekat / scroll.
+class HeroScatter {
   constructor(canvas) {
     this.canvas = canvas;
-    this.ctx    = canvas.getContext('2d');
-    this.syms   = [];
+    this.ctx = canvas.getContext('2d');
+    this.cohesion = 0.15;
+    this.targetCohesion = 0.15;
+    this.mouseX = null;
+    this.mouseY = null;
+    this.time = 0;
 
     this._resize();
     this._populate();
+
     window.addEventListener('resize', () => {
       this._resize();
       this._populate();
     });
-    this._tick();
-  }
 
-  _resize() {
-    // Match canvas physical pixels to its CSS size
-    const r = this.canvas.getBoundingClientRect();
-    this.W = this.canvas.width  = r.width  || window.innerWidth;
-    this.H = this.canvas.height = r.height || window.innerHeight;
-  }
-
-  _populate() {
-    const { W, H } = this;
-    // One symbol per ~11 000 px² of hero area
-    const count = Math.max(30, Math.floor((W * H) / 11000));
-    this.syms = [];
-    for (let i = 0; i < count; i++) {
-      this.syms.push({
-        x:          Math.random() * W,
-        y:          Math.random() * H,
-        travelAngle: Math.random() * Math.PI * 2,     // direction of drift
-        speed:      0.04 + Math.random() * 0.10,       // px / frame  (very slow)
-        rot:        Math.random() * Math.PI * 2,        // visual rotation angle
-        rotSpeed:   (Math.random() - 0.5) * 0.0035,   // spin per frame
-        size:       10 + Math.random() * 24,            // font-size px
-        baseAlpha:  0.04 + Math.random() * 0.13,       // peak opacity
-        phase:      Math.random() * Math.PI * 2,        // breathing phase
-        phaseSpd:   0.005 + Math.random() * 0.009,     // breathing speed
+    // Canvas pointer-events:none → dengar mouse di section hero.
+    const hero = document.getElementById('hero');
+    if (hero) {
+      hero.addEventListener('mousemove', (e) => {
+        const r = this.canvas.getBoundingClientRect();
+        this.mouseX = e.clientX - r.left;
+        this.mouseY = e.clientY - r.top;
+      });
+      hero.addEventListener('mouseleave', () => {
+        this.mouseX = null;
+        this.mouseY = null;
       });
     }
+    window.addEventListener('scroll', () => this._updateTarget(), { passive: true });
+    this._updateTarget();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.cohesion = 0.8;
+      this._draw();
+      return; // satu frame statis, tanpa rAF loop
+    }
+    this._tick();
   }
 
   get _isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
-  _tick() {
-    const { ctx, W, H, syms } = this;
-    ctx.clearRect(0, 0, W, H);
+  _resize() {
+    const r = this.canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.W = r.width || window.innerWidth;
+    this.H = r.height || window.innerHeight;
+    this.canvas.width = Math.round(this.W * dpr);
+    this.canvas.height = Math.round(this.H * dpr);
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
 
-    // Color: charcoal in light, warm cream in dark
+  _gauss() {
+    // ~N(0,1) murah: jumlah 3 uniform
+    return (Math.random() + Math.random() + Math.random() - 1.5) * 2;
+  }
+
+  _populate() {
+    const { W, H } = this;
+    const count = Math.max(40, Math.min(140, Math.floor((W * H) / 12000)));
+    this.margin = Math.min(W * 0.12, 160);
+    this.pts = [];
+    for (let i = 0; i < count; i++) {
+      this.pts.push({
+        sx: Math.random() * W,          // scatter anchor
+        sy: Math.random() * H,
+        t: Math.random(),               // posisi sepanjang garis tren
+        off: this._gauss(),             // offset tegak lurus garis (satuan spread)
+        r: 1.2 + Math.random() * 1.6,
+        a: 0.3 + Math.random() * 0.3,
+        phase: Math.random() * Math.PI * 2,
+        freq: 0.4 + Math.random() * 0.8
+      });
+    }
+  }
+
+  // Garis tren diagonal: kiri-bawah → kanan-atas, lewat belakang headline.
+  _lineXY(t) {
+    const x = this.margin + t * (this.W - 2 * this.margin);
+    const y = this.H * 0.74 - t * this.H * 0.48;
+    return [x, y];
+  }
+
+  _updateTarget() {
+    const hero = document.getElementById('hero');
+    const heroH = (hero && hero.offsetHeight) || window.innerHeight;
+    const scrollBoost = Math.min(1, (window.scrollY || 0) / (heroH * 0.6));
+    let mouseBoost = 0;
+    if (this.mouseX !== null) {
+      const dx = this.mouseX - this.W / 2;
+      const dy = this.mouseY - this.H / 2;
+      const d = Math.sqrt(dx * dx + dy * dy) / (Math.sqrt(this.W * this.W + this.H * this.H) / 2);
+      mouseBoost = Math.max(0, 1 - d * 1.15);
+    }
+    // Cohesion naik walau mouse idle; scroll/mendekat → hampir 1.
+    this.targetCohesion = Math.max(0.15, scrollBoost, mouseBoost);
+  }
+
+  _tick() {
+    this.time += 0.016;
+    this.cohesion += (this.targetCohesion - this.cohesion) * 0.06;
+    this._draw();
+    requestAnimationFrame(() => this._tick());
+  }
+
+  _draw() {
+    const { ctx, W, H } = this;
+    ctx.clearRect(0, 0, W, H);
+    const c = this.cohesion;
+    const e = c * c * (3 - 2 * c); // smoothstep
+    const spread = Math.min(W, H) * 0.09;
+
     const [r, g, b] = this._isDark ? [222, 218, 212] : [28, 28, 28];
 
-    for (const s of syms) {
-      // Drift
-      s.x  += Math.cos(s.travelAngle) * s.speed;
-      s.y  += Math.sin(s.travelAngle) * s.speed;
-      s.rot += s.rotSpeed;
-      s.phase += s.phaseSpd;
+    // Garis tren: muncul seiring cohesion.
+    const [x0, y0] = this._lineXY(0);
+    const [x1, y1] = this._lineXY(1);
+    ctx.save();
+    ctx.globalAlpha = 0.1 + 0.55 * e;
+    ctx.strokeStyle = `rgb(${r},${g},${b})`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+    ctx.restore();
 
-      // Wrap around edges with a little padding
-      const pad = 50;
-      if (s.x < -pad)    s.x = W + pad;
-      if (s.x > W + pad) s.x = -pad;
-      if (s.y < -pad)    s.y = H + pad;
-      if (s.y > H + pad) s.y = -pad;
-
-      // Breathing opacity
-      const alpha = s.baseAlpha * (0.6 + 0.4 * Math.sin(s.phase));
-
-      ctx.save();
-      ctx.translate(s.x, s.y);
-      ctx.rotate(s.rot);
-      ctx.globalAlpha = +alpha.toFixed(4);
-      ctx.font = `${s.size}px 'JetBrains Mono', monospace`;
+    // Titik: lerp scatter → garis + jitter yang menyusut saat rapi.
+    for (const p of this.pts) {
+      const [lx, ly] = this._lineXY(p.t);
+      const jx = (Math.sin(this.time * p.freq + p.phase) * 6) * (1 - e);
+      const jy = (Math.cos(this.time * p.freq * 0.8 + p.phase) * 6) * (1 - e);
+      const px = p.sx + (lx + p.off * spread * 0.35 - p.sx) * e + jx;
+      const py = p.sy + (ly + p.off * spread - p.sy) * e + jy;
+      ctx.globalAlpha = p.a * (0.55 + 0.45 * e);
       ctx.fillStyle = `rgb(${r},${g},${b})`;
-      ctx.textAlign    = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('@', 0, 0);
-      ctx.restore();
+      ctx.beginPath();
+      ctx.arc(px, py, p.r, 0, Math.PI * 2);
+      ctx.fill();
     }
-
-    requestAnimationFrame(() => this._tick());
+    ctx.globalAlpha = 1;
   }
 }
 
-const _ditherCanvas = document.getElementById('hero-dither');
-if (_ditherCanvas) new HeroDither(_ditherCanvas);
+const _scatterCanvas = document.getElementById('hero-dither');
+if (_scatterCanvas) new HeroScatter(_scatterCanvas);
 
 // ── INTERACTIVE 3D DITHER OBJECTS ─────────────────────────────
 class Dither3D {
