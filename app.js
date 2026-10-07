@@ -669,17 +669,10 @@ reveals.forEach(el => observer.observe(el));
   var ctx = canvas.getContext('2d');
 
   var W = 0, H = 0, margin = 0;
-  // Palet titik: abu netral + 2 cluster muted (slate biru, sage hijau).
-  var DOT_LIGHT = [
-    [74, 74, 74], [74, 74, 74], [74, 74, 74], [74, 74, 74],
-    [51, 85, 136], [51, 85, 136],
-    [58, 130, 74]
-  ];
-  var DOT_DARK = [
-    [224, 224, 222], [224, 224, 222], [224, 224, 222], [224, 224, 222],
-    [125, 165, 205], [125, 165, 205],
-    [125, 185, 130]
-  ];
+  // Palet titik: abu netral + 2 cluster (biru steel = atas, hijau daun = bawah).
+  var GRAY_LIGHT = [74, 74, 74], GRAY_DARK = [224, 224, 222];
+  var BLUE_LIGHT = [51, 85, 136], BLUE_DARK = [125, 165, 205];
+  var LEAF_LIGHT = [58, 130, 74], LEAF_DARK = [125, 185, 130];
   var pts = [];
   var ripples = [];
   var cohesion = 0.18, targetCohesion = 0.18, fade = 1;
@@ -716,15 +709,19 @@ reveals.forEach(el => observer.observe(el));
     margin = Math.min(W * 0.12, 160);
     pts = [];
     for (var i = 0; i < count; i++) {
+      var iy = Math.random() * H;
+      // Warna ikut sisi: atas → biru, bawah → hijau, sisanya abu acak.
+      var iz = Math.random();
+      var zone = iz < 0.3 ? 0 : (iy < H * 0.5 ? 1 : 2);
       pts.push({
         sx: Math.random() * W,
-        sy: Math.random() * H,
+        sy: iy,
         vx: (Math.random() - 0.5) * 0.14, // brownian drift
         vy: (Math.random() - 0.5) * 0.14,
         t: Math.random(),                 // posisi sepanjang garis tren
         off: gauss(),                     // offset tegak lurus garis
         r: 1.5 + Math.random() * 2,
-        col: Math.floor(Math.random() * 7),
+        zone: zone, // 0 abu, 1 atas/biru, 2 bawah/hijau
         phase: Math.random() * Math.PI * 2,
         freq: 0.4 + Math.random() * 0.8
       });
@@ -796,7 +793,6 @@ reveals.forEach(el => observer.observe(el));
 
     // Gravitasi lokal: titik dekat kursor lebih dulu rapi ke garis.
     var gravR = Math.max(120, Math.min(260, Math.min(W, H) * 0.3));
-    var PAL = dark ? DOT_DARK : DOT_LIGHT;
 
     for (var i = 0; i < pts.length; i++) {
       var p = pts[i];
@@ -830,7 +826,10 @@ reveals.forEach(el => observer.observe(el));
       var jy = Math.cos(time * p.freq * 0.8 + p.phase) * 6 * (1 - pe);
       var px = p.sx + (L[0] + p.off * spread * 0.35 - p.sx) * pe + jx + rx;
       var py = p.sy + (L[1] + p.off * spread - p.sy) * pe + jy + ry;
-      var cc = PAL[p.col];
+      var cc;
+      if (p.zone === 1) cc = dark ? BLUE_DARK : BLUE_LIGHT;       // atas → biru
+      else if (p.zone === 2) cc = dark ? LEAF_DARK : LEAF_LIGHT;  // bawah → hijau
+      else cc = dark ? GRAY_DARK : GRAY_LIGHT;                    // abu acak
       ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.75)';
       ctx.globalAlpha = fade * (1 - 0.7 * safeFactor(px, py));
       ctx.beginPath();
