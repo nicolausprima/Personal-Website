@@ -723,7 +723,7 @@ class HeroScatter {
 
   _populate() {
     const { W, H } = this;
-    const count = Math.max(40, Math.min(140, Math.floor((W * H) / 12000)));
+    const count = Math.max(70, Math.min(200, Math.floor((W * H) / 8000)));
     this.margin = Math.min(W * 0.12, 160);
     this.pts = [];
     for (let i = 0; i < count; i++) {
@@ -732,8 +732,8 @@ class HeroScatter {
         sy: Math.random() * H,
         t: Math.random(),               // posisi sepanjang garis tren
         off: this._gauss(),             // offset tegak lurus garis (satuan spread)
-        r: 1.2 + Math.random() * 1.6,
-        a: 0.3 + Math.random() * 0.3,
+        r: 1.5 + Math.random() * 2,
+        a: 0.45 + Math.random() * 0.35,
         phase: Math.random() * Math.PI * 2,
         freq: 0.4 + Math.random() * 0.8
       });
@@ -782,7 +782,7 @@ class HeroScatter {
     const [x0, y0] = this._lineXY(0);
     const [x1, y1] = this._lineXY(1);
     ctx.save();
-    ctx.globalAlpha = 0.1 + 0.55 * e;
+    ctx.globalAlpha = 0.22 + 0.6 * e;
     ctx.strokeStyle = `rgb(${r},${g},${b})`;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
@@ -798,7 +798,7 @@ class HeroScatter {
       const jy = (Math.cos(this.time * p.freq * 0.8 + p.phase) * 6) * (1 - e);
       const px = p.sx + (lx + p.off * spread * 0.35 - p.sx) * e + jx;
       const py = p.sy + (ly + p.off * spread - p.sy) * e + jy;
-      ctx.globalAlpha = p.a * (0.55 + 0.45 * e);
+      ctx.globalAlpha = p.a * (0.7 + 0.3 * e);
       ctx.fillStyle = `rgb(${r},${g},${b})`;
       ctx.beginPath();
       ctx.arc(px, py, p.r, 0, Math.PI * 2);
