@@ -830,7 +830,7 @@ reveals.forEach(el => observer.observe(el));
       if (p.zone === 1) cc = dark ? BLUE_DARK : BLUE_LIGHT;       // atas → biru
       else if (p.zone === 2) cc = dark ? LEAF_DARK : LEAF_LIGHT;  // bawah → hijau
       else cc = dark ? GRAY_DARK : GRAY_LIGHT;                    // abu acak
-      ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.75)';
+      ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.45)';
       ctx.globalAlpha = fade * (1 - 0.7 * safeFactor(px, py));
       ctx.beginPath();
       ctx.arc(px, py, p.r, 0, Math.PI * 2);
