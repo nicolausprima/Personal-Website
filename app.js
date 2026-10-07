@@ -658,82 +658,61 @@ const observer = new IntersectionObserver((entries) => {
 });
 reveals.forEach(el => observer.observe(el));
 
-// ── HERO SCATTER: noise → trend line ────────────────────────────
-// Titik acak berkumpul ke garis tren saat mouse mendekat / scroll.
-class HeroScatter {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
-    this.cohesion = 0.15;
-    this.targetCohesion = 0.15;
-    this.mouseX = null;
-    this.mouseY = null;
-    this.time = 0;
+// ── HERO SCATTER: "Data → Decision" (self-organizing scatter) ────
+// Vanilla canvas IIFE: noisy dots relax onto a trend line.
+// Mouse gravity + click ripple, scroll cohesion + fade, DPR-aware,
+// pauses off-screen / tab-hidden, static frame for reduced motion.
+(function () {
+  var canvas = document.getElementById('hero-dither');
+  if (!canvas) return;
+  var hero = document.getElementById('hero');
+  var ctx = canvas.getContext('2d');
 
-    this._resize();
-    this._populate();
+  var W = 0, H = 0, margin = 0;
+  var pts = [];
+  var ripples = [];
+  var cohesion = 0.18, targetCohesion = 0.18, fade = 1;
+  var mouse = { x: 0, y: 0, active: false };
+  var time = 0, rafId = 0, inView = true;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    window.addEventListener('resize', () => {
-      this._resize();
-      this._populate();
-    });
-
-    // Canvas pointer-events:none → dengar mouse di section hero.
-    const hero = document.getElementById('hero');
-    if (hero) {
-      hero.addEventListener('mousemove', (e) => {
-        const r = this.canvas.getBoundingClientRect();
-        this.mouseX = e.clientX - r.left;
-        this.mouseY = e.clientY - r.top;
-      });
-      hero.addEventListener('mouseleave', () => {
-        this.mouseX = null;
-        this.mouseY = null;
-      });
-    }
-    window.addEventListener('scroll', () => this._updateTarget(), { passive: true });
-    this._updateTarget();
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.cohesion = 0.8;
-      this._draw();
-      return; // satu frame statis, tanpa rAF loop
-    }
-    this._tick();
-  }
-
-  get _isDark() {
+  function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
-  _resize() {
-    const r = this.canvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.W = r.width || window.innerWidth;
-    this.H = r.height || window.innerHeight;
-    this.canvas.width = Math.round(this.W * dpr);
-    this.canvas.height = Math.round(this.H * dpr);
-    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  _gauss() {
-    // ~N(0,1) murah: jumlah 3 uniform
+  function gauss() {
     return (Math.random() + Math.random() + Math.random() - 1.5) * 2;
   }
 
-  _populate() {
-    const { W, H } = this;
-    const count = Math.max(70, Math.min(200, Math.floor((W * H) / 8000)));
-    this.margin = Math.min(W * 0.12, 160);
-    this.pts = [];
-    for (let i = 0; i < count; i++) {
-      this.pts.push({
-        sx: Math.random() * W,          // scatter anchor
+  function smooth(x) {
+    x = Math.max(0, Math.min(1, x));
+    return x * x * (3 - 2 * x);
+  }
+
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width || window.innerWidth;
+    H = r.height || window.innerHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    populate();
+  }
+
+  function populate() {
+    var count = Math.max(70, Math.min(200, Math.floor((W * H) / 8000)));
+    margin = Math.min(W * 0.12, 160);
+    pts = [];
+    for (var i = 0; i < count; i++) {
+      pts.push({
+        sx: Math.random() * W,
         sy: Math.random() * H,
-        t: Math.random(),               // posisi sepanjang garis tren
-        off: this._gauss(),             // offset tegak lurus garis (satuan spread)
+        vx: (Math.random() - 0.5) * 0.14, // brownian drift
+        vy: (Math.random() - 0.5) * 0.14,
+        t: Math.random(),                 // posisi sepanjang garis tren
+        off: gauss(),                     // offset tegak lurus garis
         r: 1.5 + Math.random() * 2,
-        a: 0.45 + Math.random() * 0.35,
         phase: Math.random() * Math.PI * 2,
         freq: 0.4 + Math.random() * 0.8
       });
@@ -741,75 +720,147 @@ class HeroScatter {
   }
 
   // Garis tren diagonal: kiri-bawah → kanan-atas, lewat belakang headline.
-  _lineXY(t) {
-    const x = this.margin + t * (this.W - 2 * this.margin);
-    const y = this.H * 0.74 - t * this.H * 0.48;
-    return [x, y];
+  function lineXY(t) {
+    return [margin + t * (W - 2 * margin), H * 0.74 - t * H * 0.48];
   }
 
-  _updateTarget() {
-    const hero = document.getElementById('hero');
-    const heroH = (hero && hero.offsetHeight) || window.innerHeight;
-    const scrollBoost = Math.min(1, (window.scrollY || 0) / (heroH * 0.6));
-    let mouseBoost = 0;
-    if (this.mouseX !== null) {
-      const dx = this.mouseX - this.W / 2;
-      const dy = this.mouseY - this.H / 2;
-      const d = Math.sqrt(dx * dx + dy * dy) / (Math.sqrt(this.W * this.W + this.H * this.H) / 2);
+  function updateTarget() {
+    var heroH = (hero && hero.offsetHeight) || window.innerHeight;
+    var sc = window.scrollY || 0;
+    var progress = Math.min(1, sc / (heroH * 0.7));
+    var mouseBoost = 0;
+    if (mouse.active) {
+      var dx = mouse.x - W / 2, dy = mouse.y - H / 2;
+      var d = Math.sqrt(dx * dx + dy * dy) / (Math.sqrt(W * W + H * H) / 2);
       mouseBoost = Math.max(0, 1 - d * 1.15);
     }
-    // Cohesion naik walau mouse idle; scroll/mendekat → hampir 1.
-    this.targetCohesion = Math.max(0.15, scrollBoost, mouseBoost);
+    targetCohesion = Math.max(0.18, progress, mouseBoost);
+    fade = 1 - 0.7 * Math.min(1, sc / heroH);
   }
 
-  _tick() {
-    this.time += 0.016;
-    this.cohesion += (this.targetCohesion - this.cohesion) * 0.06;
-    this._draw();
-    requestAnimationFrame(() => this._tick());
-  }
-
-  _draw() {
-    const { ctx, W, H } = this;
+  function draw() {
     ctx.clearRect(0, 0, W, H);
-    const c = this.cohesion;
-    const e = c * c * (3 - 2 * c); // smoothstep
-    const spread = Math.min(W, H) * 0.09;
+    var e = smooth(cohesion);
+    var spread = Math.min(W, H) * 0.09;
+    var dark = isDark();
 
-    const [r, g, b] = this._isDark ? [222, 218, 212] : [28, 28, 28];
-
-    // Garis tren: muncul seiring cohesion.
-    const [x0, y0] = this._lineXY(0);
-    const [x1, y1] = this._lineXY(1);
+    // Garis tren / decision boundary.
+    var a = lineXY(0), b = lineXY(1);
     ctx.save();
-    ctx.globalAlpha = 0.22 + 0.6 * e;
-    ctx.strokeStyle = `rgb(${r},${g},${b})`;
-    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = (0.3 + 0.7 * e) * fade;
+    ctx.strokeStyle = dark ? 'rgba(255,255,255,0.8)' : '#2A2A2A';
+    ctx.lineWidth = dark ? 1.5 : 1.25;
     ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x1, y1);
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
     ctx.stroke();
     ctx.restore();
 
-    // Titik: lerp scatter → garis + jitter yang menyusut saat rapi.
-    for (const p of this.pts) {
-      const [lx, ly] = this._lineXY(p.t);
-      const jx = (Math.sin(this.time * p.freq + p.phase) * 6) * (1 - e);
-      const jy = (Math.cos(this.time * p.freq * 0.8 + p.phase) * 6) * (1 - e);
-      const px = p.sx + (lx + p.off * spread * 0.35 - p.sx) * e + jx;
-      const py = p.sy + (ly + p.off * spread - p.sy) * e + jy;
-      ctx.globalAlpha = p.a * (0.7 + 0.3 * e);
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
+    // Gravitasi lokal: titik dekat kursor lebih dulu rapi ke garis.
+    var gravR = Math.max(120, Math.min(260, Math.min(W, H) * 0.3));
+    ctx.globalAlpha = fade;
+    ctx.fillStyle = dark ? 'rgba(224,224,222,0.25)' : 'rgba(74,74,74,0.25)';
+
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      // Ambient brownian drift + wrap.
+      p.sx += p.vx;
+      p.sy += p.vy;
+      if (p.sx < -10) p.sx = W + 10; else if (p.sx > W + 10) p.sx = -10;
+      if (p.sy < -10) p.sy = H + 10; else if (p.sy > H + 10) p.sy = -10;
+
+      var L = lineXY(p.t);
+      var pe = e;
+      if (mouse.active) {
+        var mdx = p.sx - mouse.x, mdy = p.sy - mouse.y;
+        var md = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (md < gravR) pe = Math.min(1, e + (1 - md / gravR) * 0.55);
+      }
+      // Ripple dispersi lembut (klik/sentuh).
+      var rx = 0, ry = 0;
+      for (var k = 0; k < ripples.length; k++) {
+        var rp = ripples[k];
+        var rdx = p.sx - rp.x, rdy = p.sy - rp.y;
+        var rd = Math.sqrt(rdx * rdx + rdy * rdy) || 0.01;
+        var band = Math.abs(rd - rp.r);
+        if (band < 26) {
+          var push = (1 - band / 26) * rp.a * 14;
+          rx += (rdx / rd) * push;
+          ry += (rdy / rd) * push;
+        }
+      }
+      var jx = Math.sin(time * p.freq + p.phase) * 6 * (1 - pe);
+      var jy = Math.cos(time * p.freq * 0.8 + p.phase) * 6 * (1 - pe);
+      var px = p.sx + (L[0] + p.off * spread * 0.35 - p.sx) * pe + jx + rx;
+      var py = p.sy + (L[1] + p.off * spread - p.sy) * pe + jy + ry;
       ctx.beginPath();
       ctx.arc(px, py, p.r, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
   }
-}
 
-const _scatterCanvas = document.getElementById('hero-dither');
-if (_scatterCanvas) new HeroScatter(_scatterCanvas);
+  function frame() {
+    rafId = 0;
+    if (document.hidden || !inView) return;
+    time += 0.016;
+    cohesion += (targetCohesion - cohesion) * 0.06;
+    for (var i = ripples.length - 1; i >= 0; i--) {
+      ripples[i].r += 3.2;
+      ripples[i].a *= 0.94;
+      if (ripples[i].a < 0.02) ripples.splice(i, 1);
+    }
+    draw();
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function kick() {
+    if (!rafId && !document.hidden && inView && !reduced) rafId = requestAnimationFrame(frame);
+  }
+
+  // Canvas pointer-events:none → dengar gesture di section hero.
+  if (hero) {
+    hero.addEventListener('mousemove', function (ev) {
+      var r = canvas.getBoundingClientRect();
+      mouse.x = ev.clientX - r.left;
+      mouse.y = ev.clientY - r.top;
+      mouse.active = true;
+      updateTarget();
+    });
+    hero.addEventListener('mouseleave', function () {
+      mouse.active = false;
+      updateTarget();
+    });
+    hero.addEventListener('pointerdown', function (ev) {
+      var r = canvas.getBoundingClientRect();
+      ripples.push({ x: ev.clientX - r.left, y: ev.clientY - r.top, r: 6, a: 1 });
+      kick();
+    });
+  }
+  window.addEventListener('scroll', function () { updateTarget(); kick(); }, { passive: true });
+
+  if ('ResizeObserver' in window && hero) {
+    new ResizeObserver(function () { resize(); if (reduced) { cohesion = 0.8; draw(); } }).observe(hero);
+  } else {
+    window.addEventListener('resize', resize);
+  }
+  if ('IntersectionObserver' in window && hero) {
+    new IntersectionObserver(function (entries) {
+      inView = entries[0].isIntersecting;
+      if (inView) kick();
+    }, { threshold: 0 }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
+
+  updateTarget();
+  resize();
+  if (reduced) {
+    cohesion = 0.8;
+    draw();
+    return;
+  }
+  frame();
+})();
 
 // ── INTERACTIVE 3D DITHER OBJECTS ─────────────────────────────
 class Dither3D {
