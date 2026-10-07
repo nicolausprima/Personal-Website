@@ -669,6 +669,15 @@ reveals.forEach(el => observer.observe(el));
   var ctx = canvas.getContext('2d');
 
   var W = 0, H = 0, margin = 0;
+  // Palet titik: slate + aksen muted (colorful tapi kalem di krem).
+  var DOT_LIGHT = [
+    [74, 74, 74], [74, 74, 74], [74, 74, 74],
+    [37, 99, 235], [5, 150, 105], [217, 119, 6], [124, 58, 237]
+  ];
+  var DOT_DARK = [
+    [224, 224, 222], [224, 224, 222], [224, 224, 222],
+    [147, 197, 253], [52, 211, 153], [252, 211, 77], [196, 181, 253]
+  ];
   var pts = [];
   var ripples = [];
   var cohesion = 0.18, targetCohesion = 0.18, fade = 1;
@@ -713,6 +722,7 @@ reveals.forEach(el => observer.observe(el));
         t: Math.random(),                 // posisi sepanjang garis tren
         off: gauss(),                     // offset tegak lurus garis
         r: 1.5 + Math.random() * 2,
+        col: Math.floor(Math.random() * 7),
         phase: Math.random() * Math.PI * 2,
         freq: 0.4 + Math.random() * 0.8
       });
@@ -749,7 +759,7 @@ reveals.forEach(el => observer.observe(el));
     ctx.save();
     ctx.globalAlpha = (0.3 + 0.7 * e) * fade;
     ctx.strokeStyle = dark ? 'rgba(255,255,255,0.8)' : '#2A2A2A';
-    ctx.lineWidth = dark ? 1.5 : 1.25;
+    ctx.lineWidth = dark ? 1 : 0.8;
     ctx.beginPath();
     ctx.moveTo(a[0], a[1]);
     ctx.lineTo(b[0], b[1]);
@@ -758,8 +768,8 @@ reveals.forEach(el => observer.observe(el));
 
     // Gravitasi lokal: titik dekat kursor lebih dulu rapi ke garis.
     var gravR = Math.max(120, Math.min(260, Math.min(W, H) * 0.3));
+    var PAL = dark ? DOT_DARK : DOT_LIGHT;
     ctx.globalAlpha = fade;
-    ctx.fillStyle = dark ? 'rgba(224,224,222,0.25)' : 'rgba(74,74,74,0.25)';
 
     for (var i = 0; i < pts.length; i++) {
       var p = pts[i];
@@ -793,6 +803,8 @@ reveals.forEach(el => observer.observe(el));
       var jy = Math.cos(time * p.freq * 0.8 + p.phase) * 6 * (1 - pe);
       var px = p.sx + (L[0] + p.off * spread * 0.35 - p.sx) * pe + jx + rx;
       var py = p.sy + (L[1] + p.off * spread - p.sy) * pe + jy + ry;
+      var cc = PAL[p.col];
+      ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.5)';
       ctx.beginPath();
       ctx.arc(px, py, p.r, 0, Math.PI * 2);
       ctx.fill();
