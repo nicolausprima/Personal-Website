@@ -1264,3 +1264,78 @@ window.addEventListener('resize', () => {
   }
 });
 
+
+// ── AVATAR ENTRANCE: 3-photo glitch sequence (once) ─────────────
+// foto1 → glitch → foto2 → glitch → FotoMuka (final). Ring/shadow di
+// .about-avatar-wrap tidak ikut animasi. Hormati reduced-motion.
+(function () {
+  var CONFIG = {
+    initialDelay: 700,  // ms setelah avatar masuk viewport sebelum glitch 1
+    holdTime: 700,      // ms tiap foto tampil sebelum glitch berikutnya
+    glitchDuration: 400,// ms durasi keyframes avatar-glitch (sinkron dgn CSS)
+    swapAt: 200         // ms setelah glitch mulai untuk tukar foto (midpoint)
+  };
+
+  var stack = document.getElementById('avatar-stack');
+  if (!stack) return;
+  var photos = stack.querySelectorAll('img');
+  if (photos.length < 3) return;
+
+  function wait(ms) { return new Promise(function (res) { setTimeout(res, ms); }); }
+
+  function show(idx) {
+    photos.forEach(function (img, i) { img.classList.toggle('active', i === idx); });
+  }
+
+  function setGlitchDur() {
+    stack.style.setProperty('--glitch-dur', (CONFIG.glitchDuration / 1000) + 's');
+  }
+
+  async function playGlitchThen(nextIdx) {
+    setGlitchDur();
+    stack.classList.add('glitch');
+    await wait(CONFIG.swapAt);
+    show(nextIdx);
+    await wait(CONFIG.glitchDuration - CONFIG.swapAt);
+    stack.classList.remove('glitch');
+  }
+
+  async function runSequence() {
+    show(0);
+    await wait(CONFIG.initialDelay);
+    await playGlitchThen(1);
+    await wait(CONFIG.holdTime);
+    await playGlitchThen(2);
+    // Foto 3 final, tidak loop.
+  }
+
+  // Preload agar swap tanpa flicker (loading=eager sudah di markup).
+  ['foto1.jpg', 'foto2.jpg', 'FotoMuka.jpg'].forEach(function (src) {
+    var im = new Image();
+    im.src = src;
+  });
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    show(2); // langsung foto final, tanpa glitch
+    return;
+  }
+
+  var started = false;
+  function start() {
+    if (started) return;
+    started = true;
+    runSequence();
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        start();
+        io.disconnect(); // run once
+      }
+    }, { threshold: 0.5 });
+    io.observe(stack);
+  } else {
+    start();
+  }
+})();

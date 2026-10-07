@@ -1553,6 +1553,83 @@
       display: block;
     }
 
+    /* Avatar entrance: 3-photo stack + mild glitch (inner only, ring/shadow stay still) */
+    .about-avatar-stack {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+    }
+
+    .about-avatar-stack img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      opacity: 0;
+      display: block;
+    }
+
+    .about-avatar-stack img.active {
+      opacity: 1;
+    }
+
+    .about-avatar-stack.glitch img.active {
+      animation: avatar-glitch var(--glitch-dur, 0.4s) steps(1, end);
+    }
+
+    @keyframes avatar-glitch {
+      0% {
+        transform: none;
+        clip-path: inset(0);
+        filter: none;
+      }
+
+      20% {
+        transform: translateX(-4px);
+        clip-path: inset(8% 0 62% 0);
+        filter: contrast(1.08) saturate(1.12);
+      }
+
+      40% {
+        transform: translateX(3px);
+        clip-path: inset(52% 0 12% 0);
+        filter: contrast(0.94) saturate(0.9) hue-rotate(-12deg);
+      }
+
+      60% {
+        transform: translateX(-2px);
+        clip-path: inset(28% 0 38% 0);
+        filter: contrast(1.05) saturate(1.06);
+      }
+
+      80% {
+        transform: translateX(2px);
+        clip-path: inset(68% 0 4% 0);
+        filter: contrast(0.97) saturate(0.95) hue-rotate(10deg);
+      }
+
+      100% {
+        transform: none;
+        clip-path: inset(0);
+        filter: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-avatar-stack.glitch img.active {
+        animation: none;
+      }
+
+      .about-avatar-stack img {
+        transition: opacity 0.3s ease;
+      }
+    }
+
     .about-name {
       font-family: var(--font-display);
       font-size: 2.5rem;
@@ -2377,8 +2454,11 @@
   <section id="about" class="about-me reveal">
     <div class="container about-me-container">
       <div class="about-avatar-wrap">
-        <img src="FotoMuka.jpg" alt="Foto Nicolaus Prima, mahasiswa Applied Data Science di PENS Surabaya"
-          class="about-avatar">
+        <div class="about-avatar-stack" id="avatar-stack">
+          <img src="foto1.jpg" alt="" aria-hidden="true" loading="eager" class="active">
+          <img src="foto2.jpg" alt="" aria-hidden="true" loading="eager">
+          <img src="FotoMuka.jpg" alt="Foto Nicolaus Prima" loading="eager" class="about-avatar">
+        </div>
       </div>
       <h2 class="about-name">Nicolaus Prima</h2>
       <p class="about-bio">
