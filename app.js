@@ -669,14 +669,16 @@ reveals.forEach(el => observer.observe(el));
   var ctx = canvas.getContext('2d');
 
   var W = 0, H = 0, margin = 0;
-  // Palet titik: slate + aksen muted (colorful tapi kalem di krem).
+  // Palet titik: abu netral + 2 cluster muted (slate biru, sage hijau).
   var DOT_LIGHT = [
-    [74, 74, 74], [74, 74, 74], [74, 74, 74],
-    [37, 99, 235], [5, 150, 105], [217, 119, 6], [124, 58, 237]
+    [74, 74, 74], [74, 74, 74], [74, 74, 74], [74, 74, 74],
+    [100, 116, 139], [100, 116, 139],
+    [110, 139, 116]
   ];
   var DOT_DARK = [
-    [224, 224, 222], [224, 224, 222], [224, 224, 222],
-    [147, 197, 253], [52, 211, 153], [252, 211, 77], [196, 181, 253]
+    [224, 224, 222], [224, 224, 222], [224, 224, 222], [224, 224, 222],
+    [148, 163, 184], [148, 163, 184],
+    [150, 170, 155]
   ];
   var pts = [];
   var ripples = [];
@@ -734,6 +736,17 @@ reveals.forEach(el => observer.observe(el));
     return [margin + t * (W - 2 * margin), H * 0.74 - t * H * 0.48];
   }
 
+  // Safe zone: elips di tengah konten — 1 di dalam, 0 di luar (feather halus).
+  function safeFactor(x, y) {
+    var rx = Math.min(W * 0.32, 360);
+    var ry = Math.min(H * 0.30, 300);
+    var dx = (x - W / 2) / rx, dy = (y - H / 2) / ry;
+    var d = Math.sqrt(dx * dx + dy * dy);
+    if (d >= 1.35) return 0;
+    if (d <= 0.75) return 1;
+    return 1 - (d - 0.75) / 0.6;
+  }
+
   function updateTarget() {
     var heroH = (hero && hero.offsetHeight) || window.innerHeight;
     var sc = window.scrollY || 0;
@@ -754,22 +767,36 @@ reveals.forEach(el => observer.observe(el));
     var spread = Math.min(W, H) * 0.09;
     var dark = isDark();
 
-    // Garis tren / decision boundary.
-    var a = lineXY(0), b = lineXY(1);
-    ctx.save();
-    ctx.globalAlpha = (0.3 + 0.7 * e) * fade;
-    ctx.strokeStyle = dark ? 'rgba(255,255,255,0.8)' : '#2A2A2A';
-    ctx.lineWidth = dark ? 1 : 0.8;
-    ctx.beginPath();
-    ctx.moveTo(a[0], a[1]);
-    ctx.lineTo(b[0], b[1]);
-    ctx.stroke();
-    ctx.restore();
+    // Garis tren / decision boundary: hidden saat idle, fade-in ikut
+    // organisasi (e), memudar di kedua ujung + mask di safe zone.
+    var reveal = smooth((e - 0.12) / 0.5); // mulai muncul setelah e > 0.12
+    if (reveal > 0.01) {
+      var lc = dark ? '255,255,255' : '42,42,42';
+      var la = dark ? 0.8 : 1;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(' + lc + ',' + la + ')';
+      ctx.lineWidth = dark ? 1 : 0.8;
+      // Per segmen: gradient ujung (t) × mask safe zone (tengah).
+      var SEGS = 48;
+      for (var sgi = 0; sgi < SEGS; sgi++) {
+        var t0 = sgi / SEGS, t1 = (sgi + 1) / SEGS;
+        var tm = (t0 + t1) / 2;
+        var endFade = Math.min(1, Math.min(tm, 1 - tm) / 0.18); // 0 di ujung → 1 di tengah
+        var p0 = lineXY(t0), p1 = lineXY(t1);
+        var mid = lineXY(tm);
+        ctx.globalAlpha = reveal * fade * endFade * (1 - 0.75 * safeFactor(mid[0], mid[1]));
+        if (ctx.globalAlpha < 0.01) continue;
+        ctx.beginPath();
+        ctx.moveTo(p0[0], p0[1]);
+        ctx.lineTo(p1[0], p1[1]);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
 
     // Gravitasi lokal: titik dekat kursor lebih dulu rapi ke garis.
     var gravR = Math.max(120, Math.min(260, Math.min(W, H) * 0.3));
     var PAL = dark ? DOT_DARK : DOT_LIGHT;
-    ctx.globalAlpha = fade;
 
     for (var i = 0; i < pts.length; i++) {
       var p = pts[i];
@@ -805,6 +832,7 @@ reveals.forEach(el => observer.observe(el));
       var py = p.sy + (L[1] + p.off * spread - p.sy) * pe + jy + ry;
       var cc = PAL[p.col];
       ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.5)';
+      ctx.globalAlpha = fade * (1 - 0.7 * safeFactor(px, py));
       ctx.beginPath();
       ctx.arc(px, py, p.r, 0, Math.PI * 2);
       ctx.fill();
