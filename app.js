@@ -672,13 +672,13 @@ reveals.forEach(el => observer.observe(el));
   // Palet titik: abu netral + 2 cluster muted (slate biru, sage hijau).
   var DOT_LIGHT = [
     [74, 74, 74], [74, 74, 74], [74, 74, 74], [74, 74, 74],
-    [100, 116, 139], [100, 116, 139],
-    [110, 139, 116]
+    [51, 85, 136], [51, 85, 136],
+    [58, 130, 74]
   ];
   var DOT_DARK = [
     [224, 224, 222], [224, 224, 222], [224, 224, 222], [224, 224, 222],
-    [148, 163, 184], [148, 163, 184],
-    [150, 170, 155]
+    [125, 165, 205], [125, 165, 205],
+    [125, 185, 130]
   ];
   var pts = [];
   var ripples = [];
@@ -831,7 +831,7 @@ reveals.forEach(el => observer.observe(el));
       var px = p.sx + (L[0] + p.off * spread * 0.35 - p.sx) * pe + jx + rx;
       var py = p.sy + (L[1] + p.off * spread - p.sy) * pe + jy + ry;
       var cc = PAL[p.col];
-      ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.5)';
+      ctx.fillStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',0.75)';
       ctx.globalAlpha = fade * (1 - 0.7 * safeFactor(px, py));
       ctx.beginPath();
       ctx.arc(px, py, p.r, 0, Math.PI * 2);
