@@ -1265,77 +1265,117 @@ window.addEventListener('resize', () => {
 });
 
 
-// ── AVATAR ENTRANCE: 3-photo glitch sequence (once) ─────────────
-// foto1 → glitch → foto2 → glitch → FotoMuka (final). Ring/shadow di
-// .about-avatar-wrap tidak ikut animasi. Hormati reduced-motion.
+// ── AVATAR GLITCH ANIMATION: 3-Photo Entrance Settle Sequence ──
+// Pose 1 → glitch ke Pose 2 → Pose 2 hold → glitch balik ke Pose 1 bentar → glitch ke Pose 2 → glitch ke Foto 3 → langsung berhenti permanen
 (function () {
-  var CONFIG = {
-    initialDelay: 700,  // ms setelah avatar masuk viewport sebelum glitch 1
-    holdTime: 700,      // ms tiap foto tampil sebelum glitch berikutnya
-    glitchDuration: 400,// ms durasi keyframes avatar-glitch (sinkron dgn CSS)
-    swapAt: 200         // ms setelah glitch mulai untuk tukar foto (midpoint)
-  };
-
+  var wrap = document.querySelector('.about-avatar-wrap');
   var stack = document.getElementById('avatar-stack');
   if (!stack) return;
   var photos = stack.querySelectorAll('img');
   if (photos.length < 3) return;
 
+  photos[0].classList.add('photo-0');
+  photos[1].classList.add('photo-1');
+  photos[2].classList.add('photo-2');
+
   function wait(ms) { return new Promise(function (res) { setTimeout(res, ms); }); }
 
-  function show(idx) {
-    photos.forEach(function (img, i) { img.classList.toggle('active', i === idx); });
+  var isSequenceRunning = false;
+  var hasPlayed = false;
+
+  async function playGlitchSequence() {
+    if (isSequenceRunning) return;
+    isSequenceRunning = true;
+
+    // 0. Mulai dari Pose 1 (photo-0)
+    stack.classList.remove('settled', 'show-1', 'glitch-1-to-2', 'glitch-2-to-1', 'glitch-2-to-3');
+    stack.classList.add('show-0');
+    if (wrap) wrap.classList.remove('glowing');
+
+    // 1. Pose 1 tampil stabil
+    await wait(1200);
+
+    // 2. Glitch transisi ke Pose 2
+    stack.classList.remove('show-0');
+    stack.classList.add('glitch-1-to-2');
+    if (wrap) wrap.classList.add('glowing');
+    await wait(350);
+
+    // 3. Pose 2 tampil stabil
+    stack.classList.remove('glitch-1-to-2');
+    stack.classList.add('show-1');
+    if (wrap) wrap.classList.remove('glowing');
+    await wait(1000);
+
+    // 4. Glitch balik ke Pose 1 bentar
+    stack.classList.remove('show-1');
+    stack.classList.add('glitch-2-to-1');
+    if (wrap) wrap.classList.add('glowing');
+    await wait(320);
+
+    // 5. Pose 1 tampil sebentar
+    stack.classList.remove('glitch-2-to-1');
+    stack.classList.add('show-0');
+    if (wrap) wrap.classList.remove('glowing');
+    await wait(500);
+
+    // 6. Glitch transisi ke Pose 2
+    stack.classList.remove('show-0');
+    stack.classList.add('glitch-1-to-2');
+    if (wrap) wrap.classList.add('glowing');
+    await wait(350);
+
+    // 7. Pose 2 tampil bentar
+    stack.classList.remove('glitch-1-to-2');
+    stack.classList.add('show-1');
+    if (wrap) wrap.classList.remove('glowing');
+    await wait(650);
+
+    // 8. Glitch transisi epik ke Foto 3 (photo-2)
+    stack.classList.remove('show-1');
+    stack.classList.add('glitch-2-to-3');
+    if (wrap) wrap.classList.add('glowing');
+    await wait(380);
+
+    // 9. Langsung BERHENTI di Foto 3 secara permanen (settled state)
+    stack.classList.remove('show-0', 'show-1', 'glitch-1-to-2', 'glitch-2-to-1', 'glitch-2-to-3');
+    stack.classList.add('settled');
+    if (wrap) wrap.classList.remove('glowing');
+
+    isSequenceRunning = false;
   }
 
-  function setGlitchDur() {
-    stack.style.setProperty('--glitch-dur', (CONFIG.glitchDuration / 1000) + 's');
-  }
-
-  async function playGlitchThen(nextIdx) {
-    setGlitchDur();
-    stack.classList.add('glitch');
-    await wait(CONFIG.swapAt);
-    show(nextIdx);
-    await wait(CONFIG.glitchDuration - CONFIG.swapAt);
-    stack.classList.remove('glitch');
-  }
-
-  async function runSequence() {
-    show(0);
-    await wait(CONFIG.initialDelay);
-    await playGlitchThen(1);
-    await wait(CONFIG.holdTime);
-    await playGlitchThen(2);
-    // Foto 3 final, tidak loop.
-  }
-
-  // Preload agar swap tanpa flicker (loading=eager sudah di markup).
-  ['foto1.jpg', 'foto2.jpg', 'FotoMuka.jpg'].forEach(function (src) {
+  // Preload aset gambar
+  ['assets/nicolaus_pose1_natural.png?v=12', 'assets/nicolaus_pose2_natural.png?v=12', 'assets/nicolaus_pose3_natural.png?v=12'].forEach(function (src) {
     var im = new Image();
     im.src = src;
   });
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    show(2); // langsung foto final, tanpa glitch
+    stack.classList.add('settled');
     return;
   }
 
-  var started = false;
-  function start() {
-    if (started) return;
-    started = true;
-    runSequence();
-  }
-
+  // IntersectionObserver: putar animasi satu kali saat avatar terlihat di layar, lalu diam permanen di Foto 3
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) {
-        start();
-        io.disconnect(); // run once
+      if (entries[0].isIntersecting && !hasPlayed) {
+        hasPlayed = true;
+        playGlitchSequence();
       }
-    }, { threshold: 0.5 });
+    }, { threshold: 0.25 });
     io.observe(stack);
   } else {
-    start();
+    hasPlayed = true;
+    playGlitchSequence();
+  }
+
+  // Klik avatar untuk memutar ulang sequence lalu berhenti lagi di Foto 3
+  if (wrap) {
+    wrap.addEventListener('click', function () {
+      if (!isSequenceRunning) {
+        playGlitchSequence();
+      }
+    });
   }
 })();

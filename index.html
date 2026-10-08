@@ -1526,35 +1526,51 @@
     }
 
     .about-avatar-wrap {
-      width: 190px;
-      height: 190px;
+      position: relative;
+      width: clamp(260px, 32vw, 360px);
+      height: clamp(260px, 32vw, 360px);
       padding: 0;
       background: none;
       border: none;
       box-shadow: none;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .about-avatar-wrap:hover {
-      transform: none;
-      border-color: transparent;
-      box-shadow: none;
+    /* Ambient sports broadcast glow */
+    .about-avatar-glow {
+      position: absolute;
+      inset: -15%;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      z-index: 0;
     }
 
-    .about-avatar {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    [data-theme="dark"] .about-avatar-glow {
+      background: radial-gradient(circle, rgba(222, 218, 212, 0.14) 0%, transparent 68%);
     }
 
-    /* Avatar entrance: 3-photo stack + mild glitch (inner only, ring/shadow stay still) */
+    .about-avatar-wrap.glowing .about-avatar-glow {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+
+    /* Avatar stack with natural soft bottom fade */
     .about-avatar-stack {
       position: relative;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      overflow: visible;
       aspect-ratio: 1 / 1;
+      z-index: 1;
+      -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
     }
 
     .about-avatar-stack img {
@@ -1562,64 +1578,265 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       opacity: 0;
       display: block;
+      pointer-events: none;
+      transform-origin: center bottom;
+      will-change: transform, opacity, filter;
+      filter: grayscale(100%) contrast(1.12) brightness(1.02);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, filter 0.45s ease;
     }
 
-    .about-avatar-stack img.active {
+    /* Default fallback: show photo-2 if JS is disabled */
+    .about-avatar-stack:not(.show-0):not(.show-1):not(.glitch-1-to-2):not(.glitch-2-to-1):not(.glitch-2-to-3):not(.settled) img.photo-2 {
       opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
     }
 
-    .about-avatar-stack.glitch img.active {
-      animation: avatar-glitch var(--glitch-dur, 0.4s) steps(1, end);
+    /* Z-index hierarchy */
+    .about-avatar-stack img.photo-0 { z-index: 1; }
+    .about-avatar-stack img.photo-1 { z-index: 2; }
+    .about-avatar-stack img.photo-2 { z-index: 3; }
+
+    /* ── State: Show Pose 1 (photo-0) ── */
+    .about-avatar-stack.show-0 img.photo-0 {
+      opacity: 1;
+      z-index: 2;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: grayscale(100%) contrast(1.12) brightness(1.02);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    }
+    .about-avatar-stack.show-0 img.photo-1,
+    .about-avatar-stack.show-0 img.photo-2 {
+      opacity: 0;
+      z-index: 1;
     }
 
-    @keyframes avatar-glitch {
+    /* ── State: Glitch Transition Pose 1 ➔ Pose 2 ── */
+    .about-avatar-stack.glitch-1-to-2 img.photo-0 {
+      z-index: 1;
+      opacity: 1;
+      animation: glitch-tear-out 0.35s steps(1, end) forwards;
+    }
+    .about-avatar-stack.glitch-1-to-2 img.photo-1 {
+      z-index: 2;
+      opacity: 1;
+      animation: glitch-tear-in 0.35s steps(1, end) forwards;
+    }
+    .about-avatar-stack.glitch-1-to-2 img.photo-2 {
+      opacity: 0;
+    }
+
+    /* ── State: Show Pose 2 (photo-1) ── */
+    .about-avatar-stack.show-1 img.photo-1 {
+      opacity: 1;
+      z-index: 2;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: grayscale(100%) contrast(1.12) brightness(1.02);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    }
+    .about-avatar-stack.show-1 img.photo-0,
+    .about-avatar-stack.show-1 img.photo-2 {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* ── State: Glitch Transition Pose 2 ➔ Pose 1 ── */
+    .about-avatar-stack.glitch-2-to-1 img.photo-1 {
+      z-index: 1;
+      opacity: 1;
+      animation: glitch-tear-out 0.32s steps(1, end) forwards;
+    }
+    .about-avatar-stack.glitch-2-to-1 img.photo-0 {
+      z-index: 2;
+      opacity: 1;
+      animation: glitch-tear-in 0.32s steps(1, end) forwards;
+    }
+    .about-avatar-stack.glitch-2-to-1 img.photo-2 {
+      opacity: 0;
+    }
+
+    /* ── State: Glitch Transition Pose 2 ➔ Foto 3 ── */
+    .about-avatar-stack.glitch-2-to-3 img.photo-1 {
+      z-index: 1;
+      opacity: 1;
+      animation: glitch-tear-out 0.35s steps(1, end) forwards;
+    }
+    .about-avatar-stack.glitch-2-to-3 img.photo-2 {
+      z-index: 3;
+      opacity: 1;
+      animation: glitch-tear-in 0.35s steps(1, end) forwards;
+    }
+    .about-avatar-stack.glitch-2-to-3 img.photo-0 {
+      opacity: 0;
+    }
+
+    /* ── State: SETTLED ON FOTO 3 (Langsung Berhenti Permanen) ── */
+    .about-avatar-stack.settled img.photo-0,
+    .about-avatar-stack.settled img.photo-1 {
+      opacity: 0 !important;
+      display: none !important;
+      pointer-events: none !important;
+    }
+    .about-avatar-stack.settled img.photo-2 {
+      opacity: 1 !important;
+      z-index: 3 !important;
+      display: block !important;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: grayscale(100%) contrast(1.15) brightness(1.02);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    }
+
+    /* Hover: Subtle lift saat berhenti di Foto 3 */
+    .about-avatar-wrap:hover .about-avatar-stack.settled img.photo-2 {
+      transform: translate3d(0, -4px, 0) scale(1.02);
+      filter: grayscale(100%) contrast(1.18) brightness(1.04) drop-shadow(0 12px 32px rgba(0, 0, 0, 0.18));
+    }
+    [data-theme="dark"] .about-avatar-wrap:hover .about-avatar-stack.settled img.photo-2 {
+      filter: grayscale(100%) contrast(1.18) brightness(1.04) drop-shadow(0 12px 32px rgba(0, 0, 0, 0.5));
+    }
+
+    /* Keyframes */
+    @keyframes photo-enter-smooth {
       0% {
-        transform: none;
-        clip-path: inset(0);
-        filter: none;
+        opacity: 0;
+        transform: translate3d(0, 26px, 0) scale(0.94);
+        filter: grayscale(100%) blur(4px);
       }
-
-      20% {
-        transform: translateX(-4px);
-        clip-path: inset(8% 0 62% 0);
-        filter: contrast(1.08) saturate(1.12);
-      }
-
-      40% {
-        transform: translateX(3px);
-        clip-path: inset(52% 0 12% 0);
-        filter: contrast(0.94) saturate(0.9) hue-rotate(-12deg);
-      }
-
-      60% {
-        transform: translateX(-2px);
-        clip-path: inset(28% 0 38% 0);
-        filter: contrast(1.05) saturate(1.06);
-      }
-
-      80% {
-        transform: translateX(2px);
-        clip-path: inset(68% 0 4% 0);
-        filter: contrast(0.97) saturate(0.95) hue-rotate(10deg);
-      }
-
       100% {
-        transform: none;
-        clip-path: inset(0);
-        filter: none;
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        filter: grayscale(100%) contrast(1.12) brightness(1.02);
       }
     }
+
+    /* Outgoing photo tears into horizontal slices */
+    @keyframes glitch-tear-out {
+      0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        clip-path: inset(0 0 0 0);
+        filter: grayscale(100%) contrast(1.15);
+      }
+      20% {
+        opacity: 0.9;
+        transform: translate3d(-6px, 0, 0);
+        clip-path: inset(12% 0 54% 0);
+        filter: grayscale(100%) contrast(1.35) brightness(1.15);
+      }
+      40% {
+        opacity: 0.7;
+        transform: translate3d(8px, 0, 0);
+        clip-path: inset(58% 0 14% 0);
+        filter: grayscale(100%) contrast(1.4) brightness(1.2);
+      }
+      60% {
+        opacity: 0.45;
+        transform: translate3d(-4px, 0, 0);
+        clip-path: inset(34% 0 42% 0);
+        filter: grayscale(100%) contrast(1.2);
+      }
+      80% {
+        opacity: 0.2;
+        transform: translate3d(4px, 0, 0);
+        clip-path: inset(72% 0 4% 0);
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    /* Incoming photo emerges through the tears and stabilizes smoothly */
+    @keyframes glitch-tear-in {
+      0% {
+        opacity: 0;
+        transform: translate3d(4px, 0, 0);
+        clip-path: inset(48% 0 8% 0);
+        filter: grayscale(100%) contrast(1.3) brightness(1.15);
+      }
+      20% {
+        opacity: 0.65;
+        transform: translate3d(6px, 0, 0);
+        clip-path: inset(0 0 50% 0);
+        filter: grayscale(100%) contrast(1.35);
+      }
+      40% {
+        opacity: 0.85;
+        transform: translate3d(-5px, 0, 0);
+        clip-path: inset(46% 0 0 0);
+        filter: grayscale(100%) contrast(1.25);
+      }
+      60% {
+        opacity: 0.95;
+        transform: translate3d(3px, 0, 0);
+        clip-path: inset(15% 0 20% 0);
+        filter: grayscale(100%) contrast(1.18);
+      }
+      80% {
+        opacity: 1;
+        transform: translate3d(-1px, 0, 0);
+        clip-path: inset(0 0 0 0);
+        filter: grayscale(100%) contrast(1.14);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        clip-path: inset(0 0 0 0);
+        filter: grayscale(100%) contrast(1.12) brightness(1.02);
+      }
+    }
+
+    /* Hero photo emerges dynamically and locks in center */
+    @keyframes hero-glitch-reveal {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0) scale(1.06);
+        clip-path: inset(35% 0 25% 0);
+        filter: grayscale(100%) contrast(1.4) brightness(1.22);
+      }
+      25% {
+        opacity: 0.75;
+        transform: translate3d(-4px, 8px, 0) scale(1.03);
+        clip-path: inset(0 0 45% 0);
+        filter: grayscale(100%) contrast(1.3) brightness(1.15);
+      }
+      50% {
+        opacity: 0.9;
+        transform: translate3d(5px, 0, 0) scale(1.015);
+        clip-path: inset(42% 0 0 0);
+        filter: grayscale(100%) contrast(1.2);
+      }
+      75% {
+        opacity: 1;
+        transform: translate3d(-2px, -3px, 0) scale(0.992);
+        clip-path: inset(0 0 0 0);
+        filter: grayscale(100%) contrast(1.16);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        clip-path: inset(0 0 0 0);
+        filter: grayscale(100%) contrast(1.15) brightness(1.02);
+      }
+    }
+
+
 
     @media (prefers-reduced-motion: reduce) {
-      .about-avatar-stack.glitch img.active {
-        animation: none;
-      }
-
       .about-avatar-stack img {
-        transition: opacity 0.3s ease;
+        animation: none !important;
+        transition: none !important;
+      }
+      .about-avatar-stack img.photo-2 {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .about-avatar-stack img.photo-0,
+      .about-avatar-stack img.photo-1 {
+        display: none !important;
       }
     }
 
@@ -2374,7 +2591,7 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v15H0V8zm7.5 0h4.8v2.1h.07c.67-1.27 2.31-2.6 4.77-2.6 5.1 0 6.04 3.36 6.04 7.73V23H17.6v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V23H7.5V8z"/></svg>
         </a>
       </div>
-      <a href="CV.pdf" download class="mobile-nav-cv-btn">
+      <a href="CV.pdf" download="CV - Nicolaus Prima.pdf" class="mobile-nav-cv-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
@@ -2430,7 +2647,7 @@
           </svg>
           View Projects
         </a>
-        <a href="CV.pdf" download class="btn-outline-new">
+        <a href="CV.pdf" download="CV - Nicolaus Prima.pdf" class="btn-outline-new">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -2446,11 +2663,12 @@
   <!-- ABOUT ME -->
   <section id="about" class="about-me reveal">
     <div class="container about-me-container">
-      <div class="about-avatar-wrap">
-        <div class="about-avatar-stack" id="avatar-stack">
-          <img src="foto1.jpg" alt="" aria-hidden="true" loading="eager" class="active">
-          <img src="foto2.jpg" alt="" aria-hidden="true" loading="eager">
-          <img src="FotoMuka.jpg" alt="Foto Nicolaus Prima" loading="eager" class="about-avatar">
+      <div class="about-avatar-wrap" title="Klik untuk putar ulang entrance">
+        <div class="about-avatar-glow" aria-hidden="true"></div>
+        <div class="about-avatar-stack show-0" id="avatar-stack">
+          <img src="assets/nicolaus_pose1_natural.png?v=12" alt="Nicolaus Prima Profile" aria-hidden="true" loading="eager" class="photo-0">
+          <img src="assets/nicolaus_pose2_natural.png?v=12" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" class="photo-1">
+          <img src="assets/nicolaus_pose3_natural.png?v=12" alt="Nicolaus Prima" loading="eager" class="about-avatar photo-2">
         </div>
       </div>
       <h2 class="about-name">Nicolaus Prima</h2>
