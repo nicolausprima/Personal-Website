@@ -119,14 +119,20 @@ if (location.hash) {
 // ── CUSTOM CURSOR & NAVBAR ────────────────────────────────────
 const cursor = document.querySelector('.cursor');
 const navbar = document.querySelector('.navbar');
-// ── NAVBAR SCROLL HANDLER ─────────────────────────────────────
+// ── NAVBAR SCROLL HANDLER (throttle rAF: cegah forced reflow tiap event) ──
+let navTicking = false;
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  if (scrollY > 60) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
+  if (navTicking) return;
+  navTicking = true;
+  requestAnimationFrame(() => {
+    const scrollY = window.scrollY;
+    if (scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    navTicking = false;
+  });
 }, { passive: true });
 
 
@@ -927,7 +933,19 @@ reveals.forEach(el => observer.observe(el));
     draw();
     return;
   }
-  frame();
+  // Tunda start animasi sampai halaman selesai load agar tidak rebut
+  // main thread saat LCP/FCP (obat Total Blocking Time di mobile).
+  function start() { updateTarget(); frame(); }
+  if (document.readyState === 'complete') {
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1500 });
+    else setTimeout(start, 300);
+  } else {
+    window.addEventListener('load', function onLoad() {
+      window.removeEventListener('load', onLoad);
+      if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1500 });
+      else setTimeout(start, 300);
+    });
+  }
 })();
 
 // ── INTERACTIVE 3D DITHER OBJECTS ─────────────────────────────
@@ -935,6 +953,8 @@ class Dither3D {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    this._paused = false;
+    this._raf = 0;
     this.points = [];
     this.NUM_POINTS = 729; // 9x9x9
     this.shapeIndex = 0;
@@ -1143,6 +1163,8 @@ class Dither3D {
   }
 
   _tick() {
+    if (this._paused) { this._raf = 0; return; }
+    this._raf = 0;
     const { ctx, W, H } = this;
     ctx.clearRect(0, 0, W, H);
 
@@ -1204,23 +1226,65 @@ class Dither3D {
       ctx.fillText(p.char, p.x, p.y);
     }
 
-    requestAnimationFrame(() => this._tick());
+    this._raf = requestAnimationFrame(() => this._tick());
   }
+
+  // Pause/resume dari luar (IntersectionObserver / visibility).
+  pause() { this._paused = true; if (this._raf) cancelAnimationFrame(this._raf); this._raf = 0; }
+  resume() { if (!this._paused) return; this._paused = false; if (!this._raf) this._raf = requestAnimationFrame(() => this._tick()); }
 }
 
 const canvas3D = document.getElementById('hero-3d-canvas');
 if (canvas3D) {
-  const dither3D = new Dither3D(canvas3D);
-  const btnNext = document.getElementById('btn-next-3d');
-  const btnPrev = document.getElementById('btn-prev-3d');
-  if (btnNext) {
-    btnNext.addEventListener('click', () => {
-      dither3D.setShape(dither3D.shapeIndex + 1);
-    });
+  // Lazy-start: jangan rebut main thread saat LCP. Instance dibuat saat
+  // load selesai + idle, animasi pause saat canvas off-screen / tab hidden.
+  let dither3D = null;
+  function init3D() {
+    if (dither3D || !document.getElementById('hero-3d-canvas')) return;
+    dither3D = new Dither3D(canvas3D);
+    bind3DBtns();
+    observe3DVis();
   }
-  if (btnPrev) {
-    btnPrev.addEventListener('click', () => {
-      dither3D.setShape(dither3D.shapeIndex - 1);
+  function bind3DBtns() {
+    const btnNext = document.getElementById('btn-next-3d');
+    const btnPrev = document.getElementById('btn-prev-3d');
+    if (btnNext) {
+      btnNext.addEventListener('click', () => {
+        dither3D.setShape(dither3D.shapeIndex + 1);
+      });
+    }
+    if (btnPrev) {
+      btnPrev.addEventListener('click', () => {
+        dither3D.setShape(dither3D.shapeIndex - 1);
+      });
+    }
+  }
+  function observe3DVis() {
+    const vis = () => {
+      if (!dither3D) return;
+      const r = canvas3D.getBoundingClientRect();
+      const onScreen = r.bottom > 0 && r.top < window.innerHeight;
+      if (document.hidden || !onScreen) dither3D.pause();
+      else dither3D.resume();
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => {
+        if (!dither3D) return;
+        if (es[0].isIntersecting) dither3D.resume();
+        else dither3D.pause();
+      }, { threshold: 0 }).observe(canvas3D);
+    }
+    document.addEventListener('visibilitychange', vis);
+    window.addEventListener('scroll', vis, { passive: true });
+  }
+  if (document.readyState === 'complete') {
+    if ('requestIdleCallback' in window) requestIdleCallback(init3D, { timeout: 2000 });
+    else setTimeout(init3D, 500);
+  } else {
+    window.addEventListener('load', function onLoad3D() {
+      window.removeEventListener('load', onLoad3D);
+      if ('requestIdleCallback' in window) requestIdleCallback(init3D, { timeout: 2000 });
+      else setTimeout(init3D, 500);
     });
   }
 }
