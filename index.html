@@ -71,7 +71,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Epilogue:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Bebas+Neue&display=swap"
     rel="stylesheet">
-  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
   <script>
     // Apply theme immediately to prevent flash of wrong theme
     (function () {
@@ -643,9 +642,23 @@
       min-height: 2rem;
     }
 
-    .hero-role .typed-cursor {
+    .hero-role .typed-cursor,
+    .auto-type-hero .typed-cursor {
       color: var(--accent);
       font-weight: 300;
+      animation: typed-blink 1s step-end infinite;
+    }
+
+    @keyframes typed-blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
     }
 
     .hero-bio {
@@ -2475,8 +2488,8 @@
     <div class="container about-me-container">
       <div class="about-avatar-wrap">
         <div class="about-avatar-stack show-pose2" id="avatar-stack">
-          <img src="assets/nicolaus_pose2_natural.png?v=15" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" class="photo-pose2">
-          <img src="assets/nicolaus_pose3_natural.png?v=15" alt="Nicolaus Prima" loading="eager" class="about-avatar photo-pose3">
+          <img src="assets/nicolaus_pose2_natural.webp" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" class="photo-pose2">
+          <img src="assets/nicolaus_pose3_natural.webp" alt="Nicolaus Prima" loading="eager" class="about-avatar photo-pose3">
         </div>
       </div>
       <h2 class="about-name">Nicolaus Prima</h2>
