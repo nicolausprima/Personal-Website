@@ -1547,111 +1547,191 @@
       max-width: 720px;
     }
 
+    /* ── ABOUT ME AVATAR (Frameless, Centered, Role → Foto 1 → Foto 2) ── */
     .about-avatar-wrap {
       position: relative;
       width: clamp(260px, 32vw, 360px);
-      height: clamp(260px, 32vw, 360px);
+      height: clamp(280px, 35vw, 380px);
       padding: 0;
       background: none;
       border: none;
-      box-shadow: none;
-      margin-bottom: 24px;
-      cursor: default;
+      border-radius: 0;
+      margin: 0 auto 24px auto;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Avatar stack with subtle thin bottom fade */
-    .about-avatar-stack {
-      position: relative;
+    .about-avatar-wrap:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Phase 1: Role Emblem Badge (Centered) */
+    .avatar-role-badge {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      pointer-events: none;
+      padding: 20px;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .role-icon-box {
+      width: 88px;
+      height: 88px;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.06));
+    }
+
+    [data-theme="dark"] .role-icon-box {
+      filter: drop-shadow(0 4px 18px rgba(255, 255, 255, 0.05));
+    }
+
+    .role-crest-svg {
       width: 100%;
       height: 100%;
-      overflow: visible;
-      aspect-ratio: 1 / 1;
-      z-index: 1;
-      -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+      display: block;
     }
 
-    .about-avatar-stack img {
+    .role-badge-tag {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] .role-badge-tag {
+      background: var(--surface-alt);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .role-badge-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Photo Stage (Centered with natural bottom fade mask) */
+    .avatar-photo-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 86%, transparent 100%);
+    }
+
+    .avatar-photo {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      display: block;
+      object-position: center bottom;
       pointer-events: none;
-      transform-origin: center bottom;
-      will-change: opacity;
+      user-select: none;
       filter: grayscale(100%) contrast(1.12) brightness(1.02);
-      transition: opacity 1.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
     }
 
     /* Fallback default jika JS nonaktif */
-    .about-avatar-stack:not(.show-pose2):not(.transitioning):not(.settled) img.photo-pose3 {
+    .about-avatar-wrap:not(.state-role):not(.state-pose1):not(.state-pose2):not(.settled) .photo-pose3 {
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }
-
-    /* ── State 1: Pose 2 tampil mulus ── */
-    .about-avatar-stack.show-pose2 img.photo-pose2 {
-      opacity: 1;
-      z-index: 2;
-      transform: translate3d(0, 0, 0);
-    }
-    .about-avatar-stack.show-pose2 img.photo-pose3 {
-      opacity: 0;
-      z-index: 1;
-      transform: translate3d(0, 0, 0);
-    }
-
-    /* ── State 2: Smooth Cross-fade ke Foto 3 (Arah sama persis, in-place) ── */
-    .about-avatar-stack.transitioning img.photo-pose2 {
-      opacity: 0;
-      z-index: 1;
-      transform: translate3d(0, 0, 0);
-    }
-    .about-avatar-stack.transitioning img.photo-pose3 {
-      opacity: 1;
-      z-index: 2;
-      transform: translate3d(0, 0, 0);
-    }
-
-    /* ── State 3: Berhenti Permanen di Foto 3 (Settled) ── */
-    .about-avatar-stack.settled img.photo-pose2 {
-      opacity: 0 !important;
+    .about-avatar-wrap:not(.state-role):not(.state-pose1):not(.state-pose2):not(.settled) .photo-pose2,
+    .about-avatar-wrap:not(.state-role):not(.state-pose1):not(.state-pose2):not(.settled) .avatar-role-badge {
       display: none !important;
-      pointer-events: none !important;
-    }
-    .about-avatar-stack.settled img.photo-pose3 {
-      opacity: 1 !important;
-      z-index: 2 !important;
-      display: block !important;
-      transform: translate3d(0, 0, 0);
-      filter: grayscale(100%) contrast(1.12) brightness(1.02);
     }
 
-    /* Hover: Subtle clean lift saat di Foto 3 (tanpa aura/shadow hitam) */
-    .about-avatar-wrap {
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    /* ── ANIMATION STATES ── */
+    /* State 1: Role Phase */
+    .about-avatar-wrap.state-role .avatar-role-badge {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
-    .about-avatar-wrap:hover {
-      transform: translateY(-4px);
+    .about-avatar-wrap.state-role .photo-pose2 {
+      opacity: 0;
+      transform: translate3d(40px, 0, 0);
+      z-index: 1;
     }
-    .about-avatar-wrap:hover .about-avatar-stack.settled img.photo-pose3 {
+    .about-avatar-wrap.state-role .photo-pose3 {
+      opacity: 0;
+      transform: translate3d(-40px, 0, 0);
+      z-index: 1;
+    }
+
+    /* State 2: Pose 1 Slide-in (Crossed Arms) */
+    .about-avatar-wrap.state-pose1 .avatar-role-badge {
+      opacity: 0;
+      transform: translate3d(-35px, 0, 0) scale(0.95);
+    }
+    .about-avatar-wrap.state-pose1 .photo-pose2 {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      z-index: 2;
+    }
+    .about-avatar-wrap.state-pose1 .photo-pose3 {
+      opacity: 0;
+      transform: translate3d(-40px, 0, 0);
+      z-index: 1;
+    }
+
+    /* State 3: Pose 2 Slide-in dari Kiri (Hero Pose & Locked-in) */
+    .about-avatar-wrap.state-pose2 .avatar-role-badge,
+    .about-avatar-wrap.settled .avatar-role-badge {
+      opacity: 0;
+      display: none !important;
+    }
+    .about-avatar-wrap.state-pose2 .photo-pose2,
+    .about-avatar-wrap.settled .photo-pose2 {
+      opacity: 0;
+      transform: translate3d(40px, 0, 0);
+      z-index: 1;
+    }
+    .about-avatar-wrap.state-pose2 .photo-pose3,
+    .about-avatar-wrap.settled .photo-pose3 {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      z-index: 2;
+    }
+
+    .about-avatar-wrap.settled:hover .photo-pose3 {
       filter: grayscale(100%) contrast(1.15) brightness(1.04);
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .about-avatar-stack img {
+      .about-avatar-wrap .avatar-photo,
+      .about-avatar-wrap .avatar-role-badge {
         animation: none !important;
         transition: none !important;
       }
-      .about-avatar-stack img.photo-pose3 {
+      .about-avatar-wrap .photo-pose3 {
         opacity: 1 !important;
-        transform: none !important;
+        transform: translate3d(0, 0, 0) !important;
       }
-      .about-avatar-stack img.photo-pose2 {
+      .about-avatar-wrap .photo-pose2,
+      .about-avatar-wrap .avatar-role-badge {
         display: none !important;
       }
     }
@@ -2212,8 +2292,17 @@
 
       .about-avatar-wrap {
         width: clamp(210px, 62vw, 280px);
-        height: clamp(210px, 62vw, 280px);
+        height: clamp(240px, 70vw, 320px);
         margin-bottom: 22px;
+      }
+      .role-icon-box {
+        width: 76px;
+        height: 76px;
+        margin-bottom: 12px;
+      }
+      .role-badge-tag {
+        font-size: 0.7rem;
+        padding: 5px 12px;
       }
 
       .about-name {
@@ -2325,7 +2414,7 @@
 
       .about-avatar-wrap {
         width: clamp(175px, 58vw, 215px);
-        height: clamp(175px, 58vw, 215px);
+        height: clamp(200px, 66vw, 250px);
         margin-bottom: 16px;
       }
 
@@ -2495,10 +2584,30 @@
   <!-- ABOUT ME -->
   <section id="about" class="about-me reveal">
     <div class="container about-me-container">
-      <div class="about-avatar-wrap">
-        <div class="about-avatar-stack show-pose2" id="avatar-stack">
-          <img src="assets/nicolaus_pose2_natural.webp" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" width="339" height="445" class="photo-pose2">
-          <img src="assets/nicolaus_pose3_natural.webp" alt="Nicolaus Prima" loading="eager" width="249" height="375" class="about-avatar photo-pose3">
+      <div class="about-avatar-wrap state-role" id="about-avatar">
+        <!-- Phase 1: Role Emblem Badge (Muncul di awal) -->
+        <div class="avatar-role-badge">
+          <div class="role-icon-box">
+            <svg class="role-crest-svg" viewBox="0 0 120 120" fill="none" stroke="currentColor">
+              <polygon points="60,8 108,34 108,86 60,112 12,86 12,34" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polygon points="60,18 100,40 100,80 60,102 20,80 20,40" stroke-width="1" opacity="0.45" stroke-dasharray="4 3"/>
+              <line x1="60" y1="24" x2="60" y2="34" stroke-width="1.5" opacity="0.6"/>
+              <line x1="60" y1="86" x2="60" y2="96" stroke-width="1.5" opacity="0.6"/>
+              <line x1="42" y1="46" x2="78" y2="46" stroke-width="2.2" opacity="0.85"/>
+              <line x1="42" y1="46" x2="60" y2="76" stroke-width="2.2" opacity="0.85"/>
+              <line x1="78" y1="46" x2="60" y2="76" stroke-width="2.2" opacity="0.85"/>
+              <circle cx="42" cy="46" r="5.5" fill="currentColor"/>
+              <circle cx="78" cy="46" r="5.5" fill="currentColor"/>
+              <circle cx="60" cy="76" r="7.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="role-badge-sub">APPLIED DATA SCIENCE &bull; PENS</div>
+        </div>
+
+        <!-- Photo Stage (Slide-in Foto 1 lalu Foto 2) -->
+        <div class="avatar-photo-stage">
+          <img src="assets/nicolaus_pose2_natural.webp" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" width="339" height="445" class="avatar-photo photo-pose2">
+          <img src="assets/nicolaus_pose3_natural.webp" alt="Nicolaus Prima" loading="eager" width="249" height="375" class="avatar-photo photo-pose3">
         </div>
       </div>
       <h2 class="about-name">Nicolaus Prima</h2>
