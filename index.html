@@ -66,11 +66,9 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Epilogue:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
+  <link rel="preload" href="assets/fonts/Epilogue-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Fraunces-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
   <script>
     // Apply theme immediately to prevent flash of wrong theme
     (function () {
@@ -730,7 +728,7 @@
     }
 
     .hero-title-new {
-      font-family: var(--font-heading);
+      font-family: var(--font-display);
       font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 500;
       letter-spacing: -0.03em;
