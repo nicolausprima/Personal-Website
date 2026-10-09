@@ -136,66 +136,6 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 
-// Hero typewriter (vanilla, ganti Typed.js CDN): ketik → highlight → jeda → hapus → loop.
-(function () {
-  var el = document.querySelector('.auto-type-hero');
-  if (!el) return;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var HTML = "I turn <span class='hero-highlight h-1'>data</span> into <span class='hero-highlight h-2'>decisions.</span>";
-  var PLAIN = 'I turn data into decisions.';
-  var h1 = document.querySelector('.hero-title-new');
-  if (reduceMotion) {
-    el.textContent = PLAIN;
-    if (h1) h1.classList.add('highlight-active');
-    return;
-  }
-  var TYPE_MS = 20, BACK_MS = 15, HOLD_MS = 4000, UNH_HL_MS = 600;
-  var cursor = document.createElement('span');
-  cursor.className = 'typed-cursor';
-  cursor.textContent = '|';
-  function plainLen() { var d = document.createElement('div'); d.innerHTML = HTML; return d.textContent.length; }
-  var N = plainLen(), i = 0, phase = 'typing';
-  // Pecah HTML jadi token tag/teks agar tag tidak setengah tertulis.
-  var tokens = HTML.match(/<[^>]+>|[^<]+/g) || [HTML];
-  function htmlUpTo(n) {
-    var out = '', count = 0;
-    for (var k = 0; k < tokens.length && count < n; k++) {
-      var tk = tokens[k];
-      if (tk[0] === '<') { out += tk; continue; }
-      var take = Math.min(tk.length, n - count);
-      out += tk.slice(0, take);
-      count += take;
-    }
-    return out;
-  }
-  function render() {
-    el.innerHTML = htmlUpTo(i);
-    el.appendChild(cursor);
-  }
-  function tick() {
-    if (phase === 'typing') {
-      i++;
-      render();
-      if (i >= N) {
-        phase = 'hold';
-        if (h1) h1.classList.add('highlight-active');
-        setTimeout(tick, HOLD_MS - UNH_HL_MS);
-      } else setTimeout(tick, TYPE_MS);
-    } else if (phase === 'hold') {
-      phase = 'erasing';
-      if (h1) h1.classList.remove('highlight-active');
-      setTimeout(tick, UNH_HL_MS);
-    } else {
-      i--;
-      render();
-      if (i <= 0) { phase = 'typing'; setTimeout(tick, 400); }
-      else setTimeout(tick, BACK_MS);
-    }
-  }
-  render();
-  setTimeout(tick, 500);
-})();
-
 // Skill Icon Particle Simulation Class for Skill Cards (96x96)
 class SkillPixelIcon {
   constructor(canvas) {
@@ -662,21 +602,36 @@ document.querySelectorAll('.skill-pixel-canvas').forEach(canvas => {
   if (typeof SkillPixelIcon !== 'undefined') new SkillPixelIcon(canvas);
 });
 
-// Skills marquee: build seamless loop (4x fill, no visible gap/refresh)
-document.querySelectorAll('.tech-track').forEach(track => {
-  const originals = [...track.children];
-  // Fill track to at least 2x row width, then clone once more for -50% loop
-  while (track.scrollWidth < track.parentElement.clientWidth * 2) {
-    originals.forEach(el => track.appendChild(el.cloneNode(true)));
-  }
-  [...track.children].forEach(el => {
-    const c = el.cloneNode(true);
-    c.setAttribute('aria-hidden', 'true');
-    track.appendChild(c);
+// Skills marquee: build seamless loop (tunda sampai idle agar tak rebut LCP;
+// batasi iterasi + baca layout sekali per loop untuk hindari forced reflow)
+function buildMarquees() {
+  document.querySelectorAll('.tech-track').forEach(track => {
+    if (track.dataset.loopBuilt) return;
+    track.dataset.loopBuilt = '1';
+    const originals = [...track.children];
+    let guard = 0;
+    let rowW = track.parentElement.clientWidth * 2;
+    while (track.scrollWidth < rowW && guard++ < 6) {
+      originals.forEach(el => track.appendChild(el.cloneNode(true)));
+    }
+    [...track.children].forEach(el => {
+      const c = el.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      track.appendChild(c);
+    });
+    track.parentElement.scrollLeft = 0;
   });
-  // Balance leftover: shift start offset so head/tail show half-badge under fade
-  track.parentElement.scrollLeft = 0;
-});
+}
+if (document.readyState === 'complete') {
+  if ('requestIdleCallback' in window) requestIdleCallback(buildMarquees, { timeout: 2000 });
+  else setTimeout(buildMarquees, 400);
+} else {
+  window.addEventListener('load', function onLoadMarquee() {
+    window.removeEventListener('load', onLoadMarquee);
+    if ('requestIdleCallback' in window) requestIdleCallback(buildMarquees, { timeout: 2000 });
+    else setTimeout(buildMarquees, 400);
+  });
+}
 
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
