@@ -1265,88 +1265,48 @@ window.addEventListener('resize', () => {
 });
 
 
-// ── AVATAR GLITCH ANIMATION: 3-Photo Entrance Settle Sequence ──
-// Pose 1 → glitch ke Pose 2 → Pose 2 hold → glitch balik ke Pose 1 bentar → glitch ke Pose 2 → glitch ke Foto 3 → langsung berhenti permanen
+// ── AVATAR SMOOTH TRANSITION: Foto 2 ke Foto 3 ──
+// Foto 2 tampil mulus → hold sejenak → cross-fade halus ke Foto 3 → berhenti permanen
 (function () {
   var wrap = document.querySelector('.about-avatar-wrap');
   var stack = document.getElementById('avatar-stack');
   if (!stack) return;
   var photos = stack.querySelectorAll('img');
-  if (photos.length < 3) return;
+  if (photos.length < 2) return;
 
-  photos[0].classList.add('photo-0');
-  photos[1].classList.add('photo-1');
-  photos[2].classList.add('photo-2');
+  photos[0].classList.add('photo-pose2');
+  photos[1].classList.add('photo-pose3');
 
   function wait(ms) { return new Promise(function (res) { setTimeout(res, ms); }); }
 
   var isSequenceRunning = false;
   var hasPlayed = false;
 
-  async function playGlitchSequence() {
+  async function playSmoothTransition() {
     if (isSequenceRunning) return;
     isSequenceRunning = true;
 
-    // 0. Mulai dari Pose 1 (photo-0)
-    stack.classList.remove('settled', 'show-1', 'glitch-1-to-2', 'glitch-2-to-1', 'glitch-2-to-3');
-    stack.classList.add('show-0');
-    if (wrap) wrap.classList.remove('glowing');
+    // 1. Tampilkan Foto 2 (Pose 2) secara mulus
+    stack.classList.remove('settled', 'transitioning');
+    stack.classList.add('show-pose2');
 
-    // 1. Pose 1 tampil stabil
-    await wait(1200);
+    // 2. Beri waktu user menikmati Foto 2 dengan tenang (~1.8 detik)
+    await wait(1800);
 
-    // 2. Glitch transisi ke Pose 2
-    stack.classList.remove('show-0');
-    stack.classList.add('glitch-1-to-2');
-    if (wrap) wrap.classList.add('glowing');
-    await wait(550);
+    // 3. Transisi cross-fade halus, lembut & pelan ke Foto 3 (durasi 1.35 detik)
+    stack.classList.remove('show-pose2');
+    stack.classList.add('transitioning');
+    await wait(1350);
 
-    // 3. Pose 2 tampil stabil
-    stack.classList.remove('glitch-1-to-2');
-    stack.classList.add('show-1');
-    if (wrap) wrap.classList.remove('glowing');
-    await wait(1000);
-
-    // 4. Glitch balik ke Pose 1 bentar
-    stack.classList.remove('show-1');
-    stack.classList.add('glitch-2-to-1');
-    if (wrap) wrap.classList.add('glowing');
-    await wait(500);
-
-    // 5. Pose 1 tampil sebentar
-    stack.classList.remove('glitch-2-to-1');
-    stack.classList.add('show-0');
-    if (wrap) wrap.classList.remove('glowing');
-    await wait(500);
-
-    // 6. Glitch transisi ke Pose 2
-    stack.classList.remove('show-0');
-    stack.classList.add('glitch-1-to-2');
-    if (wrap) wrap.classList.add('glowing');
-    await wait(550);
-
-    // 7. Pose 2 tampil bentar
-    stack.classList.remove('glitch-1-to-2');
-    stack.classList.add('show-1');
-    if (wrap) wrap.classList.remove('glowing');
-    await wait(650);
-
-    // 8. Glitch transisi epik ke Foto 3 (photo-2)
-    stack.classList.remove('show-1');
-    stack.classList.add('glitch-2-to-3');
-    if (wrap) wrap.classList.add('glowing');
-    await wait(580);
-
-    // 9. Langsung BERHENTI di Foto 3 secara permanen (settled state)
-    stack.classList.remove('show-0', 'show-1', 'glitch-1-to-2', 'glitch-2-to-1', 'glitch-2-to-3');
+    // 4. Berhenti permanen di Foto 3
+    stack.classList.remove('transitioning');
     stack.classList.add('settled');
-    if (wrap) wrap.classList.remove('glowing');
 
     isSequenceRunning = false;
   }
 
-  // Preload aset gambar
-  ['assets/nicolaus_pose1_natural.png?v=13', 'assets/nicolaus_pose2_natural.png?v=13', 'assets/nicolaus_pose3_natural.png?v=13'].forEach(function (src) {
+  // Preload kedua aset gambar
+  ['assets/nicolaus_pose2_natural.png?v=15', 'assets/nicolaus_pose3_natural.png?v=15'].forEach(function (src) {
     var im = new Image();
     im.src = src;
   });
@@ -1356,26 +1316,17 @@ window.addEventListener('resize', () => {
     return;
   }
 
-  // IntersectionObserver: putar animasi satu kali saat avatar terlihat di layar, lalu diam permanen di Foto 3
+  // IntersectionObserver: putar transisi halus satu kali saja saat avatar masuk ke viewport (refresh untuk memutar ulang)
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting && !hasPlayed) {
         hasPlayed = true;
-        playGlitchSequence();
+        playSmoothTransition();
       }
     }, { threshold: 0.25 });
     io.observe(stack);
   } else {
     hasPlayed = true;
-    playGlitchSequence();
-  }
-
-  // Klik avatar untuk memutar ulang sequence lalu berhenti lagi di Foto 3
-  if (wrap) {
-    wrap.addEventListener('click', function () {
-      if (!isSequenceRunning) {
-        playGlitchSequence();
-      }
-    });
+    playSmoothTransition();
   }
 })();
