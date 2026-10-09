@@ -1617,12 +1617,12 @@
     .about-avatar-stack.glitch-1-to-2 img.photo-0 {
       z-index: 1;
       opacity: 1;
-      animation: glitch-tear-out 0.35s steps(1, end) forwards;
+      animation: glitch-tear-out 0.55s linear forwards;
     }
     .about-avatar-stack.glitch-1-to-2 img.photo-1 {
       z-index: 2;
       opacity: 1;
-      animation: glitch-tear-in 0.35s steps(1, end) forwards;
+      animation: glitch-tear-in 0.55s linear forwards;
     }
     .about-avatar-stack.glitch-1-to-2 img.photo-2 {
       opacity: 0;
@@ -1646,12 +1646,12 @@
     .about-avatar-stack.glitch-2-to-1 img.photo-1 {
       z-index: 1;
       opacity: 1;
-      animation: glitch-tear-out 0.32s steps(1, end) forwards;
+      animation: glitch-tear-out 0.5s linear forwards;
     }
     .about-avatar-stack.glitch-2-to-1 img.photo-0 {
       z-index: 2;
       opacity: 1;
-      animation: glitch-tear-in 0.32s steps(1, end) forwards;
+      animation: glitch-tear-in 0.5s linear forwards;
     }
     .about-avatar-stack.glitch-2-to-1 img.photo-2 {
       opacity: 0;
@@ -1661,12 +1661,12 @@
     .about-avatar-stack.glitch-2-to-3 img.photo-1 {
       z-index: 1;
       opacity: 1;
-      animation: glitch-tear-out 0.35s steps(1, end) forwards;
+      animation: glitch-tear-out 0.55s linear forwards;
     }
     .about-avatar-stack.glitch-2-to-3 img.photo-2 {
       z-index: 3;
       opacity: 1;
-      animation: glitch-tear-in 0.35s steps(1, end) forwards;
+      animation: glitch-tear-in 0.55s linear forwards;
     }
     .about-avatar-stack.glitch-2-to-3 img.photo-0 {
       opacity: 0;
@@ -1711,75 +1711,65 @@
       }
     }
 
-    /* Outgoing photo tears into horizontal slices */
+    /* Outgoing photo dissolves in soft thin slices (mild, smooth) */
     @keyframes glitch-tear-out {
       0% {
         opacity: 1;
         transform: translate3d(0, 0, 0);
         clip-path: inset(0 0 0 0);
-        filter: grayscale(100%) contrast(1.15);
+        filter: grayscale(100%) contrast(1.12);
       }
-      20% {
-        opacity: 0.9;
-        transform: translate3d(-6px, 0, 0);
-        clip-path: inset(12% 0 54% 0);
-        filter: grayscale(100%) contrast(1.35) brightness(1.15);
+      25% {
+        opacity: 0.85;
+        transform: translate3d(-2px, 0, 0);
+        clip-path: inset(10% 0 60% 0);
+        filter: grayscale(100%) contrast(1.16) brightness(1.05);
       }
-      40% {
-        opacity: 0.7;
-        transform: translate3d(8px, 0, 0);
-        clip-path: inset(58% 0 14% 0);
-        filter: grayscale(100%) contrast(1.4) brightness(1.2);
+      50% {
+        opacity: 0.6;
+        transform: translate3d(2px, 0, 0);
+        clip-path: inset(55% 0 12% 0);
+        filter: grayscale(100%) contrast(1.18) brightness(1.06);
       }
-      60% {
-        opacity: 0.45;
-        transform: translate3d(-4px, 0, 0);
-        clip-path: inset(34% 0 42% 0);
-        filter: grayscale(100%) contrast(1.2);
-      }
-      80% {
-        opacity: 0.2;
-        transform: translate3d(4px, 0, 0);
-        clip-path: inset(72% 0 4% 0);
+      75% {
+        opacity: 0.3;
+        transform: translate3d(-1px, 0, 0);
+        clip-path: inset(30% 0 40% 0);
+        filter: grayscale(100%) contrast(1.14);
       }
       100% {
         opacity: 0;
         transform: translate3d(0, 0, 0);
         clip-path: inset(0 0 0 0);
+        filter: grayscale(100%) contrast(1.12);
       }
     }
 
-    /* Incoming photo emerges through the tears and stabilizes smoothly */
+    /* Incoming photo fades in through soft slices, settles smoothly */
     @keyframes glitch-tear-in {
       0% {
         opacity: 0;
-        transform: translate3d(4px, 0, 0);
-        clip-path: inset(48% 0 8% 0);
-        filter: grayscale(100%) contrast(1.3) brightness(1.15);
+        transform: translate3d(2px, 0, 0);
+        clip-path: inset(45% 0 10% 0);
+        filter: grayscale(100%) contrast(1.16) brightness(1.05);
       }
-      20% {
-        opacity: 0.65;
-        transform: translate3d(6px, 0, 0);
-        clip-path: inset(0 0 50% 0);
-        filter: grayscale(100%) contrast(1.35);
-      }
-      40% {
-        opacity: 0.85;
-        transform: translate3d(-5px, 0, 0);
-        clip-path: inset(46% 0 0 0);
-        filter: grayscale(100%) contrast(1.25);
-      }
-      60% {
-        opacity: 0.95;
-        transform: translate3d(3px, 0, 0);
-        clip-path: inset(15% 0 20% 0);
+      30% {
+        opacity: 0.55;
+        transform: translate3d(2px, 0, 0);
+        clip-path: inset(0 0 45% 0);
         filter: grayscale(100%) contrast(1.18);
       }
+      55% {
+        opacity: 0.8;
+        transform: translate3d(-2px, 0, 0);
+        clip-path: inset(40% 0 0 0);
+        filter: grayscale(100%) contrast(1.15);
+      }
       80% {
-        opacity: 1;
+        opacity: 0.95;
         transform: translate3d(-1px, 0, 0);
-        clip-path: inset(0 0 0 0);
-        filter: grayscale(100%) contrast(1.14);
+        clip-path: inset(8% 0 8% 0);
+        filter: grayscale(100%) contrast(1.13);
       }
       100% {
         opacity: 1;
@@ -2666,9 +2656,9 @@
       <div class="about-avatar-wrap" title="Klik untuk putar ulang entrance">
         <div class="about-avatar-glow" aria-hidden="true"></div>
         <div class="about-avatar-stack show-0" id="avatar-stack">
-          <img src="assets/nicolaus_pose1_natural.png?v=12" alt="Nicolaus Prima Profile" aria-hidden="true" loading="eager" class="photo-0">
-          <img src="assets/nicolaus_pose2_natural.png?v=12" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" class="photo-1">
-          <img src="assets/nicolaus_pose3_natural.png?v=12" alt="Nicolaus Prima" loading="eager" class="about-avatar photo-2">
+          <img src="assets/nicolaus_pose1_natural.png?v=13" alt="Nicolaus Prima Profile" aria-hidden="true" loading="eager" class="photo-0">
+          <img src="assets/nicolaus_pose2_natural.png?v=13" alt="Nicolaus Prima Crossed Arms" aria-hidden="true" loading="eager" class="photo-1">
+          <img src="assets/nicolaus_pose3_natural.png?v=13" alt="Nicolaus Prima" loading="eager" class="about-avatar photo-2">
         </div>
       </div>
       <h2 class="about-name">Nicolaus Prima</h2>

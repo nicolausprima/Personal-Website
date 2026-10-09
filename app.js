@@ -1299,7 +1299,7 @@ window.addEventListener('resize', () => {
     stack.classList.remove('show-0');
     stack.classList.add('glitch-1-to-2');
     if (wrap) wrap.classList.add('glowing');
-    await wait(350);
+    await wait(550);
 
     // 3. Pose 2 tampil stabil
     stack.classList.remove('glitch-1-to-2');
@@ -1311,7 +1311,7 @@ window.addEventListener('resize', () => {
     stack.classList.remove('show-1');
     stack.classList.add('glitch-2-to-1');
     if (wrap) wrap.classList.add('glowing');
-    await wait(320);
+    await wait(500);
 
     // 5. Pose 1 tampil sebentar
     stack.classList.remove('glitch-2-to-1');
@@ -1323,7 +1323,7 @@ window.addEventListener('resize', () => {
     stack.classList.remove('show-0');
     stack.classList.add('glitch-1-to-2');
     if (wrap) wrap.classList.add('glowing');
-    await wait(350);
+    await wait(550);
 
     // 7. Pose 2 tampil bentar
     stack.classList.remove('glitch-1-to-2');
@@ -1335,7 +1335,7 @@ window.addEventListener('resize', () => {
     stack.classList.remove('show-1');
     stack.classList.add('glitch-2-to-3');
     if (wrap) wrap.classList.add('glowing');
-    await wait(380);
+    await wait(580);
 
     // 9. Langsung BERHENTI di Foto 3 secara permanen (settled state)
     stack.classList.remove('show-0', 'show-1', 'glitch-1-to-2', 'glitch-2-to-1', 'glitch-2-to-3');
@@ -1346,7 +1346,7 @@ window.addEventListener('resize', () => {
   }
 
   // Preload aset gambar
-  ['assets/nicolaus_pose1_natural.png?v=12', 'assets/nicolaus_pose2_natural.png?v=12', 'assets/nicolaus_pose3_natural.png?v=12'].forEach(function (src) {
+  ['assets/nicolaus_pose1_natural.png?v=13', 'assets/nicolaus_pose2_natural.png?v=13', 'assets/nicolaus_pose3_natural.png?v=13'].forEach(function (src) {
     var im = new Image();
     im.src = src;
   });
