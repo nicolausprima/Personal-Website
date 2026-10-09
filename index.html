@@ -1566,6 +1566,58 @@
       transform: translateY(-4px);
     }
 
+    /* Ambient Data Science Crest Watermark behind Photo */
+    .avatar-backdrop-crest {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      width: clamp(230px, 28vw, 300px);
+      height: clamp(230px, 28vw, 300px);
+      transform: translate3d(-50%, -50%, 0);
+      color: var(--text);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .avatar-backdrop-crest svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Tampil halus saat foto masuk & locked in (state-pose1, state-pose2, settled) */
+    .about-avatar-wrap.state-pose1 .avatar-backdrop-crest,
+    .about-avatar-wrap.state-pose2 .avatar-backdrop-crest,
+    .about-avatar-wrap.settled .avatar-backdrop-crest {
+      opacity: 0.055;
+    }
+
+    [data-theme="dark"] .about-avatar-wrap.state-pose1 .avatar-backdrop-crest,
+    [data-theme="dark"] .about-avatar-wrap.state-pose2 .avatar-backdrop-crest,
+    [data-theme="dark"] .about-avatar-wrap.settled .avatar-backdrop-crest {
+      opacity: 0.095;
+    }
+
+    .about-avatar-wrap:hover .avatar-backdrop-crest {
+      opacity: 0.085;
+      transform: translate3d(-50%, -50%, 0) scale(1.04);
+    }
+
+    [data-theme="dark"] .about-avatar-wrap:hover .avatar-backdrop-crest {
+      opacity: 0.14;
+    }
+
+    /* Fallback default jika JS nonaktif */
+    .about-avatar-wrap:not(.state-role):not(.state-pose1):not(.state-pose2):not(.settled) .avatar-backdrop-crest {
+      opacity: 0.055;
+    }
+    [data-theme="dark"] .about-avatar-wrap:not(.state-role):not(.state-pose1):not(.state-pose2):not(.settled) .avatar-backdrop-crest {
+      opacity: 0.095;
+    }
+
     /* Phase 1: Role Emblem Badge (Centered) */
     .avatar-role-badge {
       position: absolute;
@@ -2295,6 +2347,10 @@
         height: clamp(240px, 70vw, 320px);
         margin-bottom: 22px;
       }
+      .avatar-backdrop-crest {
+        width: clamp(200px, 60vw, 250px);
+        height: clamp(200px, 60vw, 250px);
+      }
       .role-icon-box {
         width: 76px;
         height: 76px;
@@ -2416,6 +2472,10 @@
         width: clamp(175px, 58vw, 215px);
         height: clamp(200px, 66vw, 250px);
         margin-bottom: 16px;
+      }
+      .avatar-backdrop-crest {
+        width: clamp(160px, 54vw, 195px);
+        height: clamp(160px, 54vw, 195px);
       }
 
       .about-name {
@@ -2585,6 +2645,22 @@
   <section id="about" class="about-me reveal">
     <div class="container about-me-container">
       <div class="about-avatar-wrap state-role" id="about-avatar">
+        <!-- Background Data Science Crest Watermark (Di belakang foto) -->
+        <div class="avatar-backdrop-crest" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none" stroke="currentColor">
+            <polygon points="60,8 108,34 108,86 60,112 12,86 12,34" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polygon points="60,18 100,40 100,80 60,102 20,80 20,40" stroke-width="1.2" opacity="0.5" stroke-dasharray="4 3"/>
+            <line x1="60" y1="24" x2="60" y2="34" stroke-width="1.5" opacity="0.6"/>
+            <line x1="60" y1="86" x2="60" y2="96" stroke-width="1.5" opacity="0.6"/>
+            <line x1="42" y1="46" x2="78" y2="46" stroke-width="2" opacity="0.8"/>
+            <line x1="42" y1="46" x2="60" y2="76" stroke-width="2" opacity="0.8"/>
+            <line x1="78" y1="46" x2="60" y2="76" stroke-width="2" opacity="0.8"/>
+            <circle cx="42" cy="46" r="5" fill="currentColor"/>
+            <circle cx="78" cy="46" r="5" fill="currentColor"/>
+            <circle cx="60" cy="76" r="7" fill="currentColor"/>
+          </svg>
+        </div>
+
         <!-- Phase 1: Role Emblem Badge (Muncul di awal) -->
         <div class="avatar-role-badge">
           <div class="role-icon-box">

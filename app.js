@@ -1358,68 +1358,56 @@ window.addEventListener('resize', () => {
 });
 
 
-// ── AVATAR SMOOTH TRANSITION: Foto 2 ke Foto 3 ──
-// Foto 2 tampil mulus → hold sejenak → cross-fade halus ke Foto 3 → berhenti permanen
+// ── ROSTER TRANSITION: Role → Pose 1 → Pose 2 (Lock-in) ──
 (function () {
-  var wrap = document.querySelector('.about-avatar-wrap');
-  var stack = document.getElementById('avatar-stack');
-  if (!stack) return;
-  var photos = stack.querySelectorAll('img');
-  if (photos.length < 2) return;
-
-  photos[0].classList.add('photo-pose2');
-  photos[1].classList.add('photo-pose3');
+  var avatar = document.getElementById('about-avatar');
+  if (!avatar) return;
 
   function wait(ms) { return new Promise(function (res) { setTimeout(res, ms); }); }
 
   var isSequenceRunning = false;
   var hasPlayed = false;
 
-  async function playSmoothTransition() {
+  async function playRosterSequence() {
     if (isSequenceRunning) return;
     isSequenceRunning = true;
 
-    // 1. Tampilkan Foto 2 (Pose 2) secara mulus
-    stack.classList.remove('settled', 'transitioning');
-    stack.classList.add('show-pose2');
+    // 1. Fase 1: Munculkan Role Emblem (Data Scientist)
+    avatar.className = 'about-avatar-wrap state-role';
+    await wait(1300);
 
-    // 2. Beri waktu user menikmati Foto 2 dengan tenang (~1.8 detik)
-    await wait(1800);
+    // 2. Fase 2: Role bergeser keluar, Foto 1 (bersidekap) meluncur masuk
+    avatar.className = 'about-avatar-wrap state-pose1';
+    await wait(1900);
 
-    // 3. Transisi cross-fade halus, lembut & pelan ke Foto 3 (durasi 1.35 detik)
-    stack.classList.remove('show-pose2');
-    stack.classList.add('transitioning');
-    await wait(1350);
-
-    // 4. Berhenti permanen di Foto 3
-    stack.classList.remove('transitioning');
-    stack.classList.add('settled');
+    // 3. Fase 3: Foto 1 meluncur keluar ke kiri, Foto 2 (Hero) meluncur masuk dari kanan
+    avatar.className = 'about-avatar-wrap state-pose2 settled';
 
     isSequenceRunning = false;
   }
 
-  // Preload kedua aset gambar
+  // Preload kedua aset gambar webp
   ['assets/nicolaus_pose2_natural.webp', 'assets/nicolaus_pose3_natural.webp'].forEach(function (src) {
     var im = new Image();
     im.src = src;
   });
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    stack.classList.add('settled');
+    avatar.className = 'about-avatar-wrap settled';
     return;
   }
 
-  // IntersectionObserver: putar transisi halus satu kali saja saat avatar masuk ke viewport (refresh untuk memutar ulang)
+  // IntersectionObserver: putar transisi satu kali saja saat avatar masuk ke viewport
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting && !hasPlayed) {
         hasPlayed = true;
-        playSmoothTransition();
+        playRosterSequence();
       }
     }, { threshold: 0.25 });
-    io.observe(stack);
+    io.observe(avatar);
   } else {
     hasPlayed = true;
-    playSmoothTransition();
+    playRosterSequence();
   }
 })();
