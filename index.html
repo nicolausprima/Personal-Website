@@ -648,6 +648,25 @@
       min-height: 2rem;
     }
 
+    .hero-role .typed-cursor,
+    .auto-type-hero .typed-cursor,
+    .hero-title-new .typed-cursor {
+      color: var(--accent);
+      font-weight: 300;
+      animation: typed-blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes typed-blink {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+    }
+
     .hero-bio {
       color: var(--text-secondary);
       font-size: 0.92rem;
@@ -2592,8 +2611,8 @@
         </svg>
         Nicolaus Prima • Portfolio
       </div>
-      <h1 class="hero-title-new highlight-active">
-        I turn <span class="hero-highlight h-1">data</span> into <span class="hero-highlight h-2">decisions.</span>
+      <h1 class="hero-title-new">
+        <span class="auto-type-hero">I turn <span class="hero-highlight h-1">data</span> into <span class="hero-highlight h-2">decisions.</span></span>
       </h1>
       <p class="hero-bio-new">
         Applied Data Science student at PENS Surabaya. I build machine learning models, data dashboards, and web apps.
