@@ -136,64 +136,53 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 
-// Hero typewriter (vanilla): ketik → highlight → jeda → hapus → loop.
+// Hero typewriter (Typed.js): ketik super smooth → highlight → jeda → hapus → loop
 (function () {
   var el = document.querySelector('.auto-type-hero');
   if (!el) return;
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var HTML = "I turn <span class='hero-highlight h-1'>data</span> into <span class='hero-highlight h-2'>decisions.</span>";
-  var PLAIN = 'I turn data into decisions.';
   var h1 = document.querySelector('.hero-title-new');
+
   if (reduceMotion) {
     el.innerHTML = HTML;
     if (h1) h1.classList.add('highlight-active');
     return;
   }
-  var TYPE_MS = 25, BACK_MS = 16, HOLD_MS = 4000, UNH_HL_MS = 600;
-  var cursor = document.createElement('span');
-  cursor.className = 'typed-cursor';
-  cursor.textContent = '|';
-  function plainLen() { var d = document.createElement('div'); d.innerHTML = HTML; return d.textContent.length; }
-  var N = plainLen(), i = 0, phase = 'typing';
-  // Pecah HTML jadi token tag/teks agar tag tidak setengah tertulis.
-  var tokens = HTML.match(/<[^>]+>|[^<]+/g) || [HTML];
-  function htmlUpTo(n) {
-    var out = '', count = 0;
-    for (var k = 0; k < tokens.length && count < n; k++) {
-      var tk = tokens[k];
-      if (tk[0] === '<') { out += tk; continue; }
-      var take = Math.min(tk.length, n - count);
-      out += tk.slice(0, take);
-      count += take;
-    }
-    return out;
-  }
-  function render() {
-    el.innerHTML = htmlUpTo(i);
-    el.appendChild(cursor);
-  }
-  function tick() {
-    if (phase === 'typing') {
-      i++;
-      render();
-      if (i >= N) {
-        phase = 'hold';
-        if (h1) h1.classList.add('highlight-active');
-        setTimeout(tick, HOLD_MS - UNH_HL_MS);
-      } else setTimeout(tick, TYPE_MS);
-    } else if (phase === 'hold') {
-      phase = 'erasing';
-      if (h1) h1.classList.remove('highlight-active');
-      setTimeout(tick, UNH_HL_MS);
+
+  function initTyped() {
+    if (typeof Typed !== 'undefined') {
+      new Typed('.auto-type-hero', {
+        strings: [HTML],
+        typeSpeed: 20, /* Kecepatan smooth ketik awal */
+        backSpeed: 15, /* Kecepatan hapus halus */
+        loop: true,
+        backDelay: 4000, /* Tahan tampil utuh 4 detik */
+        showCursor: true,
+        cursorChar: '|',
+        onStringTyped: function () {
+          // Trigger efek highlight hitam ala awal
+          if (h1) h1.classList.add('highlight-active');
+
+          // Tarik balik highlight 0.6s sebelum backspacing dimulai
+          setTimeout(function () {
+            if (h1) h1.classList.remove('highlight-active');
+          }, 3400);
+        }
+      });
     } else {
-      i--;
-      render();
-      if (i <= 0) { phase = 'typing'; setTimeout(tick, 400); }
-      else setTimeout(tick, BACK_MS);
+      // Fallback jika lib tertunda
+      el.innerHTML = HTML;
+      if (h1) h1.classList.add('highlight-active');
     }
   }
-  render();
-  setTimeout(tick, 400);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTyped);
+  } else {
+    initTyped();
+  }
 })();
 
 

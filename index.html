@@ -747,7 +747,7 @@
     }
 
     .hero-title-new {
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 500;
       letter-spacing: -0.03em;
@@ -2624,7 +2624,7 @@
         Nicolaus Prima • Portfolio
       </div>
       <h1 class="hero-title-new">
-        <span class="auto-type-hero">I turn <span class="hero-highlight h-1">data</span> into <span class="hero-highlight h-2">decisions.</span></span>
+        <span class="auto-type-hero"></span>
       </h1>
       <p class="hero-bio-new">
         Applied Data Science student at PENS Surabaya. I build machine learning models, data dashboards, and web apps.
@@ -2909,6 +2909,7 @@
   </footer>
 
   <!-- Custom JS (defer: tidak blokir render, jalan setelah HTML selesai parse) -->
+  <script src="assets/typed.umd.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 
